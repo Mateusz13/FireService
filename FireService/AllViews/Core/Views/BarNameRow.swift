@@ -1,5 +1,5 @@
 //
-//  RotaTableView.swift
+//  BarNameRow.swift
 //  FireService
 //
 //  Created by Mateusz Szafarczyk on 13/02/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RotaTableView: View {
+struct BarNameRow: View {
     
     let number: Int
     
@@ -64,9 +64,9 @@ struct RotaTableView: View {
     }
 }
 
-struct RotaTableView_Previews: PreviewProvider {
+struct BarNameRow_Previews: PreviewProvider {
     static var previews: some View {
-        RotaTableView(number: 0, name: .constant(["mati"]), entryPressure: .constant(["100"]), firstCheckPressure: .constant(["90"]), secondCheckPressure: .constant(["80"]))
+        BarNameRow(number: 0, name: .constant(["mati"]), entryPressure: .constant(["100"]), firstCheckPressure: .constant(["90"]), secondCheckPressure: .constant(["80"]))
     }
 }
 

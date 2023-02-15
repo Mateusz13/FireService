@@ -14,8 +14,8 @@ struct MainTableView: View {
     var body: some View {
         
         VStack {
-            RotaTableView(number: 0, name: $vm.name, entryPressure: $vm.entryPressure, firstCheckPressure: $vm.firstCheckPressure, secondCheckPressure: $vm.secondCheckPressure)
-            RotaTableView(number: 1, name: $vm.name, entryPressure: $vm.entryPressure, firstCheckPressure: $vm.firstCheckPressure, secondCheckPressure: $vm.secondCheckPressure)
+            BarNameRow(number: 0, name: $vm.name, entryPressure: $vm.entryPressure, firstCheckPressure: $vm.firstCheckPressure, secondCheckPressure: $vm.secondCheckPressure)
+            BarNameRow(number: 1, name: $vm.name, entryPressure: $vm.entryPressure, firstCheckPressure: $vm.firstCheckPressure, secondCheckPressure: $vm.secondCheckPressure)
         }
     }
 }
