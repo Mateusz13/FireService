@@ -15,28 +15,28 @@ struct RotaTableView: View {
         case name, entryPressure, firstCheckPressure, secondCheckPressure
     }
     
-    @Binding var name1: [String]
-    @Binding var entryPressure1: [String]
-    @Binding var firstCheckPressure1: [String]
-    @Binding var secondCheckPressure1: [String]
+    @Binding var name: [String]
+    @Binding var entryPressure: [String]
+    @Binding var firstCheckPressure: [String]
+    @Binding var secondCheckPressure: [String]
     
     @FocusState private var fieldInFocus: FocusField?
     
     var body: some View {
         HStack {
             Text("1")
-            TextField("name1", text: $name1[number])
+            TextField("name", text: $name[number])
                     .focused($fieldInFocus, equals: .name)
             Text("BAR")
-            TextField("entryPressure1", text: $entryPressure1[number])
+            TextField("entryPressure", text: $entryPressure[number])
                 .focused($fieldInFocus, equals: .entryPressure)
-                .numbersOnly($entryPressure1[number])
-            TextField("firstCheckPressure1", text: $firstCheckPressure1[number])
+                .numbersOnly($entryPressure[number])
+            TextField("firstCheckPressure", text: $firstCheckPressure[number])
                 .focused($fieldInFocus, equals: .firstCheckPressure)
-                .numbersOnly($firstCheckPressure1[number])
-            TextField("secondCheckPressure1", text: $secondCheckPressure1[number])
+                .numbersOnly($firstCheckPressure[number])
+            TextField("secondCheckPressure", text: $secondCheckPressure[number])
                 .focused($fieldInFocus, equals: .secondCheckPressure)
-                .numbersOnly($secondCheckPressure1[number])
+                .numbersOnly($secondCheckPressure[number])
             
         }
         .textFieldStyle(.roundedBorder)
@@ -44,7 +44,7 @@ struct RotaTableView: View {
         .frame(maxWidth: 500)
         .background(Color.gray.brightness(0.4))
         .cornerRadius(10)
-        .padding()
+//        .padding()
         .toolbar {
             ToolbarItem(placement: .keyboard) {
                 Spacer()
@@ -66,7 +66,7 @@ struct RotaTableView: View {
 
 struct RotaTableView_Previews: PreviewProvider {
     static var previews: some View {
-        RotaTableView(number: 0, name1: .constant(["mati"]), entryPressure1: .constant(["100"]), firstCheckPressure1: .constant(["90"]), secondCheckPressure1: .constant(["80"]))
+        RotaTableView(number: 0, name: .constant(["mati"]), entryPressure: .constant(["100"]), firstCheckPressure: .constant(["90"]), secondCheckPressure: .constant(["80"]))
     }
 }
 

@@ -13,10 +13,10 @@ class CoreViewModel: ObservableObject {
     
     @Published var allRotas: [MainTableModel] = []
     
-    @Published var name1: [String] = ["", "", ""]
-    @Published var entryPressure1: [String] = ["", "", ""]
-    @Published var firstCheckPressure1: [String] = ["", "", ""]
-    @Published var secondCheckPressure1: [String] = ["", "", ""]
+    @Published var name: [String] = ["", "", ""]
+    @Published var entryPressure: [String] = ["", "", ""]
+    @Published var firstCheckPressure: [String] = ["", "", ""]
+    @Published var secondCheckPressure: [String] = ["", "", ""]
     
 }
 
