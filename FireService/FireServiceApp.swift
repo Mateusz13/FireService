@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct FireServiceApp: App {
+    
+    @StateObject private var vm = CoreViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            RotaTableView()
+            NavigationStack {
+                MainTableView()
+                    .environmentObject(vm)
+            }
         }
     }
 }
