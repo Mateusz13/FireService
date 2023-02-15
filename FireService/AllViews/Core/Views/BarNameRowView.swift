@@ -1,5 +1,5 @@
 //
-//  BarNameRow.swift
+//  BarNameRowView.swift
 //  FireService
 //
 //  Created by Mateusz Szafarczyk on 13/02/2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BarNameRow: View {
+struct BarNameRowView: View {
     
     let number: Int
     
@@ -64,9 +64,9 @@ struct BarNameRow: View {
     }
 }
 
-struct BarNameRow_Previews: PreviewProvider {
+struct BarNameRowView_Previews: PreviewProvider {
     static var previews: some View {
-        BarNameRow(number: 0, name: .constant(["mati"]), entryPressure: .constant(["100"]), firstCheckPressure: .constant(["90"]), secondCheckPressure: .constant(["80"]))
+        BarNameRowView(number: 0, name: .constant(["mati"]), entryPressure: .constant(["100"]), firstCheckPressure: .constant(["90"]), secondCheckPressure: .constant(["80"]))
     }
 }
 
