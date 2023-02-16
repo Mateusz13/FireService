@@ -14,8 +14,9 @@ struct MainTableView: View {
     var body: some View {
         
         VStack {
-            BarNameRowView(number: 0, name: $vm.name, entryPressure: $vm.entryPressure, firstCheckPressure: $vm.firstCheckPressure, secondCheckPressure: $vm.secondCheckPressure)
-            BarNameRowView(number: 1, name: $vm.name, entryPressure: $vm.entryPressure, firstCheckPressure: $vm.firstCheckPressure, secondCheckPressure: $vm.secondCheckPressure)
+            tableHeader
+            RotaView()
+            Spacer()
         }
     }
 }
@@ -24,5 +25,20 @@ struct MainTableView_Previews: PreviewProvider {
     static var previews: some View {
         MainTableView()
             .environmentObject(CoreViewModel())
+    }
+}
+
+extension MainTableView {
+    
+    private var tableHeader: some View {
+        HStack {
+            Spacer()
+            Text("CZAS")
+            Text("WEJŚCIE")
+            Text("Kontrola 1")
+            Text("Kontrola 2")
+        }
+        .foregroundColor(Color.blue)
+        .padding()
     }
 }

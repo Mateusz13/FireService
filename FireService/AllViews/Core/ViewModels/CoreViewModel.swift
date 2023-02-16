@@ -18,5 +18,9 @@ class CoreViewModel: ObservableObject {
     @Published var firstCheckPressure: [String] = ["", "", ""]
     @Published var secondCheckPressure: [String] = ["", "", ""]
     
+    @Published var entryTime: [String] = ["", "", ""]
+    @Published var firstCheckTime: [String] = ["", "", ""]
+    @Published var secondCheckTime: [String] = ["", "", ""]
+    
 }
 

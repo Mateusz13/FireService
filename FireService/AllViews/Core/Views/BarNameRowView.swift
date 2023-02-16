@@ -24,10 +24,11 @@ struct BarNameRowView: View {
     
     var body: some View {
         HStack {
-            Text("1")
+//            Text("1")
             TextField("name", text: $name[number])
                     .focused($fieldInFocus, equals: .name)
             Text("BAR")
+                .foregroundColor(Color.blue)
             TextField("entryPressure", text: $entryPressure[number])
                 .focused($fieldInFocus, equals: .entryPressure)
                 .numbersOnly($entryPressure[number])

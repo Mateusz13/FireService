@@ -16,6 +16,7 @@
 		E63B8641299AD42D000F6CCE /* BarNameRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8640299AD42D000F6CCE /* BarNameRowView.swift */; };
 		E63B8643299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */; };
 		E63B8647299D0D5A000F6CCE /* TimeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8646299D0D5A000F6CCE /* TimeRowView.swift */; };
+		E63B8649299E1C24000F6CCE /* RotaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8648299E1C23000F6CCE /* RotaView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		E63B8640299AD42D000F6CCE /* BarNameRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarNameRowView.swift; sourceTree = "<group>"; };
 		E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersOnlyViewModifier.swift; sourceTree = "<group>"; };
 		E63B8646299D0D5A000F6CCE /* TimeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRowView.swift; sourceTree = "<group>"; };
+		E63B8648299E1C23000F6CCE /* RotaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotaView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				E63B863A299ABAD3000F6CCE /* MainTableView.swift */,
+				E63B8648299E1C23000F6CCE /* RotaView.swift */,
 				E63B8640299AD42D000F6CCE /* BarNameRowView.swift */,
 				E63B8646299D0D5A000F6CCE /* TimeRowView.swift */,
 			);
@@ -234,6 +237,7 @@
 			files = (
 				E63B8647299D0D5A000F6CCE /* TimeRowView.swift in Sources */,
 				E63B863B299ABAD3000F6CCE /* MainTableView.swift in Sources */,
+				E63B8649299E1C24000F6CCE /* RotaView.swift in Sources */,
 				E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */,
 				E63B8643299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift in Sources */,
 				E63B863D299ABB5E000F6CCE /* MainTableModel.swift in Sources */,
