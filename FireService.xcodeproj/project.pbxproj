@@ -17,6 +17,7 @@
 		E63B8643299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */; };
 		E63B8647299D0D5A000F6CCE /* TimeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8646299D0D5A000F6CCE /* TimeRowView.swift */; };
 		E63B8649299E1C24000F6CCE /* RotaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8648299E1C23000F6CCE /* RotaView.swift */; };
+		E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B864A299E24FC000F6CCE /* HideKeyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersOnlyViewModifier.swift; sourceTree = "<group>"; };
 		E63B8646299D0D5A000F6CCE /* TimeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRowView.swift; sourceTree = "<group>"; };
 		E63B8648299E1C23000F6CCE /* RotaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotaView.swift; sourceTree = "<group>"; };
+		E63B864A299E24FC000F6CCE /* HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */,
+				E63B864A299E24FC000F6CCE /* HideKeyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				E63B8643299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift in Sources */,
 				E63B863D299ABB5E000F6CCE /* MainTableModel.swift in Sources */,
 				E63B863F299AC225000F6CCE /* CoreViewModel.swift in Sources */,
+				E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */,
 				E63B8641299AD42D000F6CCE /* BarNameRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

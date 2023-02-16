@@ -14,8 +14,22 @@ struct RotaView: View {
     var body: some View {
         VStack {
             TimeRowView(number: 0, entryTime: $vm.entryTime, firstCheckTime: $vm.firstCheckTime, secondCheckTime: $vm.secondCheckTime)
+                
             BarNameRowView(number: 0, name: $vm.name, entryPressure: $vm.entryPressure, firstCheckPressure: $vm.firstCheckPressure, secondCheckPressure: $vm.secondCheckPressure)
             BarNameRowView(number: 1, name: $vm.name, entryPressure: $vm.entryPressure, firstCheckPressure: $vm.firstCheckPressure, secondCheckPressure: $vm.secondCheckPressure)
+        }
+        .toolbar {
+            ToolbarItem(placement: .keyboard) {
+                Spacer()
+            }
+            ToolbarItem(placement: .keyboard) {
+                Button {
+                   hideKeyboard()
+                } label: {
+                    Image(systemName: "keyboard.chevron.compact.down")
+                }
+
+            }
         }
     }
 }

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct TimeRowView: View {
     
-    enum FocusField {
-        case entryTime, firstCheckTime, secondCheckTime
-    }
+//    enum FocusField {
+//        case entryTime, firstCheckTime, secondCheckTime
+//    }
     
     let number: Int
     
@@ -19,7 +19,7 @@ struct TimeRowView: View {
     @Binding var firstCheckTime: [String]
     @Binding var secondCheckTime: [String]
     
-    @FocusState var fieldInFocus: FocusField?
+//    @FocusState var fieldInFocus: FocusField?
     
     var body: some View {
         
@@ -30,13 +30,13 @@ struct TimeRowView: View {
             Text("GG:MM")
                 .foregroundColor(Color.blue)
             TextField("entryTime", text: $entryTime[number])
-                .focused($fieldInFocus, equals: .entryTime)
+//                .focused($fieldInFocus, equals: .entryTime)
                 .numbersOnly($entryTime[number], includeDecimal: true)
             TextField("firstCheckTime", text: $firstCheckTime[number])
-                .focused($fieldInFocus, equals: .firstCheckTime)
+//                .focused($fieldInFocus, equals: .firstCheckTime)
                 .numbersOnly($firstCheckTime[number], includeDecimal: true)
             TextField("secondCheckTime", text: $secondCheckTime[number])
-                .focused($fieldInFocus, equals: .secondCheckTime)
+//                .focused($fieldInFocus, equals: .secondCheckTime)
                 .numbersOnly($secondCheckTime[number], includeDecimal: true)
         }
         .textFieldStyle(.roundedBorder)
@@ -44,19 +44,6 @@ struct TimeRowView: View {
         .frame(maxWidth: 500)
         .background(Color.gray.brightness(0.4))
         .cornerRadius(10)
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                Spacer()
-            }
-            ToolbarItem(placement: .keyboard) {
-                Button {
-                    fieldInFocus = nil
-                } label: {
-                    Image(systemName: "keyboard.chevron.compact.down")
-                }
-
-            }
-        }
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
         }

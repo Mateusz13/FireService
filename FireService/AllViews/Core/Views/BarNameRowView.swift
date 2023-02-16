@@ -11,32 +11,32 @@ struct BarNameRowView: View {
     
     let number: Int
     
-    enum FocusField {
-        case name, entryPressure, firstCheckPressure, secondCheckPressure
-    }
+//    enum FocusField {
+//        case name, entryPressure, firstCheckPressure, secondCheckPressure
+//    }
     
     @Binding var name: [String]
     @Binding var entryPressure: [String]
     @Binding var firstCheckPressure: [String]
     @Binding var secondCheckPressure: [String]
     
-    @FocusState private var fieldInFocus: FocusField?
+//    @FocusState var fieldInFocus: FocusField?
     
     var body: some View {
         HStack {
 //            Text("1")
             TextField("name", text: $name[number])
-                    .focused($fieldInFocus, equals: .name)
+//                    .focused($fieldInFocus, equals: .name)
             Text("BAR")
                 .foregroundColor(Color.blue)
             TextField("entryPressure", text: $entryPressure[number])
-                .focused($fieldInFocus, equals: .entryPressure)
+//                .focused($fieldInFocus, equals: .entryPressure)
                 .numbersOnly($entryPressure[number])
             TextField("firstCheckPressure", text: $firstCheckPressure[number])
-                .focused($fieldInFocus, equals: .firstCheckPressure)
+//                .focused($fieldInFocus, equals: .firstCheckPressure)
                 .numbersOnly($firstCheckPressure[number])
             TextField("secondCheckPressure", text: $secondCheckPressure[number])
-                .focused($fieldInFocus, equals: .secondCheckPressure)
+//                .focused($fieldInFocus, equals: .secondCheckPressure)
                 .numbersOnly($secondCheckPressure[number])
             
         }
@@ -46,19 +46,6 @@ struct BarNameRowView: View {
         .background(Color.gray.brightness(0.4))
         .cornerRadius(10)
 //        .padding()
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                Spacer()
-            }
-            ToolbarItem(placement: .keyboard) {
-                Button {
-                    fieldInFocus = nil
-                } label: {
-                    Image(systemName: "keyboard.chevron.compact.down")
-                }
-
-            }
-        }
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
         }
