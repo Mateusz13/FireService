@@ -11,7 +11,8 @@ import Combine
 
 class CoreViewModel: ObservableObject {
     
-    @Published var allRotas: [MainTableModel] = []
+    
+    @Published var allRotas: [Fireman] = []
     
     @Published var name: [String] = ["", "", ""]
     @Published var pressure0: [String] = ["", "", ""]
@@ -21,6 +22,8 @@ class CoreViewModel: ObservableObject {
     @Published var time0: [String] = ["", "", ""]
     @Published var time1: [String] = ["", "", ""]
     @Published var time2: [String] = ["", "", ""]
+    
+    
     
 }
 
