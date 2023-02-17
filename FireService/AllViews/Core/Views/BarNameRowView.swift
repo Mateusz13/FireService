@@ -12,13 +12,13 @@ struct BarNameRowView: View {
     let number: Int
     
 //    enum FocusField {
-//        case name, entryPressure, firstCheckPressure, secondCheckPressure
+//        case name, pressure0, pressure1, pressure2
 //    }
     
     @Binding var name: [String]
-    @Binding var entryPressure: [String]
-    @Binding var firstCheckPressure: [String]
-    @Binding var secondCheckPressure: [String]
+    @Binding var pressure0: [String]
+    @Binding var pressure1: [String]
+    @Binding var pressure2: [String]
     
 //    @FocusState var fieldInFocus: FocusField?
     
@@ -29,15 +29,15 @@ struct BarNameRowView: View {
 //                    .focused($fieldInFocus, equals: .name)
             Text("BAR")
                 .foregroundColor(Color.blue)
-            TextField("entryPressure", text: $entryPressure[number])
-//                .focused($fieldInFocus, equals: .entryPressure)
-                .numbersOnly($entryPressure[number])
-            TextField("firstCheckPressure", text: $firstCheckPressure[number])
-//                .focused($fieldInFocus, equals: .firstCheckPressure)
-                .numbersOnly($firstCheckPressure[number])
-            TextField("secondCheckPressure", text: $secondCheckPressure[number])
-//                .focused($fieldInFocus, equals: .secondCheckPressure)
-                .numbersOnly($secondCheckPressure[number])
+            TextField("pressure0", text: $pressure0[number])
+//                .focused($fieldInFocus, equals: .pressure0)
+                .numbersOnly($pressure0[number])
+            TextField("pressure1", text: $pressure1[number])
+//                .focused($fieldInFocus, equals: .pressure1)
+                .numbersOnly($pressure1[number])
+            TextField("pressure2", text: $pressure2[number])
+//                .focused($fieldInFocus, equals: .pressure2)
+                .numbersOnly($pressure2[number])
             
         }
         .textFieldStyle(.roundedBorder)
@@ -54,7 +54,7 @@ struct BarNameRowView: View {
 
 struct BarNameRowView_Previews: PreviewProvider {
     static var previews: some View {
-        BarNameRowView(number: 0, name: .constant(["mati"]), entryPressure: .constant(["100"]), firstCheckPressure: .constant(["90"]), secondCheckPressure: .constant(["80"]))
+        BarNameRowView(number: 0, name: .constant(["mati"]), pressure0: .constant(["100"]), pressure1: .constant(["90"]), pressure2: .constant(["80"]))
     }
 }
 

@@ -14,13 +14,13 @@ class CoreViewModel: ObservableObject {
     @Published var allRotas: [MainTableModel] = []
     
     @Published var name: [String] = ["", "", ""]
-    @Published var entryPressure: [String] = ["", "", ""]
-    @Published var firstCheckPressure: [String] = ["", "", ""]
-    @Published var secondCheckPressure: [String] = ["", "", ""]
+    @Published var pressure0: [String] = ["", "", ""]
+    @Published var pressure1: [String] = ["", "", ""]
+    @Published var pressure2: [String] = ["", "", ""]
     
-    @Published var entryTime: [String] = ["", "", ""]
-    @Published var firstCheckTime: [String] = ["", "", ""]
-    @Published var secondCheckTime: [String] = ["", "", ""]
+    @Published var time0: [String] = ["", "", ""]
+    @Published var time1: [String] = ["", "", ""]
+    @Published var time2: [String] = ["", "", ""]
     
 }
 
