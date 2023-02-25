@@ -16,7 +16,7 @@ struct RotaView: View {
             TimeRowView(number: vm.rota1, time0: $vm.time0, time1: $vm.time1, time2: $vm.time2)
                 
             BarNameRowView(number: vm.fireman1, name: $vm.name, pressure0: $vm.pressure0, pressure1: $vm.pressure1, pressure2: $vm.pressure2)
-            BarNameRowView(number: vm.firemna2, name: $vm.name, pressure0: $vm.pressure0, pressure1: $vm.pressure1, pressure2: $vm.pressure2)
+            BarNameRowView(number: vm.fireman2, name: $vm.name, pressure0: $vm.pressure0, pressure1: $vm.pressure1, pressure2: $vm.pressure2)
         }
         .toolbar {
             ToolbarItem(placement: .keyboard) {

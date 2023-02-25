@@ -21,7 +21,7 @@ struct MainTableView: View {
             } label: {
                 Text("calculate")
             }
-            Text("exit in: \(vm.exitTime1 ?? 0.00)")
+            Text("exit in: \(vm.exitTime1 ?? 0.00) min")
             Spacer()
         }
     }
