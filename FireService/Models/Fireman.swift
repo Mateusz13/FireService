@@ -49,8 +49,5 @@ struct Fireman {
     let time0: String
     let time1: String?
     let time2: String?
-    
-    
-    
-    
+
 }
