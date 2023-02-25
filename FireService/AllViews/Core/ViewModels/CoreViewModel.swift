@@ -40,81 +40,30 @@ class CoreViewModel: ObservableObject {
     let rota1: Int = 0
     let rota2: Int = 1
     
-    //conversion
-    
-    
-    var dTime0: [Double] = []
-    var dTime1: [Double] = []
-    var dTime2: [Double] = []
-    
-    var iPressure0: [Double] = []
-    var iPressure1: [Double] = []
-    var iPressure2: [Double] = []
-    
-    
-    func conversion() {
-        
-//        let doubleTime0: [Double] = time0.map { Double($0) ?? 0 }
-        
-        //        time0.map {
-        //            dTime0.append(Double($0) ?? 0)
-        //        }
-        for time in time0 {
-            let doubleTime = Double(time) ?? 0
-            dTime0.append(doubleTime)
-        }
-        for time in time1 {
-            let doubleTime = Double(time) ?? 0
-            dTime1.append(doubleTime)
-        }
-        for time in time2 {
-            let doubleTime = Double(time) ?? 0
-            dTime2.append(doubleTime)
-        }
-        for pressure in pressure0 {
-            let intPressure = Double(pressure) ?? 0
-            iPressure0.append(intPressure)
-        }
-        for pressure in pressure1 {
-            let intPressure = Double(pressure) ?? 0
-            iPressure1.append(intPressure)
-        }
-        for pressure in pressure2 {
-            let intPressure = Double(pressure) ?? 0
-            iPressure2.append(intPressure)
-        }
-    }
-    
-    
-    
-    //    init() {
-    //        conversion()
-    //
-    //    }
-    
     
     func calculateExitTime() {
-                
-        conversion()
         
-        print(time0)
-        print(dTime0)
+        // convertion:
+        let doubleTime0: [Double] = time0.map { Double($0) ?? 0 }
+        let doubleTime1: [Double] = time1.map { Double($0) ?? 0 }
+        let doubleTime2: [Double] = time2.map { Double($0) ?? 0 }
         
-        //        let timeInterval1 = ((Double(time1[0]) ?? 0) - (Double(time0[0]) ?? 0)) * 100
-        //        let timeInterval2 = (time2[0] - time1[0]) * 100
+        let doublePressure0: [Double] = pressure0.map { Double($0) ?? 0 }
+        let doublePressure1: [Double] = pressure1.map { Double($0) ?? 0 }
+        let doublePressure2: [Double] = pressure2.map { Double($0) ?? 0 }
         
-        let timeInterval1 = (dTime1[rota1] - dTime0[rota1]) * 100
-        let timeInterval2 = (dTime2[rota1] - dTime1[rota1]) * 100
-        print(timeInterval2)
+        // calculation:
+        let timeInterval1 = (doubleTime1[rota1] - doubleTime0[rota1]) * 100
+        let timeInterval2 = (doubleTime2[rota1] - doubleTime1[rota1]) * 100
         //        let timeInterval20 = dTime2[rota1] - dTime0[rota1]
         
-        let pressureLeft0 = iPressure0[fireman1] - 70
-        let pressureLeft1 = iPressure1[fireman1] - 70
+        let pressureLeft0 = doublePressure0[fireman1] - 70
+        let pressureLeft1 = doublePressure1[fireman1] - 70
         //        let pressureLeft2 = iPressure2[fireman1] - 70
         
-        let pressureUsed1 = iPressure0[fireman1] - iPressure1[fireman1]
-        let pressureUsed2 = iPressure1[fireman1] - iPressure2[fireman1]
-        print(pressureUsed2)
+        let pressureUsed1 = doublePressure0[fireman1] - doublePressure1[fireman1]
+        let pressureUsed2 = doublePressure1[fireman1] - doublePressure2[fireman1]
+        
         
         let entireTime1 = pressureLeft0 / pressureUsed1 * timeInterval1
         let entireTime2 = pressureLeft1 / pressureUsed2 * timeInterval2
