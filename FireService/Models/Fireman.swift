@@ -8,7 +8,8 @@
 import Foundation
 
 
-struct Fireman {
+struct Rota {
+    
     
 //    let id = UUID().uuidString
     
@@ -40,14 +41,18 @@ struct Fireman {
 //        self.secondCheckPressure2 = secondCheckPressure2
 //    }
     
-    let name: String
+    var f1Name: String
+    var f2Name: String
     
-    let pressure0: String
-    let pressure1: String?
-    let pressure2: String?
+    var time0: String
+    var time1: String
+    var time2: String
     
-    let time0: String
-    let time1: String?
-    let time2: String?
-
+    var f1Pressure0: String
+    var f1Pressure1: String
+    var f1Pressure2: String
+    
+    var f2Pressure0: String
+    var f2Pressure1: String
+    var f2Pressure2: String
 }

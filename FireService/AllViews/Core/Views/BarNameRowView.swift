@@ -10,35 +10,48 @@ import SwiftUI
 struct BarNameRowView: View {
     
     let number: Int
+    @EnvironmentObject private var vm: CoreViewModel
     
 //    enum FocusField {
 //        case name, pressure0, pressure1, pressure2
 //    }
     
-    @Binding var name: [String]
-    @Binding var pressure0: [String]
-    @Binding var pressure1: [String]
-    @Binding var pressure2: [String]
-    
 //    @FocusState var fieldInFocus: FocusField?
     
     var body: some View {
-        HStack {
-//            Text("1")
-            TextField("name", text: $name[number])
-//                    .focused($fieldInFocus, equals: .name)
-            Text("BAR")
-                .foregroundColor(Color.blue)
-            TextField("p0", text: $pressure0[number])
-//                .focused($fieldInFocus, equals: .pressure0)
-                .numbersOnly($pressure0[number])
-            TextField("p1", text: $pressure1[number])
-//                .focused($fieldInFocus, equals: .pressure1)
-                .numbersOnly($pressure1[number])
-            TextField("p2", text: $pressure2[number])
-//                .focused($fieldInFocus, equals: .pressure2)
-                .numbersOnly($pressure2[number])
-            
+        VStack {
+            HStack {
+    //            Text("1")
+                TextField("name", text: $vm.rotas[number].f1Name)
+    //                    .focused($fieldInFocus, equals: .name)
+                Text("BAR")
+                    .foregroundColor(Color.blue)
+                TextField("p0", text: $vm.rotas[number].f1Pressure0)
+    //                .focused($fieldInFocus, equals: .pressure0)
+                    .numbersOnly($vm.rotas[number].f1Pressure0)
+                TextField("p1", text: $vm.rotas[number].f1Pressure1)
+    //                .focused($fieldInFocus, equals: .pressure1)
+                    .numbersOnly($vm.rotas[number].f1Pressure1)
+                TextField("p2", text: $vm.rotas[number].f1Pressure2)
+    //                .focused($fieldInFocus, equals: .pressure2)
+                    .numbersOnly($vm.rotas[number].f1Pressure2)
+            }
+            HStack {
+    //            Text("1")
+                TextField("name", text: $vm.rotas[number].f2Name)
+    //                    .focused($fieldInFocus, equals: .name)
+                Text("BAR")
+                    .foregroundColor(Color.blue)
+                TextField("p0", text: $vm.rotas[number].f2Pressure0)
+    //                .focused($fieldInFocus, equals: .pressure0)
+                    .numbersOnly($vm.rotas[number].f2Pressure0)
+                TextField("p1", text: $vm.rotas[number].f2Pressure1)
+    //                .focused($fieldInFocus, equals: .pressure1)
+                    .numbersOnly($vm.rotas[number].f2Pressure1)
+                TextField("p2", text: $vm.rotas[number].f2Pressure2)
+    //                .focused($fieldInFocus, equals: .pressure2)
+                    .numbersOnly($vm.rotas[number].f2Pressure2)
+            }
         }
         .textFieldStyle(.roundedBorder)
         .frame(height: 70)
@@ -54,7 +67,8 @@ struct BarNameRowView: View {
 
 struct BarNameRowView_Previews: PreviewProvider {
     static var previews: some View {
-        BarNameRowView(number: 0, name: .constant(["mati"]), pressure0: .constant(["100"]), pressure1: .constant(["90"]), pressure2: .constant(["80"]))
+        BarNameRowView(number: 0)
+            .environmentObject(CoreViewModel())
     }
 }
 

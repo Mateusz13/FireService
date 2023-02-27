@@ -12,17 +12,8 @@ import Combine
 class CoreViewModel: ObservableObject {
     
     
-    @Published var allRotas: [Fireman] = []
+    @Published var rotas: [Rota] = [Rota(f1Name: "", f2Name: "", time0: "", time1: "", time2: "", f1Pressure0: "", f1Pressure1: "", f1Pressure2: "", f2Pressure0: "", f2Pressure1: "", f2Pressure2: ""), Rota(f1Name: "", f2Name: "", time0: "", time1: "", time2: "", f1Pressure0: "", f1Pressure1: "", f1Pressure2: "", f2Pressure0: "", f2Pressure1: "", f2Pressure2: ""), Rota(f1Name: "", f2Name: "", time0: "", time1: "", time2: "", f1Pressure0: "", f1Pressure1: "", f1Pressure2: "", f2Pressure0: "", f2Pressure1: "", f2Pressure2: "")]
     
-    @Published var name: [String] = ["", "", ""]
-    
-    @Published var pressure0: [String] = ["", "", ""]
-    @Published var pressure1: [String] = ["", "", ""]
-    @Published var pressure2: [String] = ["", "", ""]
-    
-    @Published var time0: [String] = ["", "", ""]
-    @Published var time1: [String] = ["", "", ""]
-    @Published var time2: [String] = ["", "", ""]
     
     //    @Published var exitTime: [Double?] = []
     //    @Published var exitTime: [Double?] = [nil]
@@ -32,11 +23,6 @@ class CoreViewModel: ObservableObject {
     
     let minimalPressure: Int = 70
     
-    let fireman1: Int = 0
-    let fireman2: Int = 1
-    let fireman3: Int = 2
-    let fireman4: Int = 3
-    
     let rota1: Int = 0
     let rota2: Int = 1
     
@@ -44,69 +30,80 @@ class CoreViewModel: ObservableObject {
     func calculateExitTime() {
         
         // convertion:
-        let doubleTime0: [Double] = time0.map { Double($0) ?? 0 }
-        let doubleTime1: [Double] = time1.map { Double($0) ?? 0 }
-        let doubleTime2: [Double] = time2.map { Double($0) ?? 0 }
         
-        let doublePressure0: [Double] = pressure0.map { Double($0) ?? 0 }
-        let doublePressure1: [Double] = pressure1.map { Double($0) ?? 0 }
-        let doublePressure2: [Double] = pressure2.map { Double($0) ?? 0 }
+//        let doubleRotas = rotas.map { Double($0) ?? 0}
+        
+        let rota1 = rotas[0]
+        let time0R1 = Double(rota1.time0) ?? 0
+        let time1R1 = Double(rota1.time1) ?? 0
+        let time2R1 = Double(rota1.time2) ?? 0
+        
+        let pressure0F1 = Double(rota1.f1Pressure0) ?? 0
+        let pressure1F1 = Double(rota1.f1Pressure1) ?? 0
+        let pressure2F1 = Double(rota1.f1Pressure2) ?? 0
+        
+        let pressure0F2 = Double(rota1.f2Pressure0) ?? 0
+        let pressure1F2 = Double(rota1.f2Pressure1) ?? 0
+        let pressure2F2 = Double(rota1.f2Pressure2) ?? 0
+    
         
         // calculation:
-        let timeInterval1 = (doubleTime1[rota1] - doubleTime0[rota1]) * 100
-        let timeInterval2 = (doubleTime2[rota1] - doubleTime1[rota1]) * 100
-        //        let timeInterval20 = dTime2[rota1] - dTime0[rota1]
+        
+        let timeInterval1 = (time1R1 - time0R1) * 100
+        let timeInterval2 = (time2R1 - time1R1) * 100
+        //let timeInterval20 = dTime2[rota1] - dTime0[rota1]
         
         //fireman1
-        let pressureLeft01 = doublePressure0[fireman1] - 70
-        let pressureLeft11 = doublePressure1[fireman1] - 70
-        //        let pressureLeft2 = iPressure2[fireman1] - 70
         
-        let pressureUsed11 = doublePressure0[fireman1] - doublePressure1[fireman1]
-        let pressureUsed21 = doublePressure1[fireman1] - doublePressure2[fireman1]
         
-        let entireTime11 = pressureLeft01 / pressureUsed11 * timeInterval1
-        let entireTime21 = pressureLeft11 / pressureUsed21 * timeInterval2
+        let pressureLeft0F1 = pressure0F1 - 70
+        let pressureLeft1F1 = pressure1F1 - 70
+        //let pressureLeft2 = iPressure2[fireman1] - 70
         
-        let leftTime11 = entireTime11 - timeInterval1
-        let leftTime21 = entireTime21 - timeInterval2
+        let pressureUsed1F1 = pressure0F1 - pressure1F1
+        let pressureUsed2F1 = pressure1F1 - pressure2F1
         
-        print(leftTime11)
-        print(leftTime21)
+        let entireTime1F1 = pressureLeft0F1 / pressureUsed1F1 * timeInterval1
+        let entireTime2F1 = pressureLeft1F1 / pressureUsed2F1 * timeInterval2
+        
+        let leftTime1F1 = entireTime1F1 - timeInterval1
+        let leftTime2F1 = entireTime2F1 - timeInterval2
+        
+        print(leftTime1F1)
+        print(leftTime2F1)
         
         //fireman2
-        let pressureLeft02 = doublePressure0[fireman2] - 70
-        let pressureLeft12 = doublePressure1[fireman2] - 70
+        let pressureLeft0F2 = pressure0F2 - 70
+        let pressureLeft1F2 = pressure1F2 - 70
+        //let pressureLeft2 = iPressure2[fireman1] - 70
         
-        let pressureUsed12 = doublePressure0[fireman2] - doublePressure1[fireman2]
-        let pressureUsed22 = doublePressure1[fireman2] - doublePressure2[fireman2]
+        let pressureUsed1F2 = pressure0F2 - pressure1F2
+        let pressureUsed2F2 = pressure1F2 - pressure2F2
         
-        let entireTime12 = pressureLeft02 / pressureUsed12 * timeInterval1
-        let entireTime22 = pressureLeft12 / pressureUsed22 * timeInterval2
+        let entireTime1F2 = pressureLeft0F2 / pressureUsed1F2 * timeInterval1
+        let entireTime2F2 = pressureLeft1F2 / pressureUsed2F2 * timeInterval2
         
-        let leftTime12 = entireTime12 - timeInterval1
-        let leftTime22 = entireTime22 - timeInterval2
+        let leftTime1F2 = entireTime1F2 - timeInterval1
+        let leftTime2F2 = entireTime2F2 - timeInterval2
+        
+        print(leftTime1F2)
+        print(leftTime2F2)
         
         
-        print(leftTime12)
-        print(leftTime22)
-        
-        
-        guard doubleTime2[rota1] == 0 else {
-            if leftTime21 > leftTime22 {
-                exitTime1 = leftTime22
+        guard time2R1 == 0 else {
+            if leftTime2F1 > leftTime2F2 {
+                exitTime1 = leftTime2F2
             } else {
-                exitTime1 = leftTime21
+                exitTime1 = leftTime2F1
             }
-            
             return
         }
         
         
-        if leftTime11 > leftTime12 {
-            exitTime1 = leftTime12
+        if leftTime1F1 > leftTime1F2 {
+            exitTime1 = leftTime1F2
         } else {
-            exitTime1 = leftTime11
+            exitTime1 = leftTime1F1
         }
     }
 }
