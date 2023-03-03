@@ -19,8 +19,6 @@ struct RotaView: View {
                 BarNameRowView(number: rota.number)
                 Button {
                     vm.calculateExitTime(forRota: rota.number)
-                    print(rota.exitTime ?? 0)
-                    print(rota.time1)
                 } label: {
                     Text("calculate")
                 }
@@ -31,14 +29,6 @@ struct RotaView: View {
                 Text("exit in: \(rota.exitTime ?? 0) min")
             }
         }
-//        VStack {
-//
-//
-//            TimeRowView(number: vm.rota1)
-//
-//            BarNameRowView(number: vm.rota1)
-//
-//        }
         .toolbar {
             ToolbarItem(placement: .keyboard) {
                 Spacer()
