@@ -12,12 +12,33 @@ struct RotaView: View {
     @EnvironmentObject private var vm: CoreViewModel
     
     var body: some View {
-        VStack {
-            TimeRowView(number: vm.rota1)
+        
+        ForEach(vm.rotas) { rota in
+            VStack {
+                TimeRowView(number: rota.number)
+                BarNameRowView(number: rota.number)
+                Button {
+                    vm.calculateExitTime(forRota: rota.number)
+                    print(rota.exitTime ?? 0)
+                    print(rota.time1)
+                } label: {
+                    Text("calculate")
+                }
                 
-            BarNameRowView(number: vm.rota1)
-
+//                if let exitTime = rota.exitTime {
+//                    Text("exit in: \(exitTime) min")
+//                }
+                Text("exit in: \(rota.exitTime ?? 0) min")
+            }
         }
+//        VStack {
+//
+//
+//            TimeRowView(number: vm.rota1)
+//
+//            BarNameRowView(number: vm.rota1)
+//
+//        }
         .toolbar {
             ToolbarItem(placement: .keyboard) {
                 Spacer()
@@ -28,7 +49,6 @@ struct RotaView: View {
                 } label: {
                     Image(systemName: "keyboard.chevron.compact.down")
                 }
-
             }
         }
     }

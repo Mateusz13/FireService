@@ -12,6 +12,9 @@ struct TimeRowView: View {
 //    enum FocusField {
 //        case time0, time1, time2
 //    }
+    
+//    let rota: Rota
+    
     @EnvironmentObject private var vm: CoreViewModel
     let number: Int
     

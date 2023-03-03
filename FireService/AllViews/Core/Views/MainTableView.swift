@@ -16,12 +16,7 @@ struct MainTableView: View {
         VStack {
             tableHeader
             RotaView()
-            Button {
-                vm.calculateExitTime()
-            } label: {
-                Text("calculate")
-            }
-            Text("exit in: \(vm.exitTime1 ?? 0.00) min")
+            
             Spacer()
         }
     }

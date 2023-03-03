@@ -9,6 +9,8 @@ import SwiftUI
 
 struct BarNameRowView: View {
     
+    
+    
     let number: Int
     @EnvironmentObject private var vm: CoreViewModel
     
