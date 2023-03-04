@@ -19,6 +19,18 @@ struct MainTableView: View {
             
             Spacer()
         }
+        .toolbar {
+            ToolbarItem(placement: .keyboard) {
+                Spacer()
+            }
+            ToolbarItem(placement: .keyboard) {
+                Button {
+                   hideKeyboard()
+                } label: {
+                    Image(systemName: "keyboard.chevron.compact.down")
+                }
+            }
+        }
     }
 }
 

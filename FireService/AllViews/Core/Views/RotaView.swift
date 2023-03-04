@@ -22,23 +22,10 @@ struct RotaView: View {
                 } label: {
                     Text("calculate")
                 }
-                
 //                if let exitTime = rota.exitTime {
 //                    Text("exit in: \(exitTime) min")
 //                }
                 Text("exit in: \(rota.exitTime ?? 0) min")
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                Spacer()
-            }
-            ToolbarItem(placement: .keyboard) {
-                Button {
-                   hideKeyboard()
-                } label: {
-                    Image(systemName: "keyboard.chevron.compact.down")
-                }
             }
         }
     }
