@@ -17,9 +17,9 @@ struct Rota: Identifiable {
     var f1Name: String
     var f2Name: String
     
-    var time0: String
-    var time1: String
-    var time2: String
+    var time0: Date
+    var time1: Date
+    var time2: Date
     
     var f1Pressure0: String
     var f1Pressure1: String
@@ -31,17 +31,31 @@ struct Rota: Identifiable {
     
     var exitTime: Double?
     
-    var doubleTime0: Double {
-        return Double(time0) ?? 0
+//    let formatter = DateFormatter()
+
+//    var doubleTime0: Double {
+//        formatter.dateFormat = "HH.mm"
+//        return Double(formatter.string(from: time0)) ?? 0
+//    }
+//
+//    var doubleTime1: Double {
+//        formatter.dateFormat = "HH.mm"
+//        return Double(formatter.string(from: time1)) ?? 0
+//    }
+//
+//    var doubleTime2: Double {
+//        formatter.dateFormat = "HH.mm"
+//        return Double(formatter.string(from: time2)) ?? 0
+//    }
+    
+    var timeInterval1: TimeInterval {
+        return time1.timeIntervalSince(time0)/60
     }
     
-    var doubleTime1: Double {
-        return Double(time1) ?? 0
+    var timeInterval2: TimeInterval {
+        return time2.timeIntervalSince(time1)/60
     }
     
-    var doubleTime2: Double {
-        return Double(time2) ?? 0
-    }
     
     var doubleF1Pressure0: Double {
         return Double(f1Pressure0) ?? 0
@@ -68,7 +82,7 @@ struct Rota: Identifiable {
     }
     
     
-    init(number: Int, f1Name: String = "", f2Name: String = "", time0: String = "", time1: String = "", time2: String = "", f1Pressure0: String = "", f1Pressure1: String = "", f1Pressure2: String = "", f2Pressure0: String = "", f2Pressure1: String = "", f2Pressure2: String = "") {
+    init(number: Int, f1Name: String = "", f2Name: String = "", time0: Date = Date.now, time1: Date = Date.now, time2: Date = Date.now, f1Pressure0: String = "", f1Pressure1: String = "", f1Pressure2: String = "", f2Pressure0: String = "", f2Pressure1: String = "", f2Pressure2: String = "") {
         self.number = number
         self.f1Name = f1Name
         self.f2Name = f2Name
