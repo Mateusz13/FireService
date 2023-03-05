@@ -31,23 +31,6 @@ struct Rota: Identifiable {
     
     var exitTime: Double?
     
-//    let formatter = DateFormatter()
-
-//    var doubleTime0: Double {
-//        formatter.dateFormat = "HH.mm"
-//        return Double(formatter.string(from: time0)) ?? 0
-//    }
-//
-//    var doubleTime1: Double {
-//        formatter.dateFormat = "HH.mm"
-//        return Double(formatter.string(from: time1)) ?? 0
-//    }
-//
-//    var doubleTime2: Double {
-//        formatter.dateFormat = "HH.mm"
-//        return Double(formatter.string(from: time2)) ?? 0
-//    }
-    
     var timeInterval1: TimeInterval {
         return time1.timeIntervalSince(time0)/60
     }

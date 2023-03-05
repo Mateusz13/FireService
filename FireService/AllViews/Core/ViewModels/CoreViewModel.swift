@@ -27,11 +27,7 @@ class CoreViewModel: ObservableObject {
         
         
         // calculation:
-//        let timeInterval1 = (rota.doubleTime1 - rota.doubleTime0) * 100
-//        let timeInterval2 = (rota.doubleTime2 - rota.doubleTime1) * 100
-        //let timeInterval20 = dTime2[rota1] - dTime0[rota1]
-        
-        
+
         //fireman1
         let pressureLeft0F1 = rota.doubleF1Pressure0 - 70
         let pressureLeft1F1 = rota.doubleF1Pressure1 - 70

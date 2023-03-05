@@ -23,7 +23,6 @@ struct TimeRowView: View {
     var body: some View {
         
         HStack {
-//            Text("1")
             Text("ROTA\(number+1)")
                 .foregroundColor(Color.red)
 //            Text("GG:MM")
