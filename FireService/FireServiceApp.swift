@@ -15,7 +15,7 @@ struct FireServiceApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                MainTableView()
+                MainView()
                     .environmentObject(vm)
             }
         }

@@ -10,13 +10,11 @@
 		E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B861B2996E188000F6CCE /* FireServiceApp.swift */; };
 		E63B86202996E189000F6CCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E63B861F2996E189000F6CCE /* Assets.xcassets */; };
 		E63B86232996E189000F6CCE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E63B86222996E189000F6CCE /* Preview Assets.xcassets */; };
-		E63B863B299ABAD3000F6CCE /* MainTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B863A299ABAD3000F6CCE /* MainTableView.swift */; };
 		E63B863D299ABB5E000F6CCE /* Fireman.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B863C299ABB5E000F6CCE /* Fireman.swift */; };
 		E63B863F299AC225000F6CCE /* CoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B863E299AC225000F6CCE /* CoreViewModel.swift */; };
-		E63B8641299AD42D000F6CCE /* BarNameRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8640299AD42D000F6CCE /* BarNameRowView.swift */; };
+		E63B8641299AD42D000F6CCE /* RotaTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8640299AD42D000F6CCE /* RotaTableView.swift */; };
 		E63B8643299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */; };
-		E63B8647299D0D5A000F6CCE /* TimeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8646299D0D5A000F6CCE /* TimeRowView.swift */; };
-		E63B8649299E1C24000F6CCE /* RotaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8648299E1C23000F6CCE /* RotaView.swift */; };
+		E63B8649299E1C24000F6CCE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8648299E1C23000F6CCE /* MainView.swift */; };
 		E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B864A299E24FC000F6CCE /* HideKeyboard.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,13 +23,11 @@
 		E63B861B2996E188000F6CCE /* FireServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireServiceApp.swift; sourceTree = "<group>"; };
 		E63B861F2996E189000F6CCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E63B86222996E189000F6CCE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E63B863A299ABAD3000F6CCE /* MainTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableView.swift; sourceTree = "<group>"; };
 		E63B863C299ABB5E000F6CCE /* Fireman.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fireman.swift; sourceTree = "<group>"; };
 		E63B863E299AC225000F6CCE /* CoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreViewModel.swift; sourceTree = "<group>"; };
-		E63B8640299AD42D000F6CCE /* BarNameRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarNameRowView.swift; sourceTree = "<group>"; };
+		E63B8640299AD42D000F6CCE /* RotaTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotaTableView.swift; sourceTree = "<group>"; };
 		E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersOnlyViewModifier.swift; sourceTree = "<group>"; };
-		E63B8646299D0D5A000F6CCE /* TimeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRowView.swift; sourceTree = "<group>"; };
-		E63B8648299E1C23000F6CCE /* RotaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotaView.swift; sourceTree = "<group>"; };
+		E63B8648299E1C23000F6CCE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E63B864A299E24FC000F6CCE /* HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,10 +92,8 @@
 		E63B862E299AB804000F6CCE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E63B863A299ABAD3000F6CCE /* MainTableView.swift */,
-				E63B8648299E1C23000F6CCE /* RotaView.swift */,
-				E63B8640299AD42D000F6CCE /* BarNameRowView.swift */,
-				E63B8646299D0D5A000F6CCE /* TimeRowView.swift */,
+				E63B8648299E1C23000F6CCE /* MainView.swift */,
+				E63B8640299AD42D000F6CCE /* RotaTableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -238,15 +232,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E63B8647299D0D5A000F6CCE /* TimeRowView.swift in Sources */,
-				E63B863B299ABAD3000F6CCE /* MainTableView.swift in Sources */,
-				E63B8649299E1C24000F6CCE /* RotaView.swift in Sources */,
+				E63B8649299E1C24000F6CCE /* MainView.swift in Sources */,
 				E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */,
 				E63B8643299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift in Sources */,
 				E63B863D299ABB5E000F6CCE /* Fireman.swift in Sources */,
 				E63B863F299AC225000F6CCE /* CoreViewModel.swift in Sources */,
 				E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */,
-				E63B8641299AD42D000F6CCE /* BarNameRowView.swift in Sources */,
+				E63B8641299AD42D000F6CCE /* RotaTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

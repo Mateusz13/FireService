@@ -14,7 +14,7 @@ class CoreViewModel: ObservableObject {
     
     @Published var rotas: [Rota] = [Rota(number: 0), Rota(number: 1)]
     
-    let minimalPressure: Int = 70
+    let minimalPressure: Double = 50
     
     //    init() {
     //       rotas = [Rota()]
@@ -29,8 +29,8 @@ class CoreViewModel: ObservableObject {
         // calculation:
 
         //fireman1
-        let pressureLeft0F1 = rota.doubleF1Pressure0 - 70
-        let pressureLeft1F1 = rota.doubleF1Pressure1 - 70
+        let pressureLeft0F1 = rota.doubleF1Pressure0 - minimalPressure
+        let pressureLeft1F1 = rota.doubleF1Pressure1 - minimalPressure
         //let pressureLeft2 = iPressure2[fireman1] - 70
         
         let pressureUsed1F1 = rota.doubleF1Pressure0 - rota.doubleF1Pressure1
@@ -45,8 +45,8 @@ class CoreViewModel: ObservableObject {
         
         
         //fireman2
-        let pressureLeft0F2 = rota.doubleF2Pressure0 - 70
-        let pressureLeft1F2 = rota.doubleF2Pressure1 - 70
+        let pressureLeft0F2 = rota.doubleF2Pressure0 - minimalPressure
+        let pressureLeft1F2 = rota.doubleF2Pressure1 - minimalPressure
         //let pressureLeft2 = iPressure2[fireman1] - 70
         
         let pressureUsed1F2 = rota.doubleF2Pressure0 - rota.doubleF2Pressure1
