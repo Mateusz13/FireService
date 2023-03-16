@@ -10,6 +10,8 @@ import SwiftUI
 struct MainView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
+    @State private var showAlert: Bool = false
+    
     
     var body: some View {
         
@@ -17,6 +19,8 @@ struct MainView: View {
             allRotas
             Spacer()
         }
+        .navigationTitle("MSZP")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .keyboard) {
                 Spacer()
@@ -28,6 +32,9 @@ struct MainView: View {
                     Image(systemName: "keyboard.chevron.compact.down")
                 }
             }
+        }
+        .alert(isPresented: $showAlert) {
+            getAlert()
         }
     }
 }
@@ -47,14 +54,34 @@ extension MainView {
                 RotaTableView(number: rota.number)
                 Button {
                     vm.calculateExitTime(forRota: rota.number)
+//                    print(vm.rotas[rota.number].exitTime)
+                    if !(0.001...3600).contains(vm.rotas[rota.number].exitTime ?? 0) {
+                        showAlert.toggle()
+                    }
                 } label: {
-                    Text("oblicz")
+                    Text("Oblicz")
                 }
-//                if let exitTime = rota.exitTime {
-//                    Text("exit in: \(exitTime) min")
-//                }
-                Text("exit in: \(rota.exitTime ?? 0) min")
+                .buttonStyle(.borderedProminent)
+                
+                    if let exitTime = rota.exitTime {
+                        if (0.001...3600).contains(exitTime) {
+                            Text("Pozostały czas: \(exitTime.asString(style: .abbreviated) )")
+                                .foregroundColor(.red)
+                        }
+                    }
             }
         }
+    }
+    
+    private func getAlert() -> Alert {
+        
+//        return Alert(
+//            title: Text(alertTitle),
+//            message: Text(alertMessage),
+//            dismissButton: .default(Text("OK")))
+        return Alert(
+            title: Text("Błąd"),
+            message: Text("Wprowadź prawidłowe dane"),
+            dismissButton: .default(Text("OK")))
     }
 }

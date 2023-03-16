@@ -29,14 +29,14 @@ struct Rota: Identifiable {
     var f2Pressure1: String
     var f2Pressure2: String
     
-    var exitTime: Double?
+    var exitTime: TimeInterval?
     
     var timeInterval1: TimeInterval {
-        return time1.timeIntervalSince(time0)/60
+        return time1.timeIntervalSince(time0)
     }
     
     var timeInterval2: TimeInterval {
-        return time2.timeIntervalSince(time1)/60
+        return time2.timeIntervalSince(time1)
     }
     
     

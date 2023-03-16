@@ -24,8 +24,6 @@ class CoreViewModel: ObservableObject {
     func calculateExitTime(forRota: Int) {
         
         var rota = rotas[forRota]
-        
-        
         // calculation:
 
         //fireman1
@@ -59,13 +57,12 @@ class CoreViewModel: ObservableObject {
         let leftTime1F2 = entireTime1F2 - rota.timeInterval1
         let leftTime2F2 = entireTime2F2 - rota.timeInterval2
         
-        print(leftTime1F1)
-        print(leftTime1F2)
-        print(leftTime2F1)
-        print(leftTime2F2)
-        
-        print(rota.timeInterval1)
-        print(rota.timeInterval2)
+//        print(leftTime1F1)
+//        print(leftTime1F2)
+//        print(leftTime2F1)
+//        print(leftTime2F2)
+//        print(rota.timeInterval1)
+//        print(rota.timeInterval2)
         
         guard rota.doubleF2Pressure2 == 0 else {
             if leftTime2F1 > leftTime2F2 {
@@ -82,8 +79,7 @@ class CoreViewModel: ObservableObject {
         } else {
             rota.exitTime = leftTime1F1
         }
-                
+            
         self.rotas[forRota].exitTime = rota.exitTime
-        
     }
 }

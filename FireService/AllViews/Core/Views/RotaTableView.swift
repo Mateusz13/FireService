@@ -52,15 +52,16 @@ extension RotaTableView {
     
     private var namesColumn: some View {
         VStack {
-            Text("ROTA\(number+1)")
-                .foregroundColor(Color.red)
+            Text("ROTA \(number+1)")
+                .bold()
+                .underline()
             Spacer()
-            TextField("name", text: $vm.rotas[number].f1Name)
+            TextField("name1", text: $vm.rotas[number].f1Name)
             //                 .focused($fieldInFocus, equals: .name)
-            TextField("name", text: $vm.rotas[number].f2Name)
+            TextField("name2", text: $vm.rotas[number].f2Name)
             //                    .focused($fieldInFocus, equals: .name)
         }
-        .frame(minWidth: 100)
+        .frame(minWidth: 80)
     }
     
     private var entryColumn: some View {
@@ -80,7 +81,7 @@ extension RotaTableView {
     
     private var check1Column: some View {
         VStack {
-            Text("POMIAR1")
+            Text("POMIAR 1")
             DatePicker("time1", selection: $vm.rotas[number].time1, displayedComponents: .hourAndMinute)
                 .labelsHidden()
             //                .focused($fieldInFocus, equals: .time1)
@@ -96,7 +97,7 @@ extension RotaTableView {
     private var check2Column: some View {
         
         VStack {
-            Text("POMIAR2")
+            Text("POMIAR 2")
             DatePicker("time2", selection: $vm.rotas[number].time2, displayedComponents: .hourAndMinute)
                 .labelsHidden()
             //                .focused($fieldInFocus, equals: .time2)
@@ -107,8 +108,5 @@ extension RotaTableView {
             //                .focused($fieldInFocus, equals: .pressure2)
                 .numbersOnly($vm.rotas[number].f2Pressure2)
         }
-        
     }
-    
-    
 }
