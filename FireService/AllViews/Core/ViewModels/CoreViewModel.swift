@@ -14,6 +14,11 @@ class CoreViewModel: ObservableObject {
     
     @Published var rotas: [Rota] = [Rota(number: 0), Rota(number: 1)]
     
+//    var cancellables = Set<AnyCancellable>()
+    var timerCancellable: Cancellable?
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     let minimalPressure: Double = 50
     
     //    init() {
@@ -79,7 +84,18 @@ class CoreViewModel: ObservableObject {
         } else {
             rota.exitTime = leftTime1F1
         }
-            
+        
         self.rotas[forRota].exitTime = rota.exitTime
+        
+        timerCancellable = timer
+                .sink { [weak self] _ in
+                    guard let self = self else { return }
+                  
+                    if self.rotas[forRota].exitTime! > 0 {
+                        self.rotas[forRota].exitTime! -= 1
+                    } else {
+                        self.timerCancellable?.cancel()
+                    }
+                }
     }
 }

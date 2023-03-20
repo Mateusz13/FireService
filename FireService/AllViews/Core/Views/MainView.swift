@@ -12,7 +12,6 @@ struct MainView: View {
     @EnvironmentObject private var vm: CoreViewModel
     @State private var showAlert: Bool = false
     
-    
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: true) {
@@ -54,6 +53,7 @@ extension MainView {
                 RotaTableView(number: rota.number)
                 Button {
                     vm.calculateExitTime(forRota: rota.number)
+                    hideKeyboard()
 //                    print(vm.rotas[rota.number].exitTime)
                     if !(0.001...3600).contains(vm.rotas[rota.number].exitTime ?? 0) {
                         showAlert.toggle()
@@ -64,7 +64,7 @@ extension MainView {
                 .buttonStyle(.borderedProminent)
                 
                     if let exitTime = rota.exitTime {
-                        if (0.001...3600).contains(exitTime) {
+                        if (-1...3600).contains(exitTime) {
                             Text("Pozostały czas: \(exitTime.asString(style: .abbreviated) )")
                                 .foregroundColor(.red)
                         }

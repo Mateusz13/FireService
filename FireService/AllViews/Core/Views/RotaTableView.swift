@@ -20,7 +20,6 @@ struct RotaTableView: View {
     
     var body: some View {
         
-        
         ScrollView(.horizontal, showsIndicators: true) {
             HStack {
                 namesColumn
@@ -32,9 +31,11 @@ struct RotaTableView: View {
         .textFieldStyle(.roundedBorder)
         .frame(height: 150)
         //.frame(maxWidth: 500)
+//        .padding(.horizontal, 3)
+//        .padding(.vertical, 3)
+        .padding(3)
         .background(Color.gray.brightness(0.4))
         .cornerRadius(10)
-        //.padding()
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
         }
