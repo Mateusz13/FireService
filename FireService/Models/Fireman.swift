@@ -21,6 +21,11 @@ struct Rota: Identifiable {
     var time1: Date
     var time2: Date
     
+    var time00: Date? // entryTime
+    
+    var duration: TimeInterval = 0 //should be optional as well?
+    
+    
     var f1Pressure0: String
     var f1Pressure1: String
     var f1Pressure2: String

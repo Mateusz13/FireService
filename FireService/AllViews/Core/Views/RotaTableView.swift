@@ -12,11 +12,11 @@ struct RotaTableView: View {
     let number: Int
     @EnvironmentObject private var vm: CoreViewModel
     
-    //    enum FocusField {
-    //        case name, pressure0, pressure1, pressure2
-    //    }
-    
-    //    @FocusState var fieldInFocus: FocusField?
+//        enum FocusField {
+//            case name, pressure0, pressure1, pressure2
+//        }
+//
+//        @FocusState var fieldInFocus: FocusField?
     
     var body: some View {
         
@@ -57,8 +57,11 @@ extension RotaTableView {
                 .bold()
                 .underline()
             Spacer()
+            Text(timerInterval: (vm.rotas[number].time00 ?? Date())...Date(), countsDown: false)
+                .foregroundColor(.red)
+            Spacer()
             TextField("name1", text: $vm.rotas[number].f1Name)
-            //                 .focused($fieldInFocus, equals: .name)
+//                             .focused($fieldInFocus, equals: .name)
             TextField("name2", text: $vm.rotas[number].f2Name)
             //                    .focused($fieldInFocus, equals: .name)
         }

@@ -13,8 +13,9 @@ class CoreViewModel: ObservableObject {
     
     
     @Published var rotas: [Rota] = [Rota(number: 0), Rota(number: 1)]
+//    @Published var duration: [Int] = []
     
-//    var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     var timerCancellable: Cancellable?
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -24,6 +25,21 @@ class CoreViewModel: ObservableObject {
     //    init() {
     //       rotas = [Rota()]
     //    }
+    
+    func startAction(forRota: Int) {
+        
+        self.rotas[forRota].time0 = Date.now
+        self.rotas[forRota].time00 = Date.now
+                
+        timer
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.rotas[forRota].duration += 1
+            }
+            .store(in: &cancellables)
+        //should we cancal the timer in ceratain condition?
+        
+    }
     
     
     func calculateExitTime(forRota: Int) {

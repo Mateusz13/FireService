@@ -51,17 +51,27 @@ extension MainView {
         ForEach(vm.rotas) { rota in
             VStack {
                 RotaTableView(number: rota.number)
-                Button {
-                    vm.calculateExitTime(forRota: rota.number)
-                    hideKeyboard()
-//                    print(vm.rotas[rota.number].exitTime)
-                    if !(0.001...3600).contains(vm.rotas[rota.number].exitTime ?? 0) {
-                        showAlert.toggle()
+                HStack {
+                    Button {
+                        vm.startAction(forRota: rota.number)
+                    } label: {
+                        Text("Start")
                     }
-                } label: {
-                    Text("Oblicz")
+                    .buttonStyle(.borderedProminent)
+                    .foregroundColor(.green)
+                    
+                    Button {
+                        vm.calculateExitTime(forRota: rota.number)
+                        hideKeyboard()
+    //                    print(vm.rotas[rota.number].exitTime)
+                        if !(0.001...3600).contains(vm.rotas[rota.number].exitTime ?? 0) {
+                            showAlert.toggle()
+                        }
+                    } label: {
+                        Text("Oblicz")
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
                 
                     if let exitTime = rota.exitTime {
                         if (-1...3600).contains(exitTime) {
