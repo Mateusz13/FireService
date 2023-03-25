@@ -50,27 +50,27 @@ extension MainView {
     private var allRotas: some View {
         ForEach(vm.rotas) { rota in
             VStack {
-                RotaTableView(number: rota.number)
+                RotaTableView(number: rota.number, showAlert: $showAlert)
                 HStack {
-                    Button {
-                        vm.startAction(forRota: rota.number)
-                    } label: {
-                        Text("Start")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .foregroundColor(.green)
+//                    Button {
+//                        vm.startAction(forRota: rota.number)
+//                    } label: {
+//                        Text("Start")
+//                    }
+//                    .buttonStyle(.borderedProminent)
+//                    .foregroundColor(.green)
                     
-                    Button {
-                        vm.calculateExitTime(forRota: rota.number)
-                        hideKeyboard()
-    //                    print(vm.rotas[rota.number].exitTime)
-                        if !(0.001...3600).contains(vm.rotas[rota.number].exitTime ?? 0) {
-                            showAlert.toggle()
-                        }
-                    } label: {
-                        Text("Oblicz")
-                    }
-                    .buttonStyle(.borderedProminent)
+//                    Button {
+//                        vm.calculateExitTime(forRota: rota.number)
+//                        hideKeyboard()
+//    //                    print(vm.rotas[rota.number].exitTime)
+//                        if !(0.001...3600).contains(vm.rotas[rota.number].exitTime ?? 0) {
+//                            showAlert.toggle()
+//                        }
+//                    } label: {
+//                        Text("Oblicz")
+//                    }
+//                    .buttonStyle(.borderedProminent)
                 }
                 
                     if let exitTime = rota.exitTime {

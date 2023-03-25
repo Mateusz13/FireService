@@ -12,11 +12,11 @@ import Combine
 class CoreViewModel: ObservableObject {
     
     
-    @Published var rotas: [Rota] = [Rota(number: 0), Rota(number: 1)]
+    @Published var rotas: [Rota] = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
 //    @Published var duration: [Int] = []
     
     var cancellables = Set<AnyCancellable>()
-    var timerCancellable: Cancellable?
+//    var timerCancellable: Cancellable?
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -103,15 +103,17 @@ class CoreViewModel: ObservableObject {
         
         self.rotas[forRota].exitTime = rota.exitTime
         
-        timerCancellable = timer
+        timer
                 .sink { [weak self] _ in
                     guard let self = self else { return }
                   
                     if self.rotas[forRota].exitTime! > 0 {
                         self.rotas[forRota].exitTime! -= 1
                     } else {
-                        self.timerCancellable?.cancel()
+                        //self.timerCancellable?.cancel()
+                        // should we cancal the timer in ceratain condition?
                     }
                 }
+                .store(in: &cancellables)
     }
 }
