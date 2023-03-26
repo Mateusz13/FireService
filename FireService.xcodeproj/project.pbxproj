@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E634064A29B75499000BFE5F /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = E634064929B75499000BFE5F /* Double.swift */; };
+		E634833B29CF14FC00AEB05A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = E634833A29CF14FC00AEB05A /* Date.swift */; };
 		E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B861B2996E188000F6CCE /* FireServiceApp.swift */; };
 		E63B86202996E189000F6CCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E63B861F2996E189000F6CCE /* Assets.xcassets */; };
 		E63B86232996E189000F6CCE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E63B86222996E189000F6CCE /* Preview Assets.xcassets */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		E634064929B75499000BFE5F /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		E634833A29CF14FC00AEB05A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		E63B86182996E188000F6CCE /* FireService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FireService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E63B861B2996E188000F6CCE /* FireServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireServiceApp.swift; sourceTree = "<group>"; };
 		E63B861F2996E189000F6CCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */,
 				E63B864A299E24FC000F6CCE /* HideKeyboard.swift */,
 				E634064929B75499000BFE5F /* Double.swift */,
+				E634833A29CF14FC00AEB05A /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				E63B863D299ABB5E000F6CCE /* Fireman.swift in Sources */,
 				E63B863F299AC225000F6CCE /* CoreViewModel.swift in Sources */,
 				E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */,
+				E634833B29CF14FC00AEB05A /* Date.swift in Sources */,
 				E63B8641299AD42D000F6CCE /* RotaTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

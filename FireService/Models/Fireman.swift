@@ -17,11 +17,10 @@ struct Rota: Identifiable {
     var f1Name: String
     var f2Name: String
     
-    var time0: Date
-    var time1: Date
-    var time2: Date
+    var time0: Date? //entryTime
+    var time1: Date?
+    var time2: Date?
     
-    var time00: Date? // entryTime
     
     var duration: TimeInterval = 0 //should be optional as well?
     
@@ -37,11 +36,11 @@ struct Rota: Identifiable {
     var exitTime: TimeInterval?
     
     var timeInterval1: TimeInterval {
-        return time1.timeIntervalSince(time0)
+        return time1?.timeIntervalSince(time0 ?? Date()) ?? 0
     }
     
     var timeInterval2: TimeInterval {
-        return time2.timeIntervalSince(time1)
+        return time2?.timeIntervalSince(time1 ?? Date()) ?? 0
     }
     
     
@@ -70,13 +69,10 @@ struct Rota: Identifiable {
     }
     
     
-    init(number: Int, f1Name: String = "", f2Name: String = "", time0: Date = Date.now, time1: Date = Date.now, time2: Date = Date.now, f1Pressure0: String = "", f1Pressure1: String = "", f1Pressure2: String = "", f2Pressure0: String = "", f2Pressure1: String = "", f2Pressure2: String = "") {
+    init(number: Int, f1Name: String = "", f2Name: String = "", f1Pressure0: String = "", f1Pressure1: String = "", f1Pressure2: String = "", f2Pressure0: String = "", f2Pressure1: String = "", f2Pressure2: String = "") {
         self.number = number
         self.f1Name = f1Name
         self.f2Name = f2Name
-        self.time0 = time0
-        self.time1 = time1
-        self.time2 = time2
         self.f1Pressure0 = f1Pressure0
         self.f1Pressure1 = f1Pressure1
         self.f1Pressure2 = f1Pressure2

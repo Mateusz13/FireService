@@ -12,7 +12,7 @@ import Combine
 class CoreViewModel: ObservableObject {
     
     
-    @Published var rotas: [Rota] = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
+    @Published var rotas: [Rota]
 //    @Published var duration: [Int] = []
     
     var cancellables = Set<AnyCancellable>()
@@ -22,14 +22,14 @@ class CoreViewModel: ObservableObject {
     
     let minimalPressure: Double = 50
     
-    //    init() {
-    //       rotas = [Rota()]
-    //    }
+        init() {
+           let rotas = [Rota(number: 0), Rota(number: 1)]
+           self.rotas = rotas
+        }
     
     func startAction(forRota: Int) {
         
-        self.rotas[forRota].time0 = Date.now
-        self.rotas[forRota].time00 = Date.now
+//        self.rotas[forRota].time0 = Date() // move to View
                 
         timer
             .sink { [weak self] _ in
@@ -43,6 +43,7 @@ class CoreViewModel: ObservableObject {
     
     
     func calculateExitTime(forRota: Int) {
+        
         
         var rota = rotas[forRota]
         // calculation:
