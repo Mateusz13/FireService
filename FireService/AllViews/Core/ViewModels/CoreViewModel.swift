@@ -71,9 +71,17 @@ class CoreViewModel: ObservableObject {
         
         var rota = rotas[forRota]
         
-        // guard would be better?
         
-        //        rota.f1Pressures[forMeasurement] == "" || rota.f2Pressures[forMeasurement] == "" || !(0.001...3600).contains(rota.exitTime ?? 0)
+        guard rota.f1Pressures[forMeasurement] != "" && rota.f2Pressures[forMeasurement] != "" else {
+            showAlert = true
+            return
+        }
+        
+        self.rotas[forRota].time?[forMeasurement] = Date()
+        self.calculateButtonActive[forRota][forMeasurement-1] = false
+        hideKeyboard()
+        
+        
         
         if rota.f1Pressures[forMeasurement] == "" || rota.f2Pressures[forMeasurement] == "" {
             showAlert = true
@@ -111,24 +119,30 @@ class CoreViewModel: ObservableObject {
         } else {
             rota.exitTime = timeToLeaveF1
         }
-        self.rotas[forRota].exitTime = rota.exitTime
         
-        if forMeasurement == 1 {
-            timer
-                .sink { [weak self] _ in
-                    guard let self = self else { return }
-                    
-                    if self.rotas[forRota].exitTime! > 0 {
-                        self.rotas[forRota].exitTime! -= 1
-                    } else {
-                        //timer.upstream.connect().cancel()
-                        //self.timerCancellable?.cancel()
-                        // should we cancal the timer in ceratain condition?
+        if !(0.001...3600).contains(rota.exitTime ?? 0) {
+            showAlert = true
+            self.calculateButtonActive[forRota][forMeasurement-1] = true
+        } else {
+            self.rotas[forRota].exitTime = rota.exitTime
+            if forMeasurement == 1 {
+                timer
+                    .sink { [weak self] _ in
+                        guard let self = self else { return }
+                        guard self.rotas[forRota].exitTime != nil else {
+                            return
+                        }
+                        if self.rotas[forRota].exitTime ?? 0 > 0 {
+                            self.rotas[forRota].exitTime! -= 1
+                        } else {
+                            //timer.upstream.connect().cancel()
+                            //self.timerCancellable?.cancel()
+                            // should we cancal the timer in ceratain condition?
+                        }
                     }
-                }
-                .store(in: &cancellables)
+                    .store(in: &cancellables)
+            }
         }
-        
     }
 }
     
