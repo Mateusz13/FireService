@@ -11,6 +11,7 @@ struct MainView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
     @State private var showAlert: Bool = false
+
     
     var body: some View {
         
@@ -32,7 +33,7 @@ struct MainView: View {
                 }
             }
         }
-        .alert(isPresented: $showAlert) {
+        .alert(isPresented: $vm.showAlert) {
             getAlert()
         }
     }
@@ -50,10 +51,10 @@ extension MainView {
     private var allRotas: some View {
         ForEach(vm.rotas) { rota in
             VStack {
-                RotaTableView(number: rota.number, showAlert: $showAlert)
+                RotaTableView(rotaNumber: rota.number)
                 HStack {
 //                    Button {
-//                        vm.startAction(forRota: rota.number)
+//                        vm.startAction(forRota: rota.rotaNumber)
 //                    } label: {
 //                        Text("Start")
 //                    }
@@ -61,10 +62,10 @@ extension MainView {
 //                    .foregroundColor(.green)
                     
 //                    Button {
-//                        vm.calculateExitTime(forRota: rota.number)
+//                        vm.calculateExitTime(forRota: rota.rotaNumber)
 //                        hideKeyboard()
-//    //                    print(vm.rotas[rota.number].exitTime)
-//                        if !(0.001...3600).contains(vm.rotas[rota.number].exitTime ?? 0) {
+//    //                    print(vm.rotas[rota.rotaNumber].exitTime)
+//                        if !(0.001...3600).contains(vm.rotas[rota.rotaNumber].exitTime ?? 0) {
 //                            showAlert.toggle()
 //                        }
 //                    } label: {
@@ -77,6 +78,12 @@ extension MainView {
                         if (-1...3600).contains(exitTime) {
                             Text("Pozostały czas: \(exitTime.asString(style: .abbreviated) )")
                                 .foregroundColor(.red)
+                           
+//                            print(startDate)
+//                            let endDate = Date().addingTimeInterval(exitTime)
+//                            Text(timerInterval: Date()...endDate, countsDown: true)
+//                                .foregroundColor(.red)
+                            
                         }
                     }
             }
