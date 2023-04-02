@@ -11,7 +11,7 @@ struct MainView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
     @State private var showAlert: Bool = false
-
+    
     
     var body: some View {
         
@@ -27,7 +27,7 @@ struct MainView: View {
             }
             ToolbarItem(placement: .keyboard) {
                 Button {
-                   hideKeyboard()
+                    hideKeyboard()
                 } label: {
                     Image(systemName: "keyboard.chevron.compact.down")
                 }
@@ -52,50 +52,29 @@ extension MainView {
         ForEach(vm.rotas) { rota in
             VStack {
                 RotaTableView(rotaNumber: rota.number)
-                HStack {
-//                    Button {
-//                        vm.startAction(forRota: rota.rotaNumber)
-//                    } label: {
-//                        Text("Start")
-//                    }
-//                    .buttonStyle(.borderedProminent)
-//                    .foregroundColor(.green)
-                    
-//                    Button {
-//                        vm.calculateExitTime(forRota: rota.rotaNumber)
-//                        hideKeyboard()
-//    //                    print(vm.rotas[rota.rotaNumber].exitTime)
-//                        if !(0.001...3600).contains(vm.rotas[rota.rotaNumber].exitTime ?? 0) {
-//                            showAlert.toggle()
-//                        }
-//                    } label: {
-//                        Text("Oblicz")
-//                    }
-//                    .buttonStyle(.borderedProminent)
-                }
                 
-                    if let exitTime = rota.exitTime {
-                        if (-1...3600).contains(exitTime) {
-                            Text("Pozostały czas: \(exitTime.asString(style: .abbreviated) )")
-                                .foregroundColor(.red)
-                           
-//                            print(startDate)
-//                            let endDate = Date().addingTimeInterval(exitTime)
-//                            Text(timerInterval: Date()...endDate, countsDown: true)
-//                                .foregroundColor(.red)
-                            
-                        }
+                
+                if let exitTime = rota.exitTime {
+                    if (-1...3600).contains(exitTime) {
+                        Text("Pozostały czas: \(exitTime.asString(style: .abbreviated) )")
+                            .foregroundColor(.red)
+                        
+                        // let endDate = Date().addingTimeInterval(exitTime)
+                        // Text(timerInterval: Date()...endDate, countsDown: true)
+                        //   .foregroundColor(.red)
+                        
                     }
+                }
             }
         }
     }
     
     private func getAlert() -> Alert {
         
-//        return Alert(
-//            title: Text(alertTitle),
-//            message: Text(alertMessage),
-//            dismissButton: .default(Text("OK")))
+        //        return Alert(
+        //            title: Text(alertTitle),
+        //            message: Text(alertMessage),
+        //            dismissButton: .default(Text("OK")))
         return Alert(
             title: Text("Błąd"),
             message: Text("Wprowadź prawidłowe dane"),

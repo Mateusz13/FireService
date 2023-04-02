@@ -11,18 +11,14 @@ import Combine
 
 class CoreViewModel: ObservableObject {
     
-    
     @Published var rotas: [Rota]
     
     @Published var startButtonActive: [Bool]
     @Published var calculateButtonActive: [[Bool]]
-//  @Published var check2ButtonActive: [Bool]
     @Published var showAlert: Bool = false
-    @Published var exitTime2: Date = Date()
-    
     
     var cancellables = Set<AnyCancellable>()
-//    var timerCancellable: Cancellable?
+    //    var timerCancellable: Cancellable?
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -39,25 +35,20 @@ class CoreViewModel: ObservableObject {
     
     func startAction(forRota: Int) {
         
-        
         let rota = rotas[forRota]
         
         if rota.f1Pressures[0] == "" || rota.f2Pressures[0] == "" {
             showAlert = true
         } else {
             
-             self.rotas[forRota].time = Array(repeating: Date(), count: 3)
+            self.rotas[forRota].time = Array(repeating: Date(), count: 3)
             
-//            self.rotas[forRota].time?[0] = Date()
+            //self.rotas[forRota].time?[0] = Date()
+            //self.startButtonActive = Array(repeating: true, count: 10)
             
-//            self.startButtonActive = Array(repeating: true, count: 10)
             self.startButtonActive[forRota] = false
-            
             hideKeyboard()
         }
-        
-        
-
         
         timer
             .sink { [weak self] _ in
@@ -72,19 +63,18 @@ class CoreViewModel: ObservableObject {
     
     func calculateExitTimeX(forRota: Int, forMeasurement: Int) {
         
-//        self.timerCancellable?.cancel()
-        
-//        if forMeasurement != 1 {
-//            timer.upstream.connect().cancel()
-//        }
+        //        self.timerCancellable?.cancel()
+        //        if forMeasurement != 1 {
+        //            timer.upstream.connect().cancel()
+        //        }
         
         
         var rota = rotas[forRota]
         
         // guard would be better?
         
-//        rota.f1Pressures[forMeasurement] == "" || rota.f2Pressures[forMeasurement] == "" || !(0.001...3600).contains(rota.exitTime ?? 0)
-       
+        //        rota.f1Pressures[forMeasurement] == "" || rota.f2Pressures[forMeasurement] == "" || !(0.001...3600).contains(rota.exitTime ?? 0)
+        
         if rota.f1Pressures[forMeasurement] == "" || rota.f2Pressures[forMeasurement] == "" {
             showAlert = true
         } else {
@@ -96,61 +86,51 @@ class CoreViewModel: ObservableObject {
         var timeInterval: TimeInterval {
             return self.rotas[forRota].time?[forMeasurement].timeIntervalSince(self.rotas[forRota].time?[forMeasurement-1] ?? Date()) ?? 0
         }
+        
         // calculation:
-//        print(rota.time?[forMeasurement-1])
-//        print(rota.time?[forMeasurement])
         print(timeInterval)
         
         //fireman1
         let initialPressureF1 = rota.doubleF1Pressures[forMeasurement-1] - minimalPressure
-        
         let pressureUsedF1 = rota.doubleF1Pressures[forMeasurement-1] - rota.doubleF1Pressures[forMeasurement]
-        
         let entireTimeOnActionF1 = initialPressureF1 / pressureUsedF1 * timeInterval
-        
         let timeToLeaveF1 = entireTimeOnActionF1 - timeInterval
         
         
         //fireman2
         
         let initialPressureF2 = rota.doubleF2Pressures[forMeasurement-1] - minimalPressure
-        
         let pressureUsedF2 = rota.doubleF2Pressures[forMeasurement-1] - rota.doubleF2Pressures[forMeasurement]
-        
         let entireTimeOnActionF2 = initialPressureF2 / pressureUsedF2 * timeInterval
-        
         let timeToLeaveF2 = entireTimeOnActionF2 - timeInterval
         
         
-    
-            if timeToLeaveF1 > timeToLeaveF2 {
-                rota.exitTime = timeToLeaveF2
-            } else {
-                rota.exitTime = timeToLeaveF1
-            }
-            self.rotas[forRota].exitTime = rota.exitTime
-            
-//        exitTime2 = Date().addingTimeInterval(rota.exitTime ?? 0)
         
+        if timeToLeaveF1 > timeToLeaveF2 {
+            rota.exitTime = timeToLeaveF2
+        } else {
+            rota.exitTime = timeToLeaveF1
+        }
+        self.rotas[forRota].exitTime = rota.exitTime
         
         if forMeasurement == 1 {
             timer
-                    .sink { [weak self] _ in
-                        guard let self = self else { return }
-
-                        if self.rotas[forRota].exitTime! > 0 {
-                            self.rotas[forRota].exitTime! -= 1
-                        } else {
-                            //timer.upstream.connect().cancel()
-                            //self.timerCancellable?.cancel()
-                            // should we cancal the timer in ceratain condition?
-                        }
+                .sink { [weak self] _ in
+                    guard let self = self else { return }
+                    
+                    if self.rotas[forRota].exitTime! > 0 {
+                        self.rotas[forRota].exitTime! -= 1
+                    } else {
+                        //timer.upstream.connect().cancel()
+                        //self.timerCancellable?.cancel()
+                        // should we cancal the timer in ceratain condition?
                     }
-                    .store(in: &cancellables)
+                }
+                .store(in: &cancellables)
         }
         
     }
-    
+}
     
 //    func calculateExitTime(forRota: Int) {
 //
@@ -221,4 +201,3 @@ class CoreViewModel: ObservableObject {
 //                }
 //                .store(in: &cancellables)
 //    }
-}
