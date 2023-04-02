@@ -13,8 +13,7 @@ class CoreViewModel: ObservableObject {
     
     @Published var rotas: [Rota]
     
-    @Published var startButtonActive: [Bool]
-    @Published var calculateButtonActive: [[Bool]]
+    @Published var startOrCalculateButtonActive: [[Bool]]
     @Published var showAlert: Bool = false
     
     var cancellables = Set<AnyCancellable>()
@@ -28,40 +27,10 @@ class CoreViewModel: ObservableObject {
         let rotas = [Rota(number: 0), Rota(number: 1)]
         self.rotas = rotas
         //assing 100 at the begging or append in 'next' step ?
-        self.startButtonActive = Array(repeating: true, count: 2)
-        self.calculateButtonActive = [Array(repeating: true, count: 2), Array(repeating: true, count: 2)]
+        self.startOrCalculateButtonActive = [Array(repeating: true, count: 3), Array(repeating: true, count: 3)]
     }
     
-    
-    func startAction(forRota: Int) {
-        
-        let rota = rotas[forRota]
-        
-        if rota.f1Pressures[0] == "" || rota.f2Pressures[0] == "" {
-            showAlert = true
-        } else {
-            
-            self.rotas[forRota].time = Array(repeating: Date(), count: 3)
-            
-            //self.rotas[forRota].time?[0] = Date()
-            //self.startButtonActive = Array(repeating: true, count: 10)
-            
-            self.startButtonActive[forRota] = false
-            hideKeyboard()
-        }
-        
-        timer
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.rotas[forRota].duration += 1
-            }
-            .store(in: &cancellables)
-        //should we cancal the timer in ceratain condition?
-        
-    }
-    
-    
-    func calculateExitTimeX(forRota: Int, forMeasurement: Int) {
+    func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
         
         //        self.timerCancellable?.cancel()
         //        if forMeasurement != 1 {
@@ -77,8 +46,21 @@ class CoreViewModel: ObservableObject {
             return
         }
         
+        guard forMeasurement != 0 else {
+            self.rotas[forRota].time = Array(repeating: Date(), count: 3)
+            self.startOrCalculateButtonActive[forRota][forMeasurement] = false
+            hideKeyboard()
+                    timer
+                        .sink { [weak self] _ in
+                            guard let self = self else { return }
+                            self.rotas[forRota].duration += 1
+                        }
+                        .store(in: &cancellables)
+            return
+        }
+        
         self.rotas[forRota].time?[forMeasurement] = Date()
-        self.calculateButtonActive[forRota][forMeasurement-1] = false
+        self.startOrCalculateButtonActive[forRota][forMeasurement] = false
         hideKeyboard()
         
         
@@ -87,7 +69,7 @@ class CoreViewModel: ObservableObject {
             showAlert = true
         } else {
             self.rotas[forRota].time?[forMeasurement] = Date()
-            self.calculateButtonActive[forRota][forMeasurement-1] = false
+            self.startOrCalculateButtonActive[forRota][forMeasurement] = false
             hideKeyboard()
         }
         
@@ -122,7 +104,7 @@ class CoreViewModel: ObservableObject {
         
         if !(0.001...3600).contains(rota.exitTime ?? 0) {
             showAlert = true
-            self.calculateButtonActive[forRota][forMeasurement-1] = true
+            self.startOrCalculateButtonActive[forRota][forMeasurement-1] = true
         } else {
             self.rotas[forRota].exitTime = rota.exitTime
             if forMeasurement == 1 {
@@ -145,6 +127,35 @@ class CoreViewModel: ObservableObject {
         }
     }
 }
+
+//    @Published var startButtonActive: [Bool]
+//    self.startButtonActive = Array(repeating: true, count: 2)
+
+//    func startAction(forRota: Int) {
+//
+//        let rota = rotas[forRota]
+//
+//        if rota.f1Pressures[0] == "" || rota.f2Pressures[0] == "" {
+//            showAlert = true
+//        } else {
+//
+//            self.rotas[forRota].time = Array(repeating: Date(), count: 3)
+            
+            //self.rotas[forRota].time?[0] = Date()
+            //self.startButtonActive = Array(repeating: true, count: 10)
+            
+//            self.startButtonActive[forRota] = false
+//            hideKeyboard()
+//        }
+        
+//        timer
+//            .sink { [weak self] _ in
+//                guard let self = self else { return }
+//                self.rotas[forRota].duration += 1
+//            }
+//            .store(in: &cancellables)
+        //should we cancal the timer in ceratain condition?
+//    }
     
 //    func calculateExitTime(forRota: Int) {
 //

@@ -77,12 +77,12 @@ extension RotaTableView {
             TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[0])
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[0])
-            if vm.startButtonActive[rotaNumber] == false {
+            if vm.startOrCalculateButtonActive[rotaNumber][0] == false {
                 Text(vm.rotas[rotaNumber].time?[0].getFormattedDateToHHmm() ?? "error")
                     .foregroundColor(.secondary)
             } else {
                 Button {
-                    vm.startAction(forRota: rotaNumber)
+                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 0)
                 } label: {
                     Text("Start")
                 }
@@ -101,17 +101,12 @@ extension RotaTableView {
             TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[1])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[1])
-            if vm.calculateButtonActive[rotaNumber][0] == false {
+            if vm.startOrCalculateButtonActive[rotaNumber][1] == false {
                 Text(vm.rotas[rotaNumber].time?[1].getFormattedDateToHHmm() ?? "error")
                     .foregroundColor(.secondary)
             } else {
                 Button {
-                    vm.calculateExitTimeX(forRota: rotaNumber, forMeasurement: 1)
-                    //                        if !(0.001...3600).contains(vm.rotas[rotaNumber].exitTime ?? 0) {
-                    //                            showAlert = true
-                    //                        } else {
-                    //                            calculateButtonActive = false
-                    //                        }
+                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 1)
                 } label: {
                     Text("Oblicz")
                 }
@@ -130,17 +125,13 @@ extension RotaTableView {
             TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[2])
             //                .focused($fieldInFocus, equals: .pressure2)
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[2])
-            if vm.calculateButtonActive[rotaNumber][1] == false {
+            if vm.startOrCalculateButtonActive[rotaNumber][2] == false {
                 Text(vm.rotas[rotaNumber].time?[2].getFormattedDateToHHmm() ?? "error")
                     .foregroundColor(.secondary)
             } else {
                 Button {
-                    vm.calculateExitTimeX(forRota: rotaNumber, forMeasurement: 2)
-                    //                        if !(0.001...3600).contains(vm.rotas[rotaNumber].exitTime ?? 0) || vm.rotas[rotaNumber].f1Pressures[2] == "" || vm.rotas[rotaNumber].f2Pressures[2] == "" {
-                    //                            showAlert = true
-                    //                        } else {
-                    //                            check2ButtonActive = false
-                    //                        }
+                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 2)
+
                 } label: {
                     Text("Oblicz")
                 }
