@@ -24,10 +24,10 @@ class CoreViewModel: ObservableObject {
     let minimalPressure: Double = 50
     
     init() {
-        let rotas = [Rota(number: 0), Rota(number: 1)]
+        let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
         //assing 100 at the begging or append in 'next' step ?
-        self.startOrCalculateButtonActive = [Array(repeating: true, count: 3), Array(repeating: true, count: 3)]
+        self.startOrCalculateButtonActive = [Array(repeating: true, count: 7), Array(repeating: true, count: 7), Array(repeating: true, count: 7)]
     }
     
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
@@ -47,7 +47,7 @@ class CoreViewModel: ObservableObject {
         }
         
         guard forMeasurement != 0 else {
-            self.rotas[forRota].time = Array(repeating: Date(), count: 3)
+            self.rotas[forRota].time = Array(repeating: Date(), count: 7)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = false
             hideKeyboard()
                     timer
@@ -104,7 +104,7 @@ class CoreViewModel: ObservableObject {
         
         if !(0.001...3600).contains(rota.exitTime ?? 0) {
             showAlert = true
-            self.startOrCalculateButtonActive[forRota][forMeasurement-1] = true
+            self.startOrCalculateButtonActive[forRota][forMeasurement] = true
         } else {
             self.rotas[forRota].exitTime = rota.exitTime
             if forMeasurement == 1 {

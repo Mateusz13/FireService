@@ -24,8 +24,11 @@ struct RotaTableView: View {
             HStack {
                 namesColumn
                 entryColumn
-                check1Column
-                check2Column
+                MeasurementColumns(rotaNumber: rotaNumber, measurement: 1)
+                MeasurementColumns(rotaNumber: rotaNumber, measurement: 2)
+                MeasurementColumns(rotaNumber: rotaNumber, measurement: 3)
+                MeasurementColumns(rotaNumber: rotaNumber, measurement: 4)
+                MeasurementColumns(rotaNumber: rotaNumber, measurement: 5)
             }
         }
         .textFieldStyle(.roundedBorder)
@@ -92,51 +95,51 @@ extension RotaTableView {
         }
     }
     
-    private var check1Column: some View {
-        VStack {
-            Text("POMIAR 1")
-            TextField("BAR", text: $vm.rotas[rotaNumber].f1Pressures[1])
-            //                .focused($fieldInFocus, equals: .pressure1)
-                .numbersOnly($vm.rotas[rotaNumber].f1Pressures[1])
-            TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[1])
-            //                .focused($fieldInFocus, equals: .pressure1)
-                .numbersOnly($vm.rotas[rotaNumber].f2Pressures[1])
-            if vm.startOrCalculateButtonActive[rotaNumber][1] == false {
-                Text(vm.rotas[rotaNumber].time?[1].getFormattedDateToHHmm() ?? "error")
-                    .foregroundColor(.secondary)
-            } else {
-                Button {
-                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 1)
-                } label: {
-                    Text("Oblicz")
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
-    }
+//    private var check1Column: some View {
+//        VStack {
+//            Text("POMIAR 1")
+//            TextField("BAR", text: $vm.rotas[rotaNumber].f1Pressures[1])
+//            //                .focused($fieldInFocus, equals: .pressure1)
+//                .numbersOnly($vm.rotas[rotaNumber].f1Pressures[1])
+//            TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[1])
+//            //                .focused($fieldInFocus, equals: .pressure1)
+//                .numbersOnly($vm.rotas[rotaNumber].f2Pressures[1])
+//            if vm.startOrCalculateButtonActive[rotaNumber][1] == false {
+//                Text(vm.rotas[rotaNumber].time?[1].getFormattedDateToHHmm() ?? "error")
+//                    .foregroundColor(.secondary)
+//            } else {
+//                Button {
+//                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 1)
+//                } label: {
+//                    Text("Oblicz")
+//                }
+//                .buttonStyle(.borderedProminent)
+//            }
+//        }
+//    }
     
-    private var check2Column: some View {
-        
-        VStack {
-            Text("POMIAR 2")
-            TextField("BAR", text: $vm.rotas[rotaNumber].f1Pressures[2])
-            //                .focused($fieldInFocus, equals: .pressure2)
-                .numbersOnly($vm.rotas[rotaNumber].f1Pressures[2])
-            TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[2])
-            //                .focused($fieldInFocus, equals: .pressure2)
-                .numbersOnly($vm.rotas[rotaNumber].f2Pressures[2])
-            if vm.startOrCalculateButtonActive[rotaNumber][2] == false {
-                Text(vm.rotas[rotaNumber].time?[2].getFormattedDateToHHmm() ?? "error")
-                    .foregroundColor(.secondary)
-            } else {
-                Button {
-                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 2)
-
-                } label: {
-                    Text("Oblicz")
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
-    }
+//    private var check2Column: some View {
+//
+//        VStack {
+//            Text("POMIAR 2")
+//            TextField("BAR", text: $vm.rotas[rotaNumber].f1Pressures[2])
+//            //                .focused($fieldInFocus, equals: .pressure2)
+//                .numbersOnly($vm.rotas[rotaNumber].f1Pressures[2])
+//            TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[2])
+//            //                .focused($fieldInFocus, equals: .pressure2)
+//                .numbersOnly($vm.rotas[rotaNumber].f2Pressures[2])
+//            if vm.startOrCalculateButtonActive[rotaNumber][2] == false {
+//                Text(vm.rotas[rotaNumber].time?[2].getFormattedDateToHHmm() ?? "error")
+//                    .foregroundColor(.secondary)
+//            } else {
+//                Button {
+//                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 2)
+//
+//                } label: {
+//                    Text("Oblicz")
+//                }
+//                .buttonStyle(.borderedProminent)
+//            }
+//        }
+//    }
 }

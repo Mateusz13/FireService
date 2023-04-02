@@ -36,7 +36,7 @@ struct Rota: Identifiable {
     }
     
     
-    init(number: Int, f1Name: String = "", f2Name: String = "", f1Pressures: [String] = ["", "", ""], f2Pressures: [String] = ["", "", ""]) {
+    init(number: Int, f1Name: String = "", f2Name: String = "", f1Pressures: [String] = ["", "", "", "", "", "", ""], f2Pressures: [String] = ["", "", "", "", "", "", ""]) {
         self.number = number
         self.f1Name = f1Name
         self.f2Name = f2Name

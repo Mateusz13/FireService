@@ -54,17 +54,17 @@ extension MainView {
                 RotaTableView(rotaNumber: rota.number)
                 
                 
-                if let exitTime = rota.exitTime {
-                    if (-1...3600).contains(exitTime) {
-                        Text("Pozostały czas: \(exitTime.asString(style: .abbreviated) )")
+//                if let exitTime = rota.exitTime {
+//                    if (-1...3600).contains(exitTime) { // we will get alert anyway
+                Text("Pozostały czas: \(rota.exitTime?.asString(style: .abbreviated) ?? "")")
                             .foregroundColor(.red)
                         
                         // let endDate = Date().addingTimeInterval(exitTime)
                         // Text(timerInterval: Date()...endDate, countsDown: true)
                         //   .foregroundColor(.red)
                         
-                    }
-                }
+//                    }
+//                }
             }
         }
     }

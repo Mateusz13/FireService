@@ -18,6 +18,7 @@
 		E63B8643299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */; };
 		E63B8649299E1C24000F6CCE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B8648299E1C23000F6CCE /* MainView.swift */; };
 		E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B864A299E24FC000F6CCE /* HideKeyboard.swift */; };
+		E642E14929DA249100F53B07 /* MeasurementColumns.swift in Sources */ = {isa = PBXBuildFile; fileRef = E642E14829DA249100F53B07 /* MeasurementColumns.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		E63B8642299BB1FE000F6CCE /* NumbersOnlyViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumbersOnlyViewModifier.swift; sourceTree = "<group>"; };
 		E63B8648299E1C23000F6CCE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		E63B864A299E24FC000F6CCE /* HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboard.swift; sourceTree = "<group>"; };
+		E642E14829DA249100F53B07 /* MeasurementColumns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementColumns.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			children = (
 				E63B8648299E1C23000F6CCE /* MainView.swift */,
 				E63B8640299AD42D000F6CCE /* RotaTableView.swift */,
+				E642E14829DA249100F53B07 /* MeasurementColumns.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E642E14929DA249100F53B07 /* MeasurementColumns.swift in Sources */,
 				E63B8649299E1C24000F6CCE /* MainView.swift in Sources */,
 				E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */,
 				E634064A29B75499000BFE5F /* Double.swift in Sources */,
