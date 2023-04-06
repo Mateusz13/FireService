@@ -24,7 +24,7 @@ struct RotaTableView: View {
             HStack {
                 namesColumn
                 entryColumn
-                ForEach(1...6, id: \.self) { measurement in
+                ForEach(1...10, id: \.self) { measurement in
                     MeasurementColumns(rotaNumber: rotaNumber, measurement: measurement)
                 }
             }
@@ -77,9 +77,11 @@ extension RotaTableView {
             TextField("BAR", text: $vm.rotas[rotaNumber].f1Pressures[0])
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($vm.rotas[rotaNumber].f1Pressures[0])
+                .disabled(!vm.startOrCalculateButtonActive[rotaNumber][0])
             TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[0])
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[0])
+                .disabled(!vm.startOrCalculateButtonActive[rotaNumber][0])
             if vm.startOrCalculateButtonActive[rotaNumber][0] == false {
                 Text(vm.rotas[rotaNumber].time?[0].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)

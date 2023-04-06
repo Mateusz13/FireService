@@ -15,6 +15,7 @@ final class CoreViewModel: ObservableObject {
     
     @Published var startOrCalculateButtonActive: [[Bool]]
     @Published var showAlert: Bool = false
+    let measurementsNumber: Int = 10+1
     
     var cancellables = Set<AnyCancellable>()
     //    var timerCancellable: Cancellable?  // creat array ?
@@ -27,7 +28,7 @@ final class CoreViewModel: ObservableObject {
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
         //assing 100 at the begging or append in 'next' step ?
-        self.startOrCalculateButtonActive = [Array(repeating: true, count: 7), Array(repeating: true, count: 7), Array(repeating: true, count: 7)]
+        self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
     }
     
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
@@ -40,7 +41,7 @@ final class CoreViewModel: ObservableObject {
         }
         
         guard forMeasurement != 0 else {
-            self.rotas[forRota].time = Array(repeating: Date(), count: 7)
+            self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = false
             hideKeyboard()
             timer
