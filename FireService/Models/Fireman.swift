@@ -25,10 +25,8 @@ struct Rota: Identifiable {
     var f2Pressures: [String]
     
     var timeToLeave: TimeInterval?
-    
     var exitTime: Date?
     var diff: TimeInterval?
-    
     var diff2: TimeInterval?
     
     
@@ -50,6 +48,45 @@ struct Rota: Identifiable {
         self.f2Pressures = f2Pressures
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

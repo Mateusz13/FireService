@@ -28,7 +28,7 @@ struct RotaTableView: View {
                     MeasurementColumns(rotaNumber: rotaNumber, measurement: measurement)
                 }
             }
-
+            
         }
         .textFieldStyle(.roundedBorder)
         .frame(height: 150)
@@ -41,7 +41,7 @@ struct RotaTableView: View {
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
         }
-//        Spacer()
+        //        Spacer()
     }
 }
 
@@ -95,6 +95,33 @@ extension RotaTableView {
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 //    private var check1Column: some View {
 //        VStack {

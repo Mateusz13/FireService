@@ -17,7 +17,7 @@ final class CoreViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     
     var cancellables = Set<AnyCancellable>()
-//    var timerCancellable: Cancellable?  // creat array ?
+    //    var timerCancellable: Cancellable?  // creat array ?
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -32,14 +32,7 @@ final class CoreViewModel: ObservableObject {
     
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
         
-        //        self.timerCancellable?.cancel()
-        //        if forMeasurement != 1 {
-        //            timer.upstream.connect().cancel()
-        //        }
-        
-        
         var rota = rotas[forRota]
-        
         
         guard rota.f1Pressures[forMeasurement] != "" && rota.f2Pressures[forMeasurement] != "" else {
             showAlert = true
@@ -108,8 +101,6 @@ final class CoreViewModel: ObservableObject {
             rota.timeToLeave = timeToLeaveF1
         }
         
-        
-        
         if !(0.001...3600).contains(rota.timeToLeave ?? 0) {
             showAlert = true
             self.startOrCalculateButtonActive[forRota][forMeasurement] = true
@@ -117,10 +108,8 @@ final class CoreViewModel: ObservableObject {
         } else {
             if let timeToLeave = rota.timeToLeave {
                 self.rotas[forRota].timeToLeave = timeToLeave
-                
                 self.rotas[forRota].exitTime = Date().addingTimeInterval(timeToLeave)
-//                self.rotas[forRota].diff = (self.rotas[forRota].exitTime?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-                                
+                
                 if timeToLeave > 30 {
                     let leaveNotificationTime = timeToLeave - 30.0
                     NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota)
@@ -139,16 +128,11 @@ final class CoreViewModel: ObservableObject {
                             print(self.rotas[forRota].timeToLeave!)
                             
                             self.rotas[forRota].diff = (self.rotas[forRota].exitTime?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-                            
-//                            self.rotas[forRota].diff = Date().addingTimeInterval(self.rotas[forRota].timeToLeave!).timeIntervalSince1970 - Date().timeIntervalSince1970
-//                            self.rotas[forRota].newDate = Date(timeIntervalSince1970: self.rotas[forRota].diff ?? 0)
-                            
                         } else {
                             // should we cancal the timer in ceratain condition?
-//                            print("cancel the timer")
-//                             self.timer.upstream.connect().cancel()
-                        
-//                             self.timerCancellable?[forRota].cancel()
+                            //                            print("cancel the timer")
+                            //                             self.timer.upstream.connect().cancel()
+                            //                             self.timerCancellable?[forRota].cancel()
                         }
                     }
                     .store(in: &cancellables)
