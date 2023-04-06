@@ -19,15 +19,13 @@ struct Rota: Identifiable {
     
     var time: [Date]?
     
-    var duration: TimeInterval = 0 //should be optional as well?
-    
     var f1Pressures: [String]
     var f2Pressures: [String]
     
     var timeToLeave: TimeInterval?
-    var exitTime: Date?
-    var diff: TimeInterval?
-    var diff2: TimeInterval?
+    var exitDate: Date?
+    var remainingTime: TimeInterval?
+    var duration: TimeInterval?
     
     
     var doubleF1Pressures: [Double] {

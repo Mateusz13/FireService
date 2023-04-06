@@ -64,7 +64,7 @@ extension RotaTableView {
             // .focused($fieldInFocus, equals: .name)
             TextField("name2", text: $vm.rotas[rotaNumber].f2Name)
             // .focused($fieldInFocus, equals: .name)
-            Text(vm.rotas[rotaNumber].diff2?.asString(style: .abbreviated) ?? "0:00")
+            Text(vm.rotas[rotaNumber].duration?.asString(style: .abbreviated) ?? "0:00")
                 .frame(height: 33)
                 .foregroundColor(.red)
         }

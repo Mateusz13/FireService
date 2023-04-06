@@ -55,9 +55,9 @@ extension MainView {
         ForEach(vm.rotas) { rota in
             VStack {
                 RotaTableView(rotaNumber: rota.number)
-                
-                Text("Pozostały czas: \(rota.diff?.asString(style: .abbreviated) ?? "")")
+                Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
                     .foregroundColor(.red)
+                
                 
             }
         }
@@ -117,7 +117,7 @@ extension MainView {
 //                    Text("Pozostały czas: \(timerInterval: Date()...(endDate ?? Date().addingTimeInterval(1)), countsDown: true)")
 //                        .foregroundColor(.red)
 //                }
-//                Text("Pozostały czas: \(timerInterval: Date()...(rota.exitTime ?? Date()), countsDown: true)")
+//                Text("Pozostały czas: \(timerInterval: Date()...(rota.exitDate ?? Date()), countsDown: true)")
 //                    .foregroundColor(.red)
 
 
@@ -140,3 +140,6 @@ extension MainView {
 
 //                if let timeToLeave = rota.timeToLeave {
 //                    if (-1...3600).contains(timeToLeave) { // we will get alert anyway (vm solution?)
+
+//                    Text("Pozostały czas: \(rota.remainingTime?.asString(style: .abbreviated) ?? "")")
+//                        .foregroundColor(.red)

@@ -46,9 +46,13 @@ final class CoreViewModel: ObservableObject {
             timer
                 .sink { [weak self] _ in
                     guard let self = self else { return }
-                    self.rotas[forRota].duration += 1
+//                    self.rotas[forRota].duration += 1
                     
-                    self.rotas[forRota].diff2 = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+                    self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+                    
+                    
+                        self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                    
                     
                 }
                 .store(in: &cancellables)
@@ -108,38 +112,49 @@ final class CoreViewModel: ObservableObject {
         } else {
             if let timeToLeave = rota.timeToLeave {
                 self.rotas[forRota].timeToLeave = timeToLeave
-                self.rotas[forRota].exitTime = Date().addingTimeInterval(timeToLeave)
-                
+                self.rotas[forRota].exitDate = Date().addingTimeInterval(timeToLeave)
                 if timeToLeave > 30 {
                     let leaveNotificationTime = timeToLeave - 30.0
                     NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota)
                 }
             }
-            if forMeasurement == 1 {
-                timer
-                    .sink { [weak self] _ in
-                        guard let self = self else { return }
-                        guard self.rotas[forRota].timeToLeave != nil else {
-                            return
-                        }
-                        if self.rotas[forRota].timeToLeave ?? 2 > 1 {
-                            self.rotas[forRota].timeToLeave! -= 1
-                            
-                            print(self.rotas[forRota].timeToLeave!)
-                            
-                            self.rotas[forRota].diff = (self.rotas[forRota].exitTime?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-                        } else {
-                            // should we cancal the timer in ceratain condition?
-                            //                            print("cancel the timer")
-                            //                             self.timer.upstream.connect().cancel()
-                            //                             self.timerCancellable?[forRota].cancel()
-                        }
-                    }
-                    .store(in: &cancellables)
-            }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -218,7 +233,7 @@ final class CoreViewModel: ObservableObject {
 //            if leftTime2F1 > leftTime2F2 {
 //                rota.timeToLeave = leftTime2F2
 //            } else {
-//                rota.exitTime = leftTime2F1
+//                rota.exitDate = leftTime2F1
 //            }
 //            self.rotas[forRota].exitTime = rota.exitTime
 //            return
@@ -245,3 +260,27 @@ final class CoreViewModel: ObservableObject {
 //                }
 //                .store(in: &cancellables)
 //    }
+
+
+
+//if forMeasurement == 1 {
+//    timer
+//        .sink { [weak self] _ in
+//            guard let self = self else { return }
+            
+//                        guard self.rotas[forRota].timeToLeave != nil else {
+//                            return
+//                        }
+//                        if self.rotas[forRota].timeToLeave ?? 2 > 1 {
+//                            self.rotas[forRota].timeToLeave! -= 1
+            
+//                            self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+            
+//                        } else {
+                // should we cancal the timer in ceratain condition?
+                //                             self.timer.upstream.connect().cancel()
+                //                             self.timerCancellable?[forRota].cancel()
+//                        }
+//        }
+//        .store(in: &cancellables)
+//}
