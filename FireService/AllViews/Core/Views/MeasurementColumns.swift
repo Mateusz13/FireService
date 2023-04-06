@@ -24,6 +24,7 @@ struct MeasurementColumns: View {
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[measurement])
             if vm.startOrCalculateButtonActive[rotaNumber][measurement] == false {
                 Text(vm.rotas[rotaNumber].time?[measurement].getFormattedDateToHHmm() ?? "error")
+                    .frame(height: 33)
                     .foregroundColor(.secondary)
             } else {
                 Button {
@@ -31,7 +32,9 @@ struct MeasurementColumns: View {
                 } label: {
                     Text("Oblicz")
                 }
+//                .frame(height: 33)
                 .buttonStyle(.borderedProminent)
+                
             }
         }
     }

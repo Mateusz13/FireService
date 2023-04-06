@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 
-class CoreViewModel: ObservableObject {
+final class CoreViewModel: ObservableObject {
     
     @Published var rotas: [Rota]
     
@@ -17,7 +17,7 @@ class CoreViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     
     var cancellables = Set<AnyCancellable>()
-    //    var timerCancellable: Cancellable?
+//    var timerCancellable: Cancellable?  // creat array ?
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -50,23 +50,29 @@ class CoreViewModel: ObservableObject {
             self.rotas[forRota].time = Array(repeating: Date(), count: 7)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = false
             hideKeyboard()
-                    timer
-                        .sink { [weak self] _ in
-                            guard let self = self else { return }
-                            self.rotas[forRota].duration += 1
-                        }
-                        .store(in: &cancellables)
+            timer
+                .sink { [weak self] _ in
+                    guard let self = self else { return }
+                    self.rotas[forRota].duration += 1
+                    
+                    self.rotas[forRota].diff2 = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+                    
+                }
+                .store(in: &cancellables)
+            NotificationManager.instance.scheduleMeasurement1Notification()
             return
         }
         
         self.rotas[forRota].time?[forMeasurement] = Date()
         self.startOrCalculateButtonActive[forRota][forMeasurement] = false
+        NotificationManager.instance.cancelExitNotification(forRota: forRota)
         hideKeyboard()
         
         
         
         if rota.f1Pressures[forMeasurement] == "" || rota.f2Pressures[forMeasurement] == "" {
             showAlert = true
+            return
         } else {
             self.rotas[forRota].time?[forMeasurement] = Date()
             self.startOrCalculateButtonActive[forRota][forMeasurement] = false
@@ -97,29 +103,52 @@ class CoreViewModel: ObservableObject {
         
         
         if timeToLeaveF1 > timeToLeaveF2 {
-            rota.exitTime = timeToLeaveF2
+            rota.timeToLeave = timeToLeaveF2
         } else {
-            rota.exitTime = timeToLeaveF1
+            rota.timeToLeave = timeToLeaveF1
         }
         
-        if !(0.001...3600).contains(rota.exitTime ?? 0) {
+        
+        
+        if !(0.001...3600).contains(rota.timeToLeave ?? 0) {
             showAlert = true
             self.startOrCalculateButtonActive[forRota][forMeasurement] = true
+            return
         } else {
-            self.rotas[forRota].exitTime = rota.exitTime
+            if let timeToLeave = rota.timeToLeave {
+                self.rotas[forRota].timeToLeave = timeToLeave
+                
+                self.rotas[forRota].exitTime = Date().addingTimeInterval(timeToLeave)
+//                self.rotas[forRota].diff = (self.rotas[forRota].exitTime?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                                
+                if timeToLeave > 30 {
+                    let leaveNotificationTime = timeToLeave - 30.0
+                    NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota)
+                }
+            }
             if forMeasurement == 1 {
                 timer
                     .sink { [weak self] _ in
                         guard let self = self else { return }
-                        guard self.rotas[forRota].exitTime != nil else {
+                        guard self.rotas[forRota].timeToLeave != nil else {
                             return
                         }
-                        if self.rotas[forRota].exitTime ?? 0 > 0 {
-                            self.rotas[forRota].exitTime! -= 1
+                        if self.rotas[forRota].timeToLeave ?? 2 > 1 {
+                            self.rotas[forRota].timeToLeave! -= 1
+                            
+                            print(self.rotas[forRota].timeToLeave!)
+                            
+                            self.rotas[forRota].diff = (self.rotas[forRota].exitTime?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                            
+//                            self.rotas[forRota].diff = Date().addingTimeInterval(self.rotas[forRota].timeToLeave!).timeIntervalSince1970 - Date().timeIntervalSince1970
+//                            self.rotas[forRota].newDate = Date(timeIntervalSince1970: self.rotas[forRota].diff ?? 0)
+                            
                         } else {
-                            //timer.upstream.connect().cancel()
-                            //self.timerCancellable?.cancel()
                             // should we cancal the timer in ceratain condition?
+//                            print("cancel the timer")
+//                             self.timer.upstream.connect().cancel()
+                        
+//                             self.timerCancellable?[forRota].cancel()
                         }
                     }
                     .store(in: &cancellables)
@@ -127,6 +156,12 @@ class CoreViewModel: ObservableObject {
         }
     }
 }
+
+
+
+
+
+
 
 //    @Published var startButtonActive: [Bool]
 //    self.startButtonActive = Array(repeating: true, count: 2)
@@ -197,7 +232,7 @@ class CoreViewModel: ObservableObject {
 //
 //        guard rota.doubleF2Pressure2 == 0 else {
 //            if leftTime2F1 > leftTime2F2 {
-//                rota.exitTime = leftTime2F2
+//                rota.timeToLeave = leftTime2F2
 //            } else {
 //                rota.exitTime = leftTime2F1
 //            }

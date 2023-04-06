@@ -5,7 +5,7 @@
 //  Created by Mateusz Szafarczyk on 13/02/2023.
 //
 
-import SwiftUI
+import SwiftUI 
 
 struct RotaTableView: View {
     
@@ -24,12 +24,11 @@ struct RotaTableView: View {
             HStack {
                 namesColumn
                 entryColumn
-                MeasurementColumns(rotaNumber: rotaNumber, measurement: 1)
-                MeasurementColumns(rotaNumber: rotaNumber, measurement: 2)
-                MeasurementColumns(rotaNumber: rotaNumber, measurement: 3)
-                MeasurementColumns(rotaNumber: rotaNumber, measurement: 4)
-                MeasurementColumns(rotaNumber: rotaNumber, measurement: 5)
+                ForEach(1...6, id: \.self) { measurement in
+                    MeasurementColumns(rotaNumber: rotaNumber, measurement: measurement)
+                }
             }
+
         }
         .textFieldStyle(.roundedBorder)
         .frame(height: 150)
@@ -42,7 +41,7 @@ struct RotaTableView: View {
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
         }
-        Spacer()
+//        Spacer()
     }
 }
 
@@ -65,7 +64,8 @@ extension RotaTableView {
             // .focused($fieldInFocus, equals: .name)
             TextField("name2", text: $vm.rotas[rotaNumber].f2Name)
             // .focused($fieldInFocus, equals: .name)
-            Text(timerInterval: (vm.rotas[rotaNumber].time?[0] ?? Date())...Date(), countsDown: false)
+            Text(vm.rotas[rotaNumber].diff2?.asString(style: .abbreviated) ?? "0:00")
+                .frame(height: 33)
                 .foregroundColor(.red)
         }
         .frame(minWidth: 80)
@@ -82,6 +82,7 @@ extension RotaTableView {
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[0])
             if vm.startOrCalculateButtonActive[rotaNumber][0] == false {
                 Text(vm.rotas[rotaNumber].time?[0].getFormattedDateToHHmm() ?? "error")
+                    .frame(height: 33)
                     .foregroundColor(.secondary)
             } else {
                 Button {
@@ -143,3 +144,9 @@ extension RotaTableView {
 //        }
 //    }
 }
+
+
+
+//IOS 16:
+//            Text(timerInterval: (vm.rotas[rotaNumber].time?[0] ?? Date())...Date(), countsDown: false)
+

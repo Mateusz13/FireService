@@ -17,6 +17,10 @@ extension Date {
     func getFormattedDateToHHmm() -> String {
         return getFormattedDate(format: "HH:mm")
     }
+    
+//    func getFormattedDateToHHmmSS() -> String {
+//        return getFormattedDate(format: "HH:mm:SS")
+//    }
 }
 
 

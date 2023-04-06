@@ -10,7 +10,6 @@ import SwiftUI
 struct MainView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
-    @State private var showAlert: Bool = false
     
     
     var body: some View {
@@ -36,6 +35,9 @@ struct MainView: View {
         .alert(isPresented: $vm.showAlert) {
             getAlert()
         }
+        .onAppear {
+            NotificationManager.instance.requestAuthorization()
+        }
     }
 }
 
@@ -49,25 +51,34 @@ struct MainView_Previews: PreviewProvider {
 extension MainView {
     
     private var allRotas: some View {
+//
+//        @State var endDate = Date().addingTimeInterval(vm.rotas[0].timeToLeave ?? 0)
+        
         ForEach(vm.rotas) { rota in
-            VStack {
+
+            
+           
+           
+            
+                VStack {
                 RotaTableView(rotaNumber: rota.number)
                 
                 
-//                if let exitTime = rota.exitTime {
-//                    if (-1...3600).contains(exitTime) { // we will get alert anyway
-                Text("Pozostały czas: \(rota.exitTime?.asString(style: .abbreviated) ?? "")")
-                            .foregroundColor(.red)
-                        
-                        // let endDate = Date().addingTimeInterval(exitTime)
-                        // Text(timerInterval: Date()...endDate, countsDown: true)
-                        //   .foregroundColor(.red)
-                        
-//                    }
-//                }
+                //                if let timeToLeave = rota.timeToLeave {
+                //                    if (-1...3600).contains(timeToLeave) { // we will get alert anyway (vm solution?)
+                    
+                    
+                
+//                    Text("Pozostały czas: \(rota.newDate?.getFormattedDateToMMss() ?? "")")
+//                    .foregroundColor(.red)
+                    
+                    Text("Pozostały czas: \(rota.diff?.asString(style: .abbreviated) ?? "")")
+                    .foregroundColor(.red)
+                    
             }
         }
     }
+    
     
     private func getAlert() -> Alert {
         
@@ -81,3 +92,29 @@ extension MainView {
             dismissButton: .default(Text("OK")))
     }
 }
+
+
+//IOS 16:
+//                if endDate ?? Date() > Date() {
+//                    Text("Pozostały czas: \(timerInterval: Date()...(endDate ?? Date().addingTimeInterval(1)), countsDown: true)")
+//                        .foregroundColor(.red)
+//                }
+
+//                Text("Pozostały czas: \(timerInterval: Date()...(rota.exitTime ?? Date()), countsDown: true)")
+//                    .foregroundColor(.red)
+
+
+// .onAppear solution:
+
+//Text("Pozostały czas: \(timeToLeave?.asString(style: .abbreviated) ?? "")")
+//    .foregroundColor(.red)
+//
+//    .onAppear
+//    {
+//        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+//            if rota.exitTime != nil {
+//                timeToLeave! -= 1
+//            }
+//        }
+//
+//    }

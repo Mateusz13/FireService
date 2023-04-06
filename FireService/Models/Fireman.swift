@@ -24,7 +24,13 @@ struct Rota: Identifiable {
     var f1Pressures: [String]
     var f2Pressures: [String]
     
-    var exitTime: TimeInterval?
+    var timeToLeave: TimeInterval?
+    
+    var exitTime: Date?
+    var diff: TimeInterval?
+    
+    var diff2: TimeInterval?
+    
     
     var doubleF1Pressures: [Double] {
         return f1Pressures.compactMap(Double.init)
