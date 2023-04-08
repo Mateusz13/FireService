@@ -20,6 +20,7 @@
 		E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B864A299E24FC000F6CCE /* HideKeyboard.swift */; };
 		E642E14929DA249100F53B07 /* MeasurementColumns.swift in Sources */ = {isa = PBXBuildFile; fileRef = E642E14829DA249100F53B07 /* MeasurementColumns.swift */; };
 		E642E14E29DC0EF400F53B07 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E642E14D29DC0EF400F53B07 /* NotificationManager.swift */; };
+		E6B79C1029E1489E005BF832 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B79C0F29E1489E005BF832 /* HapticManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		E63B864A299E24FC000F6CCE /* HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboard.swift; sourceTree = "<group>"; };
 		E642E14829DA249100F53B07 /* MeasurementColumns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementColumns.swift; sourceTree = "<group>"; };
 		E642E14D29DC0EF400F53B07 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		E6B79C0F29E1489E005BF832 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				E642E14D29DC0EF400F53B07 /* NotificationManager.swift */,
+				E6B79C0F29E1489E005BF832 /* HapticManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				E63B863F299AC225000F6CCE /* CoreViewModel.swift in Sources */,
 				E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */,
 				E634833B29CF14FC00AEB05A /* Date.swift in Sources */,
+				E6B79C1029E1489E005BF832 /* HapticManager.swift in Sources */,
 				E63B8641299AD42D000F6CCE /* RotaTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

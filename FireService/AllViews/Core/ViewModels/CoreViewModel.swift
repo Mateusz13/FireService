@@ -37,6 +37,7 @@ final class CoreViewModel: ObservableObject {
         
         guard rota.f1Pressures[forMeasurement] != "" && rota.f2Pressures[forMeasurement] != "" else {
             showAlert = true
+            HapticManager.notifiaction(type: .error)
             return
         }
         
@@ -70,6 +71,7 @@ final class CoreViewModel: ObservableObject {
         
         if rota.f1Pressures[forMeasurement] == "" || rota.f2Pressures[forMeasurement] == "" {
             showAlert = true
+            HapticManager.notifiaction(type: .error)
             return
         } else {
             self.rotas[forRota].time?[forMeasurement] = Date()
@@ -108,6 +110,7 @@ final class CoreViewModel: ObservableObject {
         
         if !(0.001...3600).contains(rota.timeToLeave ?? 0) {
             showAlert = true
+            HapticManager.notifiaction(type: .error)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = true
             return
         } else {
