@@ -20,10 +20,12 @@ struct MeasurementColumns: View {
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($vm.rotas[rotaNumber].f1Pressures[measurement])
                 .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
+                .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
             TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[measurement])
                 .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
+                .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
             if vm.startOrCalculateButtonActive[rotaNumber][measurement] == false {
                 Text(vm.rotas[rotaNumber].time?[measurement].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)
