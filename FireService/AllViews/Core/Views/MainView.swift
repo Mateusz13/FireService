@@ -16,6 +16,7 @@ struct MainView: View {
         
         ScrollView(.vertical, showsIndicators: true) {
             allRotas
+            addButton
             Spacer()
         }
         .navigationTitle("MSZP")
@@ -56,10 +57,25 @@ extension MainView {
             VStack {
                 RotaTableView(rotaNumber: rota.number)
                 Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-                    .foregroundColor(.red)
-                
-                
+                    .foregroundColor(rota.number == 2 ? .orange : .red)
             }
+        }
+    }
+    
+    private var addButton: some View {
+        
+        HStack {
+            Button {
+                vm.addRota()
+            } label: {
+                Label("", systemImage: "plus.app.fill")
+                    .font(.title)
+            }
+            
+            .foregroundColor(.green)
+            .padding(.horizontal)
+            Spacer()
+            
         }
     }
     

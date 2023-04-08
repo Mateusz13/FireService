@@ -8,7 +8,7 @@
 import SwiftUI 
 
 struct RotaTableView: View {
-    
+
     let rotaNumber: Int
     @EnvironmentObject private var vm: CoreViewModel
     
@@ -36,7 +36,7 @@ struct RotaTableView: View {
         //.padding(.horizontal, 3)
         // .padding(.vertical, 3)
         .padding(3)
-        .background(Color.gray.brightness(0.4))
+        .background(rotaNumber == 2 ? Color(hue: 0.01, saturation: 0.63, brightness: 0.94, opacity: 1.00) : Color(white: 0.93, opacity: 1.00))
         .cornerRadius(10)
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
@@ -55,10 +55,18 @@ struct RotaTableView_Previews: PreviewProvider {
 extension RotaTableView {
     
     private var namesColumn: some View {
+        
         VStack {
-            Text("ROTA \(rotaNumber+1)")
-                .bold()
-                .underline()
+            if rotaNumber < 3 {
+                Text("ROTA \(rotaNumber == 2 ? "RIT" : String(rotaNumber+1))")
+                    .bold()
+                    .underline()
+            } else {
+                Text("ROTA \(rotaNumber)")
+                    .bold()
+                    .underline()
+            }
+            
             
             TextField("name1", text: $vm.rotas[rotaNumber].f1Name)
             // .focused($fieldInFocus, equals: .name)
@@ -66,7 +74,7 @@ extension RotaTableView {
             // .focused($fieldInFocus, equals: .name)
             Text(vm.rotas[rotaNumber].duration?.asString(style: .abbreviated) ?? "0:00")
                 .frame(height: 33)
-                .foregroundColor(.red)
+                .foregroundColor(rotaNumber == 2 ? .yellow : .red)
         }
         .frame(minWidth: 80)
     }

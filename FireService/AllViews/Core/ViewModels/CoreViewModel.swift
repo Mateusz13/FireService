@@ -15,7 +15,8 @@ final class CoreViewModel: ObservableObject {
     
     @Published var startOrCalculateButtonActive: [[Bool]]
     @Published var showAlert: Bool = false
-    let measurementsNumber: Int = 10+1
+    let measurementsNumber: Int = 11 //10
+    var numberOfRotas: Int = 2 //3
     
     var cancellables = Set<AnyCancellable>()
     //    var timerCancellable: Cancellable?  // creat array ?
@@ -29,6 +30,13 @@ final class CoreViewModel: ObservableObject {
         self.rotas = rotas
         //assing 100 at the begging or append in 'next' step ?
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
+    }
+    
+    func addRota() {
+        numberOfRotas += 1
+        self.rotas.append(Rota(number: numberOfRotas))
+        self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber))
+        
     }
     
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
