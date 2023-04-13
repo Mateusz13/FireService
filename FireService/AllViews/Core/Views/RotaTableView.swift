@@ -83,6 +83,7 @@ extension RotaTableView {
         .frame(minWidth: 80)
     }
     
+   
     private var entryColumn: some View {
         VStack {
             Text("WEJŚCIE")

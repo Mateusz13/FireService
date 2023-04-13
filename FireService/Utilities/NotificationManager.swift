@@ -35,7 +35,7 @@ class NotificationManager {
         //NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
                 
         // time
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 7.0, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 300.0, repeats: false)
  
         // calendar
 //        var dateComponents = DateComponents()

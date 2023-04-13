@@ -18,6 +18,7 @@ final class CoreViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     let measurementsNumber: Int = 11 //10
     var numberOfRotas: Int = 2 //3
+    let exitNotificationTime = 300.0
     
     var cancellables = Set<AnyCancellable>()
     //    var timerCancellable: Cancellable?  // creat array ?
@@ -132,8 +133,8 @@ final class CoreViewModel: ObservableObject {
             if let timeToLeave = rota.timeToLeave {
                 self.rotas[forRota].timeToLeave = timeToLeave
                 self.rotas[forRota].exitDate = Date().addingTimeInterval(timeToLeave)
-                if timeToLeave > 30 {
-                    let leaveNotificationTime = timeToLeave - 30.0
+                if timeToLeave > exitNotificationTime {
+                    let leaveNotificationTime = timeToLeave - exitNotificationTime
                     NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota)
                 }
             }

@@ -14,9 +14,16 @@ struct FireServiceApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                MainView()
-                    .environmentObject(vm)
+            if #available(iOS 16.0, *) {
+                NavigationStack {
+                    MainView()
+                        .environmentObject(vm)
+                }
+            } else {
+                NavigationView {
+                    MainView()
+                        .environmentObject(vm)
+                }
             }
         }
     }
