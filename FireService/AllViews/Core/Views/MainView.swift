@@ -12,6 +12,7 @@ struct MainView: View {
     @EnvironmentObject private var vm: CoreViewModel
     
     
+    
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: true) {
@@ -19,7 +20,7 @@ struct MainView: View {
             addButton
             Spacer()
         }
-        .navigationTitle("MSZP")
+        .navigationTitle("POWIETRZE DLA ROT")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .keyboard) {

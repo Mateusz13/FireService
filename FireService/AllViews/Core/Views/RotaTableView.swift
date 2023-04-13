@@ -35,7 +35,7 @@ struct RotaTableView: View {
         //.padding(.horizontal, 3)
         // .padding(.vertical, 3)
         .padding(3)
-        .background(rotaNumber == 2 ? Color(hue: 0.01, saturation: 0.63, brightness: 0.94, opacity: 1.00) : Color(white: 0.93, opacity: 1.00))
+        .background(rotaNumber == 2 ? Color(hue: 0.01, saturation: 0.63, brightness: 0.94, opacity: 1.00) : Color(white: 0.80, opacity: 1.00))
         .cornerRadius(10)
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
