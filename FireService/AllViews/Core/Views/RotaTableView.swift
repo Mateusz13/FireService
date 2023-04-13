@@ -28,7 +28,6 @@ struct RotaTableView: View {
                     MeasurementColumns(rotaNumber: rotaNumber, measurement: measurement)
                 }
             }
-            
         }
         .textFieldStyle(.roundedBorder)
         .frame(height: 150)

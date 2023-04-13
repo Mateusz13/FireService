@@ -59,10 +59,7 @@ final class CoreViewModel: ObservableObject {
 //                    self.rotas[forRota].duration += 1
                     
                     self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-                    
-                    
-                        self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-                    
+                    self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
                     
                 }
                 .store(in: &cancellables)

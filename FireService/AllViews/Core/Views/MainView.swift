@@ -56,8 +56,18 @@ extension MainView {
         ForEach(vm.rotas) { rota in
             VStack {
                 RotaTableView(rotaNumber: rota.number)
-                Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-                    .foregroundColor(rota.number == 2 ? .orange : .red)
+                HStack {
+//                    Button {
+//                        
+//                    } label: {
+//                        Text("Zakończ")
+//                    }
+//                    .buttonStyle(.borderedProminent)
+//                    .background(.red)
+//                    .foregroundColor(.green)
+                    Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+                        .foregroundColor(rota.number == 2 ? .orange : .red)
+                }
             }
         }
     }
