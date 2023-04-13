@@ -14,6 +14,7 @@ final class CoreViewModel: ObservableObject {
     @Published var rotas: [Rota]
     
     @Published var startOrCalculateButtonActive: [[Bool]]
+    @Published var endButtonActive: [Bool]
     @Published var showAlert: Bool = false
     let measurementsNumber: Int = 11 //10
     var numberOfRotas: Int = 2 //3
@@ -30,6 +31,7 @@ final class CoreViewModel: ObservableObject {
         self.rotas = rotas
         //assing 100 at the begging or append in 'next' step ?
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
+        self.endButtonActive = Array(repeating: true, count: measurementsNumber)
     }
     
     func addRota() {
@@ -37,6 +39,12 @@ final class CoreViewModel: ObservableObject {
         self.rotas.append(Rota(number: numberOfRotas))
         self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber))
         
+    }
+    
+    func endAction(forRota: Int) {
+        endButtonActive[forRota] = false
+        self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+        self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
     }
     
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
@@ -57,9 +65,11 @@ final class CoreViewModel: ObservableObject {
                 .sink { [weak self] _ in
                     guard let self = self else { return }
 //                    self.rotas[forRota].duration += 1
-                    
-                    self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-                    self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                    if endButtonActive[forRota] {
+                        self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+                        self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                    }
+
                     
                 }
                 .store(in: &cancellables)

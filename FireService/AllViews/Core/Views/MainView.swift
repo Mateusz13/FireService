@@ -56,18 +56,30 @@ extension MainView {
         ForEach(vm.rotas) { rota in
             VStack {
                 RotaTableView(rotaNumber: rota.number)
-                HStack {
-//                    Button {
-//                        
-//                    } label: {
-//                        Text("Zakończ")
-//                    }
-//                    .buttonStyle(.borderedProminent)
-//                    .background(.red)
-//                    .foregroundColor(.green)
-                    Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-                        .foregroundColor(rota.number == 2 ? .orange : .red)
+                HStack() {
+                    if vm.endButtonActive[rota.number] == false {
+                        Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
+                            .frame(height: 33)
+                            .foregroundColor(.secondary)
+                    } else {
+                        Button {
+                            vm.endAction(forRota: rota.number)
+                            
+                        } label: {
+                            Text("Zakończ")
+                        }
+                        .buttonStyle(.bordered)
+                        .background(.purple)
+                        .cornerRadius(10)
+                        .foregroundColor(.black)
+                    }
+                        Spacer()
+                        Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+                            .foregroundColor(rota.number == 2 ? .orange : .red)
+                        Spacer()
+                        Spacer()
                 }
+                .padding(.horizontal, 2)
             }
         }
     }
@@ -83,7 +95,7 @@ extension MainView {
             }
             
             .foregroundColor(.green)
-            .padding(.horizontal)
+            .padding()
             Spacer()
             
         }

@@ -71,9 +71,14 @@ extension RotaTableView {
             // .focused($fieldInFocus, equals: .name)
             TextField("name2", text: $vm.rotas[rotaNumber].f2Name)
             // .focused($fieldInFocus, equals: .name)
-            Text(vm.rotas[rotaNumber].duration?.asString(style: .abbreviated) ?? "0:00")
-                .frame(height: 33)
-                .foregroundColor(rotaNumber == 2 ? .yellow : .red)
+            if (0...7200).contains(vm.rotas[rotaNumber].duration ?? 0) {
+                Text(vm.rotas[rotaNumber].duration?.asString(style: .abbreviated) ?? "0:00")
+                    .frame(height: 33)
+                    .foregroundColor(rotaNumber == 2 ? .yellow : .red)
+            } else {
+                Text("error")
+                    .frame(height: 33)
+            }
         }
         .frame(minWidth: 80)
     }
