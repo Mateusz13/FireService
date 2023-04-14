@@ -11,8 +11,6 @@ struct MainView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
     
-    
-    
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: true) {
