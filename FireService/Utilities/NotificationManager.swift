@@ -23,7 +23,7 @@ class NotificationManager {
         }
     }
     
-    func scheduleMeasurement1Notification() {
+    func scheduleFirstMeasurementNotification(forRota: Int) {
         
         
         let content = UNMutableNotificationContent()
@@ -46,7 +46,7 @@ class NotificationManager {
         
         
         let request = UNNotificationRequest(
-            identifier: UUID().uuidString,
+            identifier: "FirstM\(forRota)",
             content: content,
             trigger: trigger)
         
@@ -80,6 +80,10 @@ class NotificationManager {
         
         UNUserNotificationCenter.current().add(request)
 
+    }
+    
+    func cancelFirstMeasurementNotification(forRota: Int) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["FirstM\(forRota)"])
     }
     
     func cancelExitNotification(forRota: Int) {
