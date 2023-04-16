@@ -75,7 +75,7 @@ extension RotaTableView {
                 Text(vm.rotas[rotaNumber].duration?.asString(style: .abbreviated) ?? "0:00")
                     .frame(height: 33)
                     .foregroundColor(rotaNumber == 2 ? .yellow : .red)
-                    .padding(.horizontal, 5)
+                    .padding(.horizontal, 3)
                     .background((300...330).contains(vm.rotas[rotaNumber].duration ?? 0) ? .green : .clear)
     
             } else {

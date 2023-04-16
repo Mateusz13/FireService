@@ -10,6 +10,8 @@ import SwiftUI
 struct MainView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
+    @State private var currentTime = ""
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         
@@ -18,7 +20,7 @@ struct MainView: View {
             addButton
             Spacer()
         }
-        .navigationTitle("POWIETRZE DLA ROT")
+        .navigationTitle("\(currentTime)          POWIETRZE DLA ROT")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .keyboard) {
@@ -37,6 +39,10 @@ struct MainView: View {
         }
         .onAppear {
             NotificationManager.instance.requestAuthorization()
+            self.currentTime = Date().getFormattedDateToHHmmSS()
+        }
+        .onReceive(timer) { _ in
+            self.currentTime = Date().getFormattedDateToHHmmSS()
         }
     }
 }
@@ -72,14 +78,14 @@ extension MainView {
                         .cornerRadius(10)
                         .foregroundColor(.black)
                     }
-                        Spacer()
-                        Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3600) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-                            .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
-//                            .foregroundColor(rota.number == 2 ? .orange : .red)
-                            .padding(.horizontal, 2)
-                            .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
-                        Spacer()
-                        Spacer()
+                    Spacer()
+                    Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3600) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+                        .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
+                    //                            .foregroundColor(rota.number == 2 ? .orange : .red)
+                        .padding(.horizontal, 3)
+                        .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
+                    Spacer()
+                    Spacer()
                 }
                 .padding(.horizontal, 2)
             }
