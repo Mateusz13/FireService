@@ -73,8 +73,11 @@ extension MainView {
                         .foregroundColor(.black)
                     }
                         Spacer()
-                        Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-                            .foregroundColor(rota.number == 2 ? .orange : .red)
+                        Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3600) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+                            .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
+//                            .foregroundColor(rota.number == 2 ? .orange : .red)
+                            .padding(.horizontal, 2)
+                            .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
                         Spacer()
                         Spacer()
                 }
