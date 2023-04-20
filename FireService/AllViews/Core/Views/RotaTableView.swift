@@ -109,6 +109,7 @@ extension RotaTableView {
                 } label: {
                     Text("Start")
                 }
+                .disabled(!vm.endButtonActive[rotaNumber])
                 .buttonStyle(.borderedProminent)
                 .foregroundColor(.green)
             }
