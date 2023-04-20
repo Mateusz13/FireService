@@ -24,6 +24,7 @@ struct FireServiceApp: App {
                     MainView()
                         .environmentObject(vm)
                 }
+                .navigationViewStyle(StackNavigationViewStyle())
             }
         }
     }

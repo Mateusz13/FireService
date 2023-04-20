@@ -82,6 +82,7 @@ extension RotaTableView {
                 Text("error")
                     .frame(height: 33)
             }
+                
         }
         .frame(minWidth: 80)
     }
