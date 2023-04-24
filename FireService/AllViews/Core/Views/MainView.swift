@@ -62,6 +62,16 @@ extension MainView {
             VStack {
                 RotaTableView(rotaNumber: rota.number)
                 HStack() {
+                    if (0...7200).contains(vm.rotas[rota.number].duration ?? 0) {
+                        Text(vm.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
+                            .frame(minWidth: 69)
+//                            .foregroundColor(.blue)
+                            .padding(.horizontal, 3)
+                            .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
+                    } else {
+                        Text("error")
+                            .frame(height: 33)
+                    }
                     if vm.endButtonActive[rota.number] == false {
                         Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
                             .frame(height: 33)
@@ -73,6 +83,7 @@ extension MainView {
                         } label: {
                             Text("Zakończ")
                         }
+                        .font(.subheadline)
                         .buttonStyle(.bordered)
                         .background(.purple)
                         .cornerRadius(10)
@@ -105,7 +116,6 @@ extension MainView {
             .foregroundColor(.green)
             .padding()
             Spacer()
-            
         }
     }
     

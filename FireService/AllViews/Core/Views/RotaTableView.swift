@@ -30,10 +30,12 @@ struct RotaTableView: View {
             }
         }
         .textFieldStyle(.roundedBorder)
-        .frame(height: 150)
+        
+
+        //.frame(height: vm.numberOfFiremens[rotaNumber] == 2 ? 192 : 150)//150/192/234
         //.frame(maxWidth: 500)
         //.padding(.horizontal, 3)
-        // .padding(.vertical, 3)
+        //.padding(.vertical, 3)
         .padding(3)
         .background(rotaNumber == 2 ? Color(hue: 0.01, saturation: 0.63, brightness: 0.94, opacity: 1.00) : Color(white: 0.80, opacity: 1.00))
         .cornerRadius(10)
@@ -65,22 +67,43 @@ extension RotaTableView {
                     .bold()
                     .underline()
             }
-            
-            
             TextField("name1", text: $vm.rotas[rotaNumber].f1Name)
             // .focused($fieldInFocus, equals: .name)
             TextField("name2", text: $vm.rotas[rotaNumber].f2Name)
             // .focused($fieldInFocus, equals: .name)
-            if (0...7200).contains(vm.rotas[rotaNumber].duration ?? 0) {
-                Text(vm.rotas[rotaNumber].duration?.asString(style: .abbreviated) ?? "0:00")
-                    .frame(height: 33)
-                    .foregroundColor(rotaNumber == 2 ? .yellow : .red)
-                    .padding(.horizontal, 3)
-                    .background((300...330).contains(vm.rotas[rotaNumber].duration ?? 0) ? .green : .clear)
-    
-            } else {
-                Text("error")
-                    .frame(height: 33)
+            if vm.numberOfFiremens[rotaNumber] > 1 {
+                TextField("name3", text: $vm.rotas[rotaNumber].f3Name)
+                // .focused($fieldInFocus, equals: .name)
+            }
+            if vm.numberOfFiremens[rotaNumber] > 2 {
+                TextField("name4", text: $vm.rotas[rotaNumber].f4Name)
+                // .focused($fieldInFocus, equals: .name)
+            }
+            
+            
+            HStack(alignment: .firstTextBaseline, spacing: 0) {
+                Button {
+                    if vm.startOrCalculateButtonActive[rotaNumber][0] {
+                        vm.addFireman(forRota: rotaNumber)
+                    }
+                } label: {
+                    Label("", systemImage: "plus.circle.fill")
+                        .font(.title)
+                }
+                .foregroundColor(.green)
+                .frame(height: 34)
+                .disabled(vm.numberOfRotas == 3)
+//                if (0...7200).contains(vm.rotas[rotaNumber].duration ?? 0) {
+//                    Text(vm.rotas[rotaNumber].duration?.asString(style: .abbreviated) ?? "0:00")
+//                        .frame(height: 33)
+//                        .foregroundColor(rotaNumber == 2 ? .yellow : .red)
+//                        .padding(.horizontal, 3)
+//                        .background((300...330).contains(vm.rotas[rotaNumber].duration ?? 0) ? .green : .clear)
+//
+//                } else {
+//                    Text("error")
+//                        .frame(height: 33)
+//                }
             }
                 
         }
@@ -99,6 +122,18 @@ extension RotaTableView {
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[0])
                 .disabled(!vm.startOrCalculateButtonActive[rotaNumber][0])
+            if vm.numberOfFiremens[rotaNumber] > 1 {
+                TextField("BAR", text: $vm.rotas[rotaNumber].f3Pressures[0])
+                //                .focused($fieldInFocus, equals: .pressure0)
+                    .numbersOnly($vm.rotas[rotaNumber].f3Pressures[0])
+                    .disabled(!vm.startOrCalculateButtonActive[rotaNumber][0])
+            }
+            if vm.numberOfFiremens[rotaNumber] > 2 {
+                TextField("BAR", text: $vm.rotas[rotaNumber].f4Pressures[0])
+                //                .focused($fieldInFocus, equals: .pressure0)
+                    .numbersOnly($vm.rotas[rotaNumber].f4Pressures[0])
+                    .disabled(!vm.startOrCalculateButtonActive[rotaNumber][0])
+            }
             if vm.startOrCalculateButtonActive[rotaNumber][0] == false {
                 Text(vm.rotas[rotaNumber].time?[0].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)

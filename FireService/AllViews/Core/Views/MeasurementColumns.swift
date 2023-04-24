@@ -26,6 +26,20 @@ struct MeasurementColumns: View {
                 .numbersOnly($vm.rotas[rotaNumber].f2Pressures[measurement])
                 .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
                 .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
+            if vm.numberOfFiremens[rotaNumber] > 1 {
+                TextField("BAR", text: $vm.rotas[rotaNumber].f3Pressures[measurement])
+                //                .focused($fieldInFocus, equals: .pressure1)
+                    .numbersOnly($vm.rotas[rotaNumber].f3Pressures[measurement])
+                    .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
+                    .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
+            }
+            if vm.numberOfFiremens[rotaNumber] > 2 {
+                TextField("BAR", text: $vm.rotas[rotaNumber].f4Pressures[measurement])
+                //                .focused($fieldInFocus, equals: .pressure1)
+                    .numbersOnly($vm.rotas[rotaNumber].f4Pressures[measurement])
+                    .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
+                    .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
+            }
             if vm.startOrCalculateButtonActive[rotaNumber][measurement] == false {
                 Text(vm.rotas[rotaNumber].time?[measurement].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)

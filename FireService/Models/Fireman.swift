@@ -17,10 +17,17 @@ struct Rota: Identifiable {
     var f1Name: String
     var f2Name: String
     
+    var f3Name: String
+    var f4Name: String
+    
+    
     var time: [Date]?
     
     var f1Pressures: [String]
     var f2Pressures: [String]
+    
+    var f3Pressures: [String]
+    var f4Pressures: [String]
     
     var timeToLeave: TimeInterval?
     var exitDate: Date?
@@ -31,19 +38,31 @@ struct Rota: Identifiable {
     var doubleF1Pressures: [Double] {
         return f1Pressures.compactMap(Double.init)
     }
-    
-    
+
+
     var doubleF2Pressures: [Double] {
         return f2Pressures.compactMap(Double.init)
     }
     
+    var doubleF3Pressures: [Double] {
+        return f3Pressures.compactMap(Double.init)
+    }
     
-    init(number: Int, f1Name: String = "", f2Name: String = "", f1Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f2Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""]) {
+    var doubleF4Pressures: [Double] {
+        return f4Pressures.compactMap(Double.init)
+    }
+    
+    
+    init(number: Int, f1Name: String = "", f2Name: String = "", f3Name: String = "", f4Name: String = "", f1Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f2Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f3Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f4Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""]) {
         self.number = number
         self.f1Name = f1Name
         self.f2Name = f2Name
+        self.f3Name = f3Name
+        self.f4Name = f4Name
         self.f1Pressures = f1Pressures
         self.f2Pressures = f2Pressures
+        self.f3Pressures = f3Pressures
+        self.f4Pressures = f4Pressures
     }
 }
 

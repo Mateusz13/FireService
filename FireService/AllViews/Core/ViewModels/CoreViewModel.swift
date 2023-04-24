@@ -20,6 +20,8 @@ final class CoreViewModel: ObservableObject {
     var numberOfRotas: Int = 2 //3
     let exitNotificationTime = 300.0
     
+    @Published var numberOfFiremens: [Int] //2
+    
     var cancellables = Set<AnyCancellable>()
     //    var timerCancellable: Cancellable?  // creat array ?
     
@@ -33,13 +35,17 @@ final class CoreViewModel: ObservableObject {
         //assing 100 at the begging or append in 'next' step ?
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
         self.endButtonActive = Array(repeating: true, count: measurementsNumber)
+        self.numberOfFiremens = Array(repeating: 1, count: measurementsNumber)
     }
     
     func addRota() {
         numberOfRotas += 1
         self.rotas.append(Rota(number: numberOfRotas))
         self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber))
-        
+    }
+    
+    func addFireman(forRota: Int) {
+        numberOfFiremens[forRota] += 1
     }
     
     func endAction(forRota: Int) {
@@ -59,6 +65,25 @@ final class CoreViewModel: ObservableObject {
             HapticManager.notifiaction(type: .error)
             return
         }
+        
+        if numberOfFiremens[forRota] == 2 {
+            
+            guard rota.f3Pressures[forMeasurement] != "" else {
+                showAlert = true
+                HapticManager.notifiaction(type: .error)
+                return
+            }
+        } else if numberOfFiremens[forRota] == 3 {
+            guard rota.f3Pressures[forMeasurement] != "" && rota.f4Pressures[forMeasurement] != "" else {
+                showAlert = true
+                HapticManager.notifiaction(type: .error)
+                return
+            }
+        }
+        
+        
+        
+        
         
         guard forMeasurement != 0 else {
             self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber)
@@ -102,7 +127,7 @@ final class CoreViewModel: ObservableObject {
         }
         
         // calculation:
-        print(timeInterval)
+       
         
         //fireman1
         let initialPressureF1 = rota.doubleF1Pressures[forMeasurement-1] - minimalPressure
@@ -118,13 +143,37 @@ final class CoreViewModel: ObservableObject {
         let entireTimeOnActionF2 = initialPressureF2 / pressureUsedF2 * timeInterval
         let timeToLeaveF2 = entireTimeOnActionF2 - timeInterval
         
+        let timesToLeave2: [Double] = [timeToLeaveF1, timeToLeaveF2]
+        rota.timeToLeave = timesToLeave2.min()
         
+        //fireman3
         
-        if timeToLeaveF1 > timeToLeaveF2 {
-            rota.timeToLeave = timeToLeaveF2
-        } else {
-            rota.timeToLeave = timeToLeaveF1
+        if numberOfFiremens[forRota] == 2 {
+            
+            let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure
+            let pressureUsedF3 = rota.doubleF3Pressures[forMeasurement-1] - rota.doubleF3Pressures[forMeasurement]
+            let entireTimeOnActionF3 = initialPressureF3 / pressureUsedF3 * timeInterval
+            let timeToLeaveF3 = entireTimeOnActionF3 - timeInterval
+            
+            let timesToLeave3: [Double] = [timeToLeaveF1, timeToLeaveF2, timeToLeaveF3]
+            rota.timeToLeave = timesToLeave3.min()
+            
+        } else if numberOfFiremens[forRota] == 3 {
+            //fireman3
+            let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure
+            let pressureUsedF3 = rota.doubleF3Pressures[forMeasurement-1] - rota.doubleF3Pressures[forMeasurement]
+            let entireTimeOnActionF3 = initialPressureF3 / pressureUsedF3 * timeInterval
+            let timeToLeaveF3 = entireTimeOnActionF3 - timeInterval
+            //fireman4
+            let initialPressureF4 = rota.doubleF4Pressures[forMeasurement-1] - minimalPressure
+            let pressureUsedF4 = rota.doubleF4Pressures[forMeasurement-1] - rota.doubleF4Pressures[forMeasurement]
+            let entireTimeOnActionF4 = initialPressureF4 / pressureUsedF4 * timeInterval
+            let timeToLeaveF4 = entireTimeOnActionF4 - timeInterval
+            
+            let timesToLeave4: [Double] = [timeToLeaveF1, timeToLeaveF2, timeToLeaveF3, timeToLeaveF4]
+            rota.timeToLeave = timesToLeave4.min()
         }
+        
         
         if !(0.001...3600).contains(rota.timeToLeave ?? 0) {
             showAlert = true
