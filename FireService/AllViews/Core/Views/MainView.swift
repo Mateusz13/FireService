@@ -11,7 +11,9 @@ struct MainView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime = ""
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var confirmationAlert: Bool = false
+//    let timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var number: Int = 0
     
     var body: some View {
         
@@ -41,7 +43,7 @@ struct MainView: View {
             NotificationManager.instance.requestAuthorization()
             self.currentTime = Date().getFormattedDateToHHmmSS()
         }
-        .onReceive(timer) { _ in
+        .onReceive(vm.timer) { _ in
             self.currentTime = Date().getFormattedDateToHHmmSS()
         }
     }
@@ -56,6 +58,7 @@ struct MainView_Previews: PreviewProvider {
 
 extension MainView {
     
+    
     private var allRotas: some View {
         
         ForEach(vm.rotas) { rota in
@@ -65,7 +68,7 @@ extension MainView {
                     if (0...7200).contains(vm.rotas[rota.number].duration ?? 0) {
                         Text(vm.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
                             .frame(minWidth: 69)
-//                            .foregroundColor(.blue)
+                            .foregroundColor(.blue)
                             .padding(.horizontal, 3)
                             .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
                     } else {
@@ -78,8 +81,8 @@ extension MainView {
                             .foregroundColor(.secondary)
                     } else {
                         Button {
-                            vm.endAction(forRota: rota.number)
-                            
+                            confirmationAlert = true
+                            number = rota.number
                         } label: {
                             Text("Zakończ")
                         }
@@ -88,6 +91,19 @@ extension MainView {
                         .background(.purple)
                         .cornerRadius(10)
                         .foregroundColor(.black)
+                        .alert("Zakończyć?", isPresented: $confirmationAlert) {
+                            Button("Tak") { vm.endAction(forRota: number) }
+                            Button("Nie", role: .cancel) { }
+                        } message: {
+                            if number == 2 {
+                                Text("Czy na pewno zakończyć akcję dla Roty RIT?")
+                            } else if number < 2 {
+                                Text("Czy na pewno zakończyć akcję dla Roty \(number+1)?")
+                            } else {
+                                Text("Czy na pewno zakończyć akcję dla Roty \(number)?")
+                            }
+                            
+                        }
                     }
                     Spacer()
                     Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3600) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")

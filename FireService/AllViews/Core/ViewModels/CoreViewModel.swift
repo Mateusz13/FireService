@@ -25,7 +25,7 @@ final class CoreViewModel: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     //    var timerCancellable: Cancellable?  // creat array ?
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @Published var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     let minimalPressure: Double = 50
     
@@ -49,6 +49,7 @@ final class CoreViewModel: ObservableObject {
     }
     
     func endAction(forRota: Int) {
+        
         endButtonActive[forRota] = false
         self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
         self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
