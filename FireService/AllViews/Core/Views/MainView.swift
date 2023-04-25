@@ -12,7 +12,6 @@ struct MainView: View {
     @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime = ""
     @State private var confirmationAlert: Bool = false
-//    let timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var number: Int = 0
     
     var body: some View {
@@ -102,13 +101,12 @@ extension MainView {
                             } else {
                                 Text("Czy na pewno zakończyć akcję dla Roty \(number)?")
                             }
-                            
                         }
                     }
                     Spacer()
                     Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3600) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
                         .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
-                    //                            .foregroundColor(rota.number == 2 ? .orange : .red)
+                    //.foregroundColor(rota.number == 2 ? .orange : .red)
                         .padding(.horizontal, 3)
                         .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
                     Spacer()
@@ -134,7 +132,6 @@ extension MainView {
             Spacer()
         }
     }
-    
     
     private func getAlert() -> Alert {
         

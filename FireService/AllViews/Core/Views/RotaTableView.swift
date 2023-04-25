@@ -8,14 +8,13 @@
 import SwiftUI 
 
 struct RotaTableView: View {
-
+    
     let rotaNumber: Int
     @EnvironmentObject private var vm: CoreViewModel
     
     //        enum FocusField {
     //            case name, pressure0, pressure1, pressure2
     //        }
-    //
     //        @FocusState var fieldInFocus: FocusField?
     
     var body: some View {
@@ -30,8 +29,6 @@ struct RotaTableView: View {
             }
         }
         .textFieldStyle(.roundedBorder)
-        
-
         //.frame(height: vm.numberOfFiremens[rotaNumber] == 2 ? 192 : 150)//150/192/234
         //.frame(maxWidth: 500)
         //.padding(.horizontal, 3)
@@ -80,7 +77,6 @@ extension RotaTableView {
                 // .focused($fieldInFocus, equals: .name)
             }
             
-            
             HStack(alignment: .firstTextBaseline, spacing: 0) {
                 Button {
                     if vm.startOrCalculateButtonActive[rotaNumber][0] {
@@ -93,24 +89,12 @@ extension RotaTableView {
                 .foregroundColor(.green)
                 .frame(height: 34)
                 .disabled(vm.numberOfRotas == 3)
-//                if (0...7200).contains(vm.rotas[rotaNumber].duration ?? 0) {
-//                    Text(vm.rotas[rotaNumber].duration?.asString(style: .abbreviated) ?? "0:00")
-//                        .frame(height: 33)
-//                        .foregroundColor(rotaNumber == 2 ? .yellow : .red)
-//                        .padding(.horizontal, 3)
-//                        .background((300...330).contains(vm.rotas[rotaNumber].duration ?? 0) ? .green : .clear)
-//
-//                } else {
-//                    Text("error")
-//                        .frame(height: 33)
-//                }
             }
-                
         }
         .frame(minWidth: 80)
     }
     
-   
+    
     private var entryColumn: some View {
         VStack {
             Text("WEJŚCIE")

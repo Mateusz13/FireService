@@ -12,7 +12,8 @@ import Combine
 final class CoreViewModel: ObservableObject {
     
     @Published var rotas: [Rota]
-    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @Published var numberOfFiremens: [Int] //2
     @Published var startOrCalculateButtonActive: [[Bool]]
     @Published var endButtonActive: [Bool]
     @Published var showAlert: Bool = false
@@ -20,19 +21,14 @@ final class CoreViewModel: ObservableObject {
     var numberOfRotas: Int = 2 //3
     let exitNotificationTime = 300.0
     
-    @Published var numberOfFiremens: [Int] //2
-    
     var cancellables = Set<AnyCancellable>()
-    //    var timerCancellable: Cancellable?  // creat array ?
-    
-    @Published var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
+    //var timerCancellable: Cancellable?  // creat array ?
     let minimalPressure: Double = 50
+    
     
     init() {
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
-        //assing 100 at the begging or append in 'next' step ?
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
         self.endButtonActive = Array(repeating: true, count: measurementsNumber)
         self.numberOfFiremens = Array(repeating: 1, count: measurementsNumber)
@@ -49,7 +45,6 @@ final class CoreViewModel: ObservableObject {
     }
     
     func endAction(forRota: Int) {
-        
         endButtonActive[forRota] = false
         self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
         self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
@@ -68,7 +63,6 @@ final class CoreViewModel: ObservableObject {
         }
         
         if numberOfFiremens[forRota] == 2 {
-            
             guard rota.f3Pressures[forMeasurement] != "" else {
                 showAlert = true
                 HapticManager.notifiaction(type: .error)
@@ -81,11 +75,6 @@ final class CoreViewModel: ObservableObject {
                 return
             }
         }
-        
-        
-        
-        
-        
         guard forMeasurement != 0 else {
             self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = false
@@ -93,13 +82,11 @@ final class CoreViewModel: ObservableObject {
             timer
                 .sink { [weak self] _ in
                     guard let self = self else { return }
-//                    self.rotas[forRota].duration += 1
+                    //                    self.rotas[forRota].duration += 1
                     if endButtonActive[forRota] {
                         self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
                         self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
                     }
-
-                    
                 }
                 .store(in: &cancellables)
             NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
@@ -110,8 +97,6 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive[forRota][forMeasurement] = false
         NotificationManager.instance.cancelExitNotification(forRota: forRota)
         hideKeyboard()
-        
-        
         
         if rota.f1Pressures[forMeasurement] == "" || rota.f2Pressures[forMeasurement] == "" {
             showAlert = true
@@ -128,7 +113,6 @@ final class CoreViewModel: ObservableObject {
         }
         
         // calculation:
-       
         
         //fireman1
         let initialPressureF1 = rota.doubleF1Pressures[forMeasurement-1] - minimalPressure
@@ -150,7 +134,6 @@ final class CoreViewModel: ObservableObject {
         //fireman3
         
         if numberOfFiremens[forRota] == 2 {
-            
             let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure
             let pressureUsedF3 = rota.doubleF3Pressures[forMeasurement-1] - rota.doubleF3Pressures[forMeasurement]
             let entireTimeOnActionF3 = initialPressureF3 / pressureUsedF3 * timeInterval

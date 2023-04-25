@@ -51,7 +51,7 @@ struct MeasurementColumns: View {
                     Text("Oblicz")
                 }
                 .disabled(!vm.endButtonActive[rotaNumber])
-//                .frame(height: 33)
+                //                .frame(height: 33)
                 .buttonStyle(.borderedProminent)
                 
             }
