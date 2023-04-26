@@ -122,7 +122,9 @@ extension MainView {
         
         HStack {
             Button {
-                vm.addRota()
+                withAnimation(.easeIn) {
+                    vm.addRota()
+                }
             } label: {
                 Label("", systemImage: "plus.app.fill")
                     .font(.largeTitle)

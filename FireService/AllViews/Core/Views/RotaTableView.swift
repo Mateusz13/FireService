@@ -78,7 +78,9 @@ extension RotaTableView {
             }
             Button {
                 if vm.startOrCalculateButtonActive[rotaNumber][0] {
-                    vm.addFireman(forRota: rotaNumber)
+                    withAnimation(.easeIn) {
+                        vm.addFireman(forRota: rotaNumber)
+                    }
                 }
             } label: {
                 Label("", systemImage: "plus.circle.fill")
