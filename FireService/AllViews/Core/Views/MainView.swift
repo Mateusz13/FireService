@@ -125,7 +125,7 @@ extension MainView {
                 vm.addRota()
             } label: {
                 Label("", systemImage: "plus.app.fill")
-                    .font(.title)
+                    .font(.largeTitle)
             }
             
             .foregroundColor(.green)

@@ -76,20 +76,17 @@ extension RotaTableView {
                 TextField("name4", text: $vm.rotas[rotaNumber].f4Name)
                 // .focused($fieldInFocus, equals: .name)
             }
-            
-            HStack(alignment: .firstTextBaseline, spacing: 0) {
-                Button {
-                    if vm.startOrCalculateButtonActive[rotaNumber][0] {
-                        vm.addFireman(forRota: rotaNumber)
-                    }
-                } label: {
-                    Label("", systemImage: "plus.circle.fill")
-                        .font(.title)
+            Button {
+                if vm.startOrCalculateButtonActive[rotaNumber][0] {
+                    vm.addFireman(forRota: rotaNumber)
                 }
-                .foregroundColor(.green)
-                .frame(height: 34)
-                .disabled(vm.numberOfRotas == 3)
+            } label: {
+                Label("", systemImage: "plus.circle.fill")
+                    .font(.title)
             }
+            .foregroundColor(.green)
+            .frame(height: 34)
+            .disabled(vm.numberOfFiremens[rotaNumber] == 3)
         }
         .frame(minWidth: 80)
     }
