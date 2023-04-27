@@ -8,9 +8,9 @@
 import Foundation
 
 
-struct Rota: Identifiable {
+struct Rota: Identifiable, Codable {
     
-    let id = UUID().uuidString
+    var id = UUID().uuidString
     
     let number: Int
     

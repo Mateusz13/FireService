@@ -18,7 +18,7 @@ struct MainView: View {
         
         ScrollView(.vertical, showsIndicators: true) {
             allRotas
-            addButton
+            endLine
             Spacer()
         }
         .navigationTitle("\(currentTime)          POWIETRZE DLA ROT")
@@ -118,7 +118,7 @@ extension MainView {
         }
     }
     
-    private var addButton: some View {
+    private var endLine: some View {
         
         HStack {
             Button {
@@ -132,6 +132,27 @@ extension MainView {
             
             .foregroundColor(.green)
             .padding()
+            Button {
+                withAnimation(.easeOut) {
+                    vm.minusRota()
+                }
+            } label: {
+                Label("", systemImage: "minus.square.fill")
+                    .font(.largeTitle)
+            }
+            
+            .foregroundColor(.red)
+            .padding()
+            Button {
+                vm.delete()
+            } label: {
+                Text("Wyczyść")
+            }
+            .font(.body)
+            .buttonStyle(.bordered)
+            .background(.orange)
+            .cornerRadius(10)
+            .foregroundColor(.black)
             Spacer()
         }
     }

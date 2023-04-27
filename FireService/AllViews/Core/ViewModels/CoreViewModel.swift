@@ -11,33 +11,164 @@ import Combine
 
 final class CoreViewModel: ObservableObject {
     
-    @Published var rotas: [Rota]
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @Published var numberOfFiremens: [Int] //2
-    @Published var startOrCalculateButtonActive: [[Bool]]
-    @Published var endButtonActive: [Bool]
+    @Published var rotas: [Rota] {
+        didSet {
+            saveRotasInputs()
+        }
+    }
+    @Published var numberOfFiremens: [Int] {
+        didSet {
+            saveNumberOfFiremans()
+        }
+    }
+    @Published var startOrCalculateButtonActive: [[Bool]] {
+        didSet {
+            saveStartOrCalculateButtonActive()
+        }
+    }
+    @Published var endButtonActive: [Bool] {
+        didSet {
+            saveEndButtonActive()
+        }
+    }
     @Published var showAlert: Bool = false
+    var numberOfRotas: Int = 2 {
+        didSet {
+            saveNumberOfRotas()
+        }
+    }
     let measurementsNumber: Int = 11 //10
-    var numberOfRotas: Int = 2 //3
     let exitNotificationTime = 300.0
-    
+    let minimalPressure: Double = 50
     var cancellables = Set<AnyCancellable>()
     //var timerCancellable: Cancellable?  // creat array ?
-    let minimalPressure: Double = 50
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    let rotasInputsKey: String = "rotasInputs"
+    let numberOfFiremansKey: String = "numberOfFiremans"
+    let endButtonActiveKey: String = "endButtonActive"
+    let numberOfRotasKey: String = "numberOfRotas"
+    let startOrCalculateButtonActiveKey: String = "startOrCalculateButtonActive"
     
     
     init() {
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
-        self.endButtonActive = Array(repeating: true, count: measurementsNumber)
-        self.numberOfFiremens = Array(repeating: 1, count: measurementsNumber)
+        self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
+        self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
+//        getNumberOfRotas()
+//        getNumberOfFiremans()
+//        getStartOrCalculateButtonActive()
+//        getEndButtonActive()
+//        getRotasInputs()
     }
+    
+    func getNumberOfRotas() {
+        guard
+            let data = UserDefaults.standard.data(forKey: numberOfRotasKey),
+            let savedData = try? JSONDecoder().decode(Int.self, from: data)
+        else { return }
+        self.numberOfRotas = savedData
+    }
+    
+    func getRotasInputs() {
+        guard
+            let data = UserDefaults.standard.data(forKey: rotasInputsKey),
+            let savedData = try? JSONDecoder().decode([Rota].self, from: data)
+        else { return }
+        self.rotas = savedData
+    }
+    
+    func getNumberOfFiremans() {
+        guard
+            let data = UserDefaults.standard.data(forKey: numberOfFiremansKey),
+            let savedData = try? JSONDecoder().decode([Int].self, from: data)
+        else { return }
+        self.numberOfFiremens = savedData
+    }
+    
+    func getEndButtonActive() {
+        guard
+            let data = UserDefaults.standard.data(forKey: endButtonActiveKey),
+            let savedData = try? JSONDecoder().decode([Bool].self, from: data)
+        else { return }
+        self.endButtonActive = savedData
+    }
+    
+    func getStartOrCalculateButtonActive() {
+        guard
+            let data = UserDefaults.standard.data(forKey: startOrCalculateButtonActiveKey),
+            let savedData = try? JSONDecoder().decode([[Bool]].self, from: data)
+        else { return }
+        self.startOrCalculateButtonActive = savedData
+    }
+    
+    func saveNumberOfRotas() {
+        if let encodedData = try? JSONEncoder().encode(numberOfRotas) {
+            UserDefaults.standard.set(encodedData, forKey: numberOfRotasKey)
+        }
+    }
+    
+    func saveRotasInputs() {
+        if let encodedData = try? JSONEncoder().encode(rotas) {
+            UserDefaults.standard.set(encodedData, forKey: rotasInputsKey)
+        }
+    }
+    
+    func saveNumberOfFiremans() {
+        if let encodedData = try? JSONEncoder().encode(numberOfFiremens) {
+            UserDefaults.standard.set(encodedData, forKey: numberOfFiremansKey)
+        }
+    }
+    
+    func saveEndButtonActive() {
+        if let encodedData = try? JSONEncoder().encode(endButtonActive) {
+            UserDefaults.standard.set(encodedData, forKey: endButtonActiveKey)
+        }
+    }
+    
+    func saveStartOrCalculateButtonActive() {
+        if let encodedData = try? JSONEncoder().encode(startOrCalculateButtonActive) {
+            UserDefaults.standard.set(encodedData, forKey: startOrCalculateButtonActiveKey)
+        }
+    }
+    
+    func delete() {
+        
+        self.numberOfRotas = 2
+        self.rotas.remove(at: 3)
+        self.startOrCalculateButtonActive.remove(at: 3)
+        
+        let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
+        self.rotas = rotas
+        self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
+        self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
+        self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
+        //delete all notification
+    }
+    
+    
+    func minusRota() {
+        numberOfRotas -= 1
+        self.rotas.remove(at: 3)
+        self.startOrCalculateButtonActive.remove(at: 3)
+        
+//        self.rotas.append(Rota(number: numberOfRotas))
+//        self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber))
+    }
+    
+//    func minusRota2(IndexSet: IndexSet) {
+//        self.rotas.remove(atOffsets: IndexSet)
+//    }
+    
     
     func addRota() {
         numberOfRotas += 1
         self.rotas.append(Rota(number: numberOfRotas))
         self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber))
+        self.endButtonActive.append(true)
+        self.numberOfFiremens.append(1)
     }
     
     func addFireman(forRota: Int) {
