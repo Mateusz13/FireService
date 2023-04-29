@@ -62,7 +62,7 @@ extension MainView {
         
         ForEach(vm.rotas) { rota in
             VStack {
-                RotaTableView(rotaNumber: rota.number)
+                RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremens: $vm.numberOfFiremens[rota.number], endButtonActive: $vm.endButtonActive[rota.number])
                 HStack() {
                     if (0...7200).contains(vm.rotas[rota.number].duration ?? 0) {
                         Text(vm.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
@@ -73,6 +73,8 @@ extension MainView {
                     } else {
                         Text("error")
                             .frame(height: 33)
+                            .frame(minWidth: 69)
+                            .padding(.horizontal, 3)
                     }
                     if vm.endButtonActive[rota.number] == false {
                         Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
@@ -134,7 +136,7 @@ extension MainView {
             .padding()
             Button {
                 withAnimation(.easeOut) {
-                    vm.minusRota()
+                    vm.subtractRota()
                 }
             } label: {
                 Label("", systemImage: "minus.square.fill")
@@ -144,7 +146,7 @@ extension MainView {
             .foregroundColor(.red)
             .padding()
             Button {
-                vm.delete()
+                vm.reset()
             } label: {
                 Text("Wyczyść")
             }

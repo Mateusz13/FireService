@@ -57,11 +57,11 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
         self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
         self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
-//        getNumberOfRotas()
-//        getNumberOfFiremans()
-//        getStartOrCalculateButtonActive()
-//        getEndButtonActive()
-//        getRotasInputs()
+        getNumberOfRotas()
+        getNumberOfFiremans()
+        getStartOrCalculateButtonActive()
+        getEndButtonActive()
+        getRotasInputs()
     }
     
     func getNumberOfRotas() {
@@ -134,12 +134,9 @@ final class CoreViewModel: ObservableObject {
         }
     }
     
-    func delete() {
+    func reset() {
         
         self.numberOfRotas = 2
-        self.rotas.remove(at: 3)
-        self.startOrCalculateButtonActive.remove(at: 3)
-        
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
@@ -149,19 +146,13 @@ final class CoreViewModel: ObservableObject {
     }
     
     
-    func minusRota() {
+    func subtractRota() {
         numberOfRotas -= 1
-        self.rotas.remove(at: 3)
-        self.startOrCalculateButtonActive.remove(at: 3)
-        
-//        self.rotas.append(Rota(number: numberOfRotas))
-//        self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber))
+        self.rotas.removeLast()
+        self.startOrCalculateButtonActive.removeLast()
+        self.endButtonActive.removeLast()
+        self.numberOfFiremens.removeLast()
     }
-    
-//    func minusRota2(IndexSet: IndexSet) {
-//        self.rotas.remove(atOffsets: IndexSet)
-//    }
-    
     
     func addRota() {
         numberOfRotas += 1

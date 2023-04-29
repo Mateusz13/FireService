@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct FireServiceApp: App {
     
+//    let vm = CoreViewModel() ??
     @StateObject private var vm = CoreViewModel()
     
     var body: some Scene {

@@ -9,48 +9,54 @@ import SwiftUI
 
 struct MeasurementColumns: View {
     
-    let rotaNumber: Int
+//  let rotaNumber: Int
     let measurement: Int
+    
     @EnvironmentObject private var vm: CoreViewModel
+    
+    @Binding var rota: Rota
+    @Binding var startOrCalculateButtonActive: [Bool]
+    @Binding var numberOfFiremens: Int
+    @Binding var endButtonActive: Bool
     
     var body: some View {
         VStack {
             Text("POMIAR \(measurement)")
-            TextField("BAR", text: $vm.rotas[rotaNumber].f1Pressures[measurement])
+            TextField("BAR", text: $rota.f1Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
-                .numbersOnly($vm.rotas[rotaNumber].f1Pressures[measurement])
-                .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
-                .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
-            TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[measurement])
+                .numbersOnly($rota.f1Pressures[measurement])
+                .disabled(!startOrCalculateButtonActive[measurement])
+                .disabled(startOrCalculateButtonActive[measurement-1])
+            TextField("BAR", text: $rota.f2Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
-                .numbersOnly($vm.rotas[rotaNumber].f2Pressures[measurement])
-                .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
-                .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
-            if vm.numberOfFiremens[rotaNumber] > 1 {
-                TextField("BAR", text: $vm.rotas[rotaNumber].f3Pressures[measurement])
+                .numbersOnly($rota.f2Pressures[measurement])
+                .disabled(!startOrCalculateButtonActive[measurement])
+                .disabled(startOrCalculateButtonActive[measurement-1])
+            if numberOfFiremens > 1 {
+                TextField("BAR", text: $rota.f3Pressures[measurement])
                 //                .focused($fieldInFocus, equals: .pressure1)
-                    .numbersOnly($vm.rotas[rotaNumber].f3Pressures[measurement])
-                    .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
-                    .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
+                    .numbersOnly($rota.f3Pressures[measurement])
+                    .disabled(!startOrCalculateButtonActive[measurement])
+                    .disabled(startOrCalculateButtonActive[measurement-1])
             }
-            if vm.numberOfFiremens[rotaNumber] > 2 {
-                TextField("BAR", text: $vm.rotas[rotaNumber].f4Pressures[measurement])
+            if numberOfFiremens > 2 {
+                TextField("BAR", text: $rota.f4Pressures[measurement])
                 //                .focused($fieldInFocus, equals: .pressure1)
-                    .numbersOnly($vm.rotas[rotaNumber].f4Pressures[measurement])
-                    .disabled(!vm.startOrCalculateButtonActive[rotaNumber][measurement])
-                    .disabled(vm.startOrCalculateButtonActive[rotaNumber][measurement-1])
+                    .numbersOnly($rota.f4Pressures[measurement])
+                    .disabled(!startOrCalculateButtonActive[measurement])
+                    .disabled(startOrCalculateButtonActive[measurement-1])
             }
-            if vm.startOrCalculateButtonActive[rotaNumber][measurement] == false {
-                Text(vm.rotas[rotaNumber].time?[measurement].getFormattedDateToHHmm() ?? "error")
+            if startOrCalculateButtonActive[measurement] == false {
+                Text(rota.time?[measurement].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)
                     .foregroundColor(.secondary)
             } else {
                 Button {
-                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: measurement)
+                    vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
                 } label: {
                     Text("Oblicz")
                 }
-                .disabled(!vm.endButtonActive[rotaNumber])
+                .disabled(!endButtonActive)
                 //                .frame(height: 33)
                 .buttonStyle(.borderedProminent)
                 
@@ -59,9 +65,9 @@ struct MeasurementColumns: View {
     }
 }
 
-struct measurementColumns_Previews: PreviewProvider {
-    static var previews: some View {
-        MeasurementColumns(rotaNumber: 0, measurement: 1)
-            .environmentObject(CoreViewModel())
-    }
-}
+//struct measurementColumns_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MeasurementColumns(rotaNumber: 0, measurement: 1)
+//            .environmentObject(CoreViewModel())
+//    }
+//}
