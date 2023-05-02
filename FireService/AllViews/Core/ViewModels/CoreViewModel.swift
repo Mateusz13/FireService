@@ -38,6 +38,8 @@ final class CoreViewModel: ObservableObject {
         numberOfRotas += 1
         self.rotas.append(Rota(number: numberOfRotas))
         self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber))
+        self.endButtonActive.append(true)
+        self.numberOfFiremens.append(1)
     }
     
     func addFireman(forRota: Int) {
