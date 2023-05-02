@@ -30,8 +30,8 @@ final class CoreViewModel: ObservableObject {
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
-        self.endButtonActive = Array(repeating: true, count: measurementsNumber)
-        self.numberOfFiremens = Array(repeating: 1, count: measurementsNumber)
+        self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
+        self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
     }
     
     func addRota() {
@@ -159,7 +159,7 @@ final class CoreViewModel: ObservableObject {
         }
         
         
-        if !(0.001...3600).contains(rota.timeToLeave ?? 0) {
+        if !(0.001...7200).contains(rota.timeToLeave ?? 0) {
             showAlert = true
             HapticManager.notifiaction(type: .error)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = true

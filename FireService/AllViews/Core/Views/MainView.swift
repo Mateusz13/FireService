@@ -105,7 +105,7 @@ extension MainView {
                         }
                     }
                     Spacer()
-                    Text("Pozostały czas: \((-3599...3599).contains(rota.remainingTime ?? 3600) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+                    Text("Pozostały czas: \((-7200...7200).contains(rota.remainingTime ?? 7201) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
                         .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
                     //.foregroundColor(rota.number == 2 ? .orange : .red)
                         .padding(.horizontal, 3)
