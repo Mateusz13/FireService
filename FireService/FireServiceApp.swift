@@ -40,6 +40,9 @@ struct FireServiceApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
-        NotificationManager.instance.cancelAllNotifications()
+//        NotificationManager.instance.cancelAllNotifications()
+    
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
 }
