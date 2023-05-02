@@ -11,6 +11,9 @@ import SwiftUI
 struct FireServiceApp: App {
     
     @StateObject private var vm = CoreViewModel()
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+//    @Environment(\.scenePhase) private var scenePhase
     
     var body: some Scene {
         WindowGroup {
@@ -27,5 +30,16 @@ struct FireServiceApp: App {
                 .navigationViewStyle(StackNavigationViewStyle())
             }
         }
+//        .onChange(of: scenePhase) { newScenePhase in
+//            if newScenePhase == .inactive {
+//                NotificationManager.instance.cancelAllNotifications()
+//            }
+//        }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func applicationWillTerminate(_ application: UIApplication) {
+        NotificationManager.instance.cancelAllNotifications()
     }
 }
