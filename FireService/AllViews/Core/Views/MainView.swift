@@ -9,10 +9,12 @@ import SwiftUI
 
 struct MainView: View {
     
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime = ""
     @State private var confirmationAlert: Bool = false
     @State private var number: Int = 0
+    @State private var timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         
@@ -42,7 +44,7 @@ struct MainView: View {
             NotificationManager.instance.requestAuthorization()
             self.currentTime = Date().getFormattedDateToHHmmSS()
         }
-        .onReceive(vm.timer) { _ in
+        .onReceive(timer2) { _ in
             self.currentTime = Date().getFormattedDateToHHmmSS()
         }
     }
@@ -64,15 +66,16 @@ extension MainView {
             VStack {
                 RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremens: $vm.numberOfFiremens[rota.number], endButtonActive: $vm.endButtonActive[rota.number])
                 HStack() {
-                    if (0...7200).contains(vm.rotas[rota.number].duration ?? 0) {
+                    if (0...10800).contains(vm.rotas[rota.number].duration ?? 0) {
                         Text(vm.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
                             .frame(minWidth: 69)
                             .foregroundColor(.blue)
                             .padding(.horizontal, 3)
                             .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
                     } else {
-                        Text("error")
-                            .frame(height: 33)
+                        Text("0:00")
+                            .foregroundColor(.blue)
+//                            .frame(height: 33)
                             .frame(minWidth: 69)
                             .padding(.horizontal, 3)
                     }
@@ -115,6 +118,16 @@ extension MainView {
                     Spacer()
                     Spacer()
                 }
+                .onChange(of: scenePhase) { newScenePhase in
+                    if newScenePhase ==  .active {
+                        print("didBecomeAtive")
+                        vm.updateDurationAndRemiaingTime(forRota: rota.number)
+                    }
+                }
+                //                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification), perform: {_ in
+                //                    print("didBecomeAtive")
+                //                    vm.updateDurationAndRemiaingTime(forRota: rota.number)
+                //                })
                 .padding(.horizontal, 2)
             }
         }
@@ -134,17 +147,17 @@ extension MainView {
             
             .foregroundColor(.green)
             .padding()
-            Button {
-                withAnimation(.easeOut) {
-                    vm.subtractRota()
-                }
-            } label: {
-                Label("", systemImage: "minus.square.fill")
-                    .font(.largeTitle)
-            }
-            
-            .foregroundColor(.red)
-            .padding()
+//            Button {
+//                withAnimation(.easeOut) {
+//                    vm.subtractRota()
+//                }
+//            } label: {
+//                Label("", systemImage: "minus.square.fill")
+//                    .font(.largeTitle)
+//            }
+//            
+//            .foregroundColor(.red)
+//            .padding()
             Button {
                 vm.reset()
             } label: {

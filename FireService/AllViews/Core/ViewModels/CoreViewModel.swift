@@ -135,24 +135,25 @@ final class CoreViewModel: ObservableObject {
     }
     
     func reset() {
-        
+        timer.upstream.connect().cancel()
         self.numberOfRotas = 2
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
         self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
         self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
-        //delete all notification
+        NotificationManager.instance.cancelAllNotifications()
     }
     
     
-    func subtractRota() {
-        numberOfRotas -= 1
-        self.rotas.removeLast()
-        self.startOrCalculateButtonActive.removeLast()
-        self.endButtonActive.removeLast()
-        self.numberOfFiremens.removeLast()
-    }
+//    func subtractRota() {
+////        timer.upstream.connect().cancel()
+//        numberOfRotas -= 1
+//        self.rotas.removeLast()
+//        self.startOrCalculateButtonActive.removeLast()
+//        self.endButtonActive.removeLast()
+//        self.numberOfFiremens.removeLast()
+//    }
     
     func addRota() {
         numberOfRotas += 1
@@ -172,6 +173,19 @@ final class CoreViewModel: ObservableObject {
         self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
         NotificationManager.instance.cancelExitNotification(forRota: forRota)
         NotificationManager.instance.cancelFirstMeasurementNotification(forRota: forRota)
+    }
+    
+    func updateDurationAndRemiaingTime(forRota: Int) {
+        timer
+        .sink { [weak self] _ in
+            guard let self = self else { return }
+            //                    self.rotas[forRota].duration += 1
+            if endButtonActive[forRota] {
+                self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+                self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+            }
+        }
+        .store(in: &cancellables)
     }
     
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
