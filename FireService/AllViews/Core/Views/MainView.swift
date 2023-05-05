@@ -15,7 +15,7 @@ struct MainView: View {
     @State private var endConfirmationAlert: Bool = false
     @State private var cleanConfirmationAlert: Bool = false
     @State private var number: Int = 0
-    @State private var timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+//    @State private var timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         
@@ -45,7 +45,7 @@ struct MainView: View {
             NotificationManager.instance.requestAuthorization()
             self.currentTime = Date().getFormattedDateToHHmmSS()
         }
-        .onReceive(timer2) { _ in
+        .onReceive(vm.timer2) { _ in
             self.currentTime = Date().getFormattedDateToHHmmSS()
         }
     }
