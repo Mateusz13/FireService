@@ -12,7 +12,8 @@ struct MainView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime = ""
-    @State private var confirmationAlert: Bool = false
+    @State private var endConfirmationAlert: Bool = false
+    @State private var cleanConfirmationAlert: Bool = false
     @State private var number: Int = 0
     @State private var timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -86,7 +87,7 @@ extension MainView {
                             .foregroundColor(.secondary)
                     } else {
                         Button {
-                            confirmationAlert = true
+                            endConfirmationAlert = true
                             number = rota.number
                         } label: {
                             Text("Zakończ")
@@ -96,7 +97,8 @@ extension MainView {
                         .background(.purple)
                         .cornerRadius(10)
                         .foregroundColor(.black)
-                        .alert("Zakończyć?", isPresented: $confirmationAlert) {
+                        .padding(.vertical, 4)
+                        .alert("Zakończyć?", isPresented: $endConfirmationAlert) {
                             Button("Tak") { vm.endAction(forRota: number) }
                             Button("Nie", role: .cancel) { }
                         } message: {
@@ -159,7 +161,7 @@ extension MainView {
 //            .foregroundColor(.red)
 //            .padding()
             Button {
-                vm.reset()
+                cleanConfirmationAlert = true
             } label: {
                 Text("Wyczyść")
             }
@@ -168,6 +170,10 @@ extension MainView {
             .background(.orange)
             .cornerRadius(10)
             .foregroundColor(.black)
+            .alert("Zakończyć wszystkie akcje i wyczyścić dane?", isPresented: $cleanConfirmationAlert) {
+                Button("Tak", role: .destructive) { vm.reset() }
+                Button("Nie", role: .cancel) { }
+            }
             Spacer()
         }
     }

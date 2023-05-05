@@ -64,6 +64,36 @@ final class CoreViewModel: ObservableObject {
         getRotasInputs()
     }
     
+    func saveNumberOfRotas() {
+        if let encodedData = try? JSONEncoder().encode(numberOfRotas) {
+            UserDefaults.standard.set(encodedData, forKey: numberOfRotasKey)
+        }
+    }
+    
+    func saveRotasInputs() {
+        if let encodedData = try? JSONEncoder().encode(rotas) {
+            UserDefaults.standard.set(encodedData, forKey: rotasInputsKey)
+        }
+    }
+    
+    func saveNumberOfFiremans() {
+        if let encodedData = try? JSONEncoder().encode(numberOfFiremens) {
+            UserDefaults.standard.set(encodedData, forKey: numberOfFiremansKey)
+        }
+    }
+    
+    func saveEndButtonActive() {
+        if let encodedData = try? JSONEncoder().encode(endButtonActive) {
+            UserDefaults.standard.set(encodedData, forKey: endButtonActiveKey)
+        }
+    }
+    
+    func saveStartOrCalculateButtonActive() {
+        if let encodedData = try? JSONEncoder().encode(startOrCalculateButtonActive) {
+            UserDefaults.standard.set(encodedData, forKey: startOrCalculateButtonActiveKey)
+        }
+    }
+    
     func getNumberOfRotas() {
         guard
             let data = UserDefaults.standard.data(forKey: numberOfRotasKey),
@@ -104,57 +134,6 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = savedData
     }
     
-    func saveNumberOfRotas() {
-        if let encodedData = try? JSONEncoder().encode(numberOfRotas) {
-            UserDefaults.standard.set(encodedData, forKey: numberOfRotasKey)
-        }
-    }
-    
-    func saveRotasInputs() {
-        if let encodedData = try? JSONEncoder().encode(rotas) {
-            UserDefaults.standard.set(encodedData, forKey: rotasInputsKey)
-        }
-    }
-    
-    func saveNumberOfFiremans() {
-        if let encodedData = try? JSONEncoder().encode(numberOfFiremens) {
-            UserDefaults.standard.set(encodedData, forKey: numberOfFiremansKey)
-        }
-    }
-    
-    func saveEndButtonActive() {
-        if let encodedData = try? JSONEncoder().encode(endButtonActive) {
-            UserDefaults.standard.set(encodedData, forKey: endButtonActiveKey)
-        }
-    }
-    
-    func saveStartOrCalculateButtonActive() {
-        if let encodedData = try? JSONEncoder().encode(startOrCalculateButtonActive) {
-            UserDefaults.standard.set(encodedData, forKey: startOrCalculateButtonActiveKey)
-        }
-    }
-    
-    func reset() {
-        timer.upstream.connect().cancel()
-        self.numberOfRotas = 2
-        let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
-        self.rotas = rotas
-        self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
-        self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
-        self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
-        NotificationManager.instance.cancelAllNotifications()
-    }
-    
-    
-//    func subtractRota() {
-////        timer.upstream.connect().cancel()
-//        numberOfRotas -= 1
-//        self.rotas.removeLast()
-//        self.startOrCalculateButtonActive.removeLast()
-//        self.endButtonActive.removeLast()
-//        self.numberOfFiremens.removeLast()
-//    }
-    
     func addRota() {
         numberOfRotas += 1
         self.rotas.append(Rota(number: numberOfRotas))
@@ -173,6 +152,17 @@ final class CoreViewModel: ObservableObject {
         self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
         NotificationManager.instance.cancelExitNotification(forRota: forRota)
         NotificationManager.instance.cancelFirstMeasurementNotification(forRota: forRota)
+    }
+    
+    func reset() {
+        timer.upstream.connect().cancel()
+        self.numberOfRotas = 2
+        let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
+        self.rotas = rotas
+        self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
+        self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
+        self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
+        NotificationManager.instance.cancelAllNotifications()
     }
     
     func updateDurationAndRemiaingTime(forRota: Int) {
@@ -347,7 +337,14 @@ final class CoreViewModel: ObservableObject {
 
 
 
-
+//    func subtractRota() {
+////        timer.upstream.connect().cancel()
+//        numberOfRotas -= 1
+//        self.rotas.removeLast()
+//        self.startOrCalculateButtonActive.removeLast()
+//        self.endButtonActive.removeLast()
+//        self.numberOfFiremens.removeLast()
+//    }
 
 
 

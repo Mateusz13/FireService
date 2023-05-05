@@ -9,9 +9,10 @@ import SwiftUI
 
 struct RotaTableView: View {
     
-//    let rotaNumber: Int
+    //    let rotaNumber: Int
     
     @EnvironmentObject private var vm: CoreViewModel
+    @State private var addFiremanConfirmationAlert: Bool = false
     
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
@@ -82,11 +83,7 @@ extension RotaTableView {
                 // .focused($fieldInFocus, equals: .name)
             }
             Button {
-                if startOrCalculateButtonActive[0] {
-                    withAnimation(.easeIn) {
-                        vm.addFireman(forRota: rota.number)
-                    }
-                }
+                addFiremanConfirmationAlert = true
             } label: {
                 Label("", systemImage: "plus.circle.fill")
                     .font(.title)
@@ -94,6 +91,23 @@ extension RotaTableView {
             .foregroundColor(.green)
             .frame(height: 34)
             .disabled(numberOfFiremens == 3)
+            .alert("Dodać strażaka?", isPresented: $addFiremanConfirmationAlert) {
+                Button("Tak") { if startOrCalculateButtonActive[0] {
+                    withAnimation(.easeIn) {
+                        vm.addFireman(forRota: rota.number)
+                    }
+                }
+                }
+                Button("Nie", role: .cancel) { }
+            } message: {
+                if rota.number == 2 {
+                    Text("Dodać kolejnego strażaka do Roty RIT?")
+                } else if rota.number < 2 {
+                    Text("Dodać kolejnego strażaka do Roty \(rota.number+1)?")
+                } else {
+                    Text("Dodać kolejnego strażaka do Roty \(rota.number)?")
+                }
+            }
         }
         .frame(minWidth: 80)
     }
