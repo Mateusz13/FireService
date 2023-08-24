@@ -58,7 +58,7 @@ class NotificationManager {
         
         
         let content = UNMutableNotificationContent()
-        content.title = "Pozostało 5 minut do wyjścia!"
+        content.title = "Pozostało 5 minut do gwizdka!"
 //        content.body = ""
         content.sound = .default
                 

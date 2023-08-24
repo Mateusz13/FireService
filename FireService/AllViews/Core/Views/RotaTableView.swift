@@ -82,31 +82,35 @@ extension RotaTableView {
                 TextField("name4", text: $rota.f4Name)
                 // .focused($fieldInFocus, equals: .name)
             }
-            Button {
-                addFiremanConfirmationAlert = true
-            } label: {
-                Label("", systemImage: "plus.circle.fill")
-                    .font(.title)
-            }
-            .foregroundColor(.green)
-            .frame(height: 34)
-            .disabled(numberOfFiremens == 3)
-            .alert("Dodać strażaka?", isPresented: $addFiremanConfirmationAlert) {
-                Button("Tak") { if startOrCalculateButtonActive[0] {
-                    withAnimation(.easeIn) {
-                        vm.addFireman(forRota: rota.number)
+            if startOrCalculateButtonActive[0] && numberOfFiremens != 3 {
+                Button {
+                    addFiremanConfirmationAlert = true
+                } label: {
+                    Label("", systemImage: "plus.circle.fill")
+                        .font(.title)
+                }
+                .foregroundColor(.green)
+                .frame(height: 34)
+//                .disabled(numberOfFiremens == 3)
+                .alert("Dodać strażaka?", isPresented: $addFiremanConfirmationAlert) {
+                    Button("Tak") { if startOrCalculateButtonActive[0] {
+                        withAnimation(.easeIn) {
+                            vm.addFireman(forRota: rota.number)
+                        }
+                    }
+                    }
+                    Button("Nie", role: .cancel) { }
+                } message: {
+                    if rota.number == 2 {
+                        Text("Dodać kolejnego strażaka do Roty RIT?")
+                    } else if rota.number < 2 {
+                        Text("Dodać kolejnego strażaka do Roty \(rota.number+1)?")
+                    } else {
+                        Text("Dodać kolejnego strażaka do Roty \(rota.number)?")
                     }
                 }
-                }
-                Button("Nie", role: .cancel) { }
-            } message: {
-                if rota.number == 2 {
-                    Text("Dodać kolejnego strażaka do Roty RIT?")
-                } else if rota.number < 2 {
-                    Text("Dodać kolejnego strażaka do Roty \(rota.number+1)?")
-                } else {
-                    Text("Dodać kolejnego strażaka do Roty \(rota.number)?")
-                }
+            } else {
+                Spacer()
             }
         }
         .frame(minWidth: 80)

@@ -72,7 +72,7 @@ extension MainView {
                             .frame(minWidth: 69)
                             .foregroundColor(.blue)
                             .padding(.horizontal, 3)
-                            .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
+//                            .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
                     } else {
                         Text("0:00")
                             .foregroundColor(.blue)
