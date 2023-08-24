@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct MainView: View {
     
@@ -44,9 +45,15 @@ struct MainView: View {
         .onAppear {
             NotificationManager.instance.requestAuthorization()
             self.currentTime = Date().getFormattedDateToHHmmSS()
+            // Disabling the idle timer when this view appears
+            UIApplication.shared.isIdleTimerDisabled = true
         }
         .onReceive(vm.timer2) { _ in
             self.currentTime = Date().getFormattedDateToHHmmSS()
+        }
+        .onDisappear {
+            // Enabling the idle timer back when this view disappears
+            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
 }
