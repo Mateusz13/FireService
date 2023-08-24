@@ -286,7 +286,7 @@ final class CoreViewModel: ObservableObject {
         }
         
         
-        if !(0.001...3600).contains(rota.timeToLeave ?? 0) {
+        if !(0.001...12600).contains(rota.timeToLeave ?? 0) {
             showAlert = true
             HapticManager.notifiaction(type: .error)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = true
