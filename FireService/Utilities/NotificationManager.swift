@@ -8,7 +8,7 @@
 import Foundation
 import UserNotifications
 
-class NotificationManager {
+class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
     
     static let instance = NotificationManager() // Singleton
     
@@ -21,6 +21,7 @@ class NotificationManager {
                 print("Permission granted")
             }
         }
+        UNUserNotificationCenter.current().delegate = self
     }
     
     func scheduleFirstMeasurementNotification(forRota: Int) {
@@ -93,6 +94,11 @@ class NotificationManager {
     func cancelAllNotifications() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Specify that the notification should be shown even when the app is in the foreground
+        completionHandler([.banner, .sound])
     }
 }
 
