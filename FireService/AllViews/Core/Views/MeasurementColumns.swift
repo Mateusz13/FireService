@@ -65,9 +65,8 @@ struct MeasurementColumns: View {
     }
 }
 
-//struct measurementColumns_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MeasurementColumns(rotaNumber: 0, measurement: 1)
-//            .environmentObject(CoreViewModel())
-//    }
-//}
+struct measurementColumns_Previews: PreviewProvider {
+    static var previews: some View {
+        MeasurementColumns(measurement: 1, rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremens: .constant(1), endButtonActive: .constant(true))            .environmentObject(CoreViewModel())
+    }
+}

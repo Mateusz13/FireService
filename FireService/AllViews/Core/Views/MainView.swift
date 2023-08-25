@@ -74,7 +74,7 @@ extension MainView {
             VStack {
                 RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremens: $vm.numberOfFiremens[rota.number], endButtonActive: $vm.endButtonActive[rota.number])
                 HStack() {
-                    if (0...10800).contains(vm.rotas[rota.number].duration ?? 0) {
+                    if (0...12600).contains(vm.rotas[rota.number].duration ?? 0) {
                         Text(vm.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
                             .frame(minWidth: 69)
                             .foregroundColor(.blue)
