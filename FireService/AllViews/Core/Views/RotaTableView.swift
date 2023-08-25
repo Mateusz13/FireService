@@ -13,6 +13,7 @@ struct RotaTableView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
     @State private var addFiremanConfirmationAlert: Bool = false
+    @State private var removeTheReserveConfirmationAlert: Bool = false
     
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
@@ -110,7 +111,26 @@ extension RotaTableView {
                     }
                 }
             } else {
-                Spacer()
+                Button {
+                    removeTheReserveConfirmationAlert = true
+                } label: {
+                    Label("", systemImage: "person.crop.circle.badge.exclamationmark")
+                        .font(.title)
+                }
+                .foregroundColor(vm.minimalPressure[rota.number] == 50.0 ? .green : .red)
+                .frame(height: 34)
+                .disabled(vm.minimalPressure[rota.number] == 0.0)
+                .alert("Usunąć rezerwę 50 BAR?!", isPresented: $removeTheReserveConfirmationAlert) {
+                    Button("Tak") {
+                        withAnimation(.easeIn) {
+                            vm.minimalPressure[rota.number] = 0.0
+                        }
+                    }
+                    Button("Nie", role: .cancel) { }
+                }
+//                message: {
+//                    Text("Usunąć rezerwę?")
+//                }
             }
         }
         .frame(minWidth: 80)

@@ -37,9 +37,15 @@ final class CoreViewModel: ObservableObject {
             saveNumberOfRotas()
         }
     }
+    @Published var minimalPressure : [Double] {
+        didSet {
+            saveMinimalPressure()
+        }
+    }
+    
     let measurementsNumber: Int = 11 //10
     let exitNotificationTime = 300.0
-    let minimalPressure: Double = 50
+//    let minimalPressure: Double = 50
     var cancellables = Set<AnyCancellable>()
     //var timerCancellable: Cancellable?  // creat array ?
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -47,6 +53,7 @@ final class CoreViewModel: ObservableObject {
     
     let rotasInputsKey: String = "rotasInputs"
     let numberOfFiremansKey: String = "numberOfFiremans"
+    let minimalPressureKey: String = "minimalPressure"
     let endButtonActiveKey: String = "endButtonActive"
     let numberOfRotasKey: String = "numberOfRotas"
     let startOrCalculateButtonActiveKey: String = "startOrCalculateButtonActive"
@@ -58,11 +65,13 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
         self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
         self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
+        self.minimalPressure = Array(repeating: 50.0, count: 50)
         getNumberOfRotas()
         getNumberOfFiremans()
         getStartOrCalculateButtonActive()
         getEndButtonActive()
         getRotasInputs()
+        getMinimalPressure()
     }
     
     func saveNumberOfRotas() {
@@ -80,6 +89,12 @@ final class CoreViewModel: ObservableObject {
     func saveNumberOfFiremans() {
         if let encodedData = try? JSONEncoder().encode(numberOfFiremens) {
             UserDefaults.standard.set(encodedData, forKey: numberOfFiremansKey)
+        }
+    }
+    
+    func saveMinimalPressure() {
+        if let encodedData = try? JSONEncoder().encode(minimalPressure) {
+            UserDefaults.standard.set(encodedData, forKey: minimalPressureKey)
         }
     }
     
@@ -117,6 +132,14 @@ final class CoreViewModel: ObservableObject {
             let savedData = try? JSONDecoder().decode([Int].self, from: data)
         else { return }
         self.numberOfFiremens = savedData
+    }
+    
+    func getMinimalPressure() {
+        guard
+            let data = UserDefaults.standard.data(forKey: minimalPressureKey),
+            let savedData = try? JSONDecoder().decode([Double].self, from: data)
+        else { return }
+        self.minimalPressure = savedData
     }
     
     func getEndButtonActive() {
@@ -163,6 +186,7 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
         self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
         self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
+        self.minimalPressure = Array(repeating: 50.0, count: 50)
         NotificationManager.instance.cancelAllNotifications()
     }
     
@@ -242,7 +266,7 @@ final class CoreViewModel: ObservableObject {
         // calculation:
         
         //fireman1
-        let initialPressureF1 = rota.doubleF1Pressures[forMeasurement-1] - minimalPressure
+        let initialPressureF1 = rota.doubleF1Pressures[forMeasurement-1] - minimalPressure[forRota]
         let pressureUsedF1 = rota.doubleF1Pressures[forMeasurement-1] - rota.doubleF1Pressures[forMeasurement]
         let entireTimeOnActionF1 = initialPressureF1 / pressureUsedF1 * timeInterval
         let timeToLeaveF1 = entireTimeOnActionF1 - timeInterval
@@ -250,7 +274,7 @@ final class CoreViewModel: ObservableObject {
         
         //fireman2
         
-        let initialPressureF2 = rota.doubleF2Pressures[forMeasurement-1] - minimalPressure
+        let initialPressureF2 = rota.doubleF2Pressures[forMeasurement-1] - minimalPressure[forRota]
         let pressureUsedF2 = rota.doubleF2Pressures[forMeasurement-1] - rota.doubleF2Pressures[forMeasurement]
         let entireTimeOnActionF2 = initialPressureF2 / pressureUsedF2 * timeInterval
         let timeToLeaveF2 = entireTimeOnActionF2 - timeInterval
@@ -261,7 +285,7 @@ final class CoreViewModel: ObservableObject {
         //fireman3
         
         if numberOfFiremens[forRota] == 2 {
-            let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure
+            let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure[forRota]
             let pressureUsedF3 = rota.doubleF3Pressures[forMeasurement-1] - rota.doubleF3Pressures[forMeasurement]
             let entireTimeOnActionF3 = initialPressureF3 / pressureUsedF3 * timeInterval
             let timeToLeaveF3 = entireTimeOnActionF3 - timeInterval
@@ -271,12 +295,12 @@ final class CoreViewModel: ObservableObject {
             
         } else if numberOfFiremens[forRota] == 3 {
             //fireman3
-            let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure
+            let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure[forRota]
             let pressureUsedF3 = rota.doubleF3Pressures[forMeasurement-1] - rota.doubleF3Pressures[forMeasurement]
             let entireTimeOnActionF3 = initialPressureF3 / pressureUsedF3 * timeInterval
             let timeToLeaveF3 = entireTimeOnActionF3 - timeInterval
             //fireman4
-            let initialPressureF4 = rota.doubleF4Pressures[forMeasurement-1] - minimalPressure
+            let initialPressureF4 = rota.doubleF4Pressures[forMeasurement-1] - minimalPressure[forRota]
             let pressureUsedF4 = rota.doubleF4Pressures[forMeasurement-1] - rota.doubleF4Pressures[forMeasurement]
             let entireTimeOnActionF4 = initialPressureF4 / pressureUsedF4 * timeInterval
             let timeToLeaveF4 = entireTimeOnActionF4 - timeInterval
