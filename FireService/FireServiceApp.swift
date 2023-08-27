@@ -12,20 +12,30 @@ struct FireServiceApp: App {
     
 //    let vm = CoreViewModel() ??
     @StateObject private var vm = CoreViewModel()
+    @State private var showLaunchView: Bool = true
     
     var body: some Scene {
         WindowGroup {
-            if #available(iOS 16.0, *) {
-                NavigationStack {
-                    MainView()
-                        .environmentObject(vm)
+            ZStack {
+                if #available(iOS 16.0, *) {
+                    NavigationStack {
+                        MainView()
+                            .environmentObject(vm)
+                    }
+                } else {
+                    NavigationView {
+                        MainView()
+                            .environmentObject(vm)
+                    }
+                    .navigationViewStyle(StackNavigationViewStyle())
                 }
-            } else {
-                NavigationView {
-                    MainView()
-                        .environmentObject(vm)
+                ZStack {
+                    if showLaunchView {
+                        LaunchView(showLaunchView: $showLaunchView)
+                            .transition(.move(edge: .leading))
+                    }
                 }
-                .navigationViewStyle(StackNavigationViewStyle())
+                .zIndex(2.0)
             }
         }
     }
