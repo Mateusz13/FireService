@@ -57,6 +57,17 @@ struct MeasurementColumns: View {
                 Text(rota.time?[measurement].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)
                     .foregroundColor(.secondary)
+            } else if editData {
+                Button {
+                    vm.startActionOrCalculateExitTime2(forRota: rota.number, forMeasurement: measurement, previousTime: rota.time?[measurement] ?? Date())
+                    editData = false
+                } label: {
+                    Text("Oblicz")
+                }
+                .disabled(!endButtonActive)
+                //                .frame(height: 33)
+                .buttonStyle(.borderedProminent)
+                
             } else {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
