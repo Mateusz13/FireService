@@ -119,7 +119,7 @@ extension MainView {
                         }
                     }
                     Spacer()
-                    Text("Pozostały czas: \((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+                    Text("Do gwizdka: \((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
                         .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
                     //.foregroundColor(rota.number == 2 ? .orange : .red)
                         .padding(.horizontal, 3)

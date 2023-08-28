@@ -19,40 +19,48 @@ struct MeasurementColumns: View {
     @Binding var numberOfFiremens: Int
     @Binding var endButtonActive: Bool
     
+    @State private var editData: Bool = false
+    
     var body: some View {
         VStack {
-            Text("POMIAR \(measurement)")
+            Button {
+                editData = true
+            } label: {
+                Text("POMIAR \(measurement)")
+                    .foregroundColor(.black)
+            }
             TextField("BAR", text: $rota.f1Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f1Pressures[measurement])
-                .disabled(!startOrCalculateButtonActive[measurement])
+                .disabled(!startOrCalculateButtonActive[measurement] && !editData)
                 .disabled(startOrCalculateButtonActive[measurement-1])
             TextField("BAR", text: $rota.f2Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f2Pressures[measurement])
-                .disabled(!startOrCalculateButtonActive[measurement])
+                .disabled(!startOrCalculateButtonActive[measurement] && !editData)
                 .disabled(startOrCalculateButtonActive[measurement-1])
             if numberOfFiremens > 1 {
                 TextField("BAR", text: $rota.f3Pressures[measurement])
                 //                .focused($fieldInFocus, equals: .pressure1)
                     .numbersOnly($rota.f3Pressures[measurement])
-                    .disabled(!startOrCalculateButtonActive[measurement])
+                    .disabled(!startOrCalculateButtonActive[measurement] && !editData)
                     .disabled(startOrCalculateButtonActive[measurement-1])
             }
             if numberOfFiremens > 2 {
                 TextField("BAR", text: $rota.f4Pressures[measurement])
                 //                .focused($fieldInFocus, equals: .pressure1)
                     .numbersOnly($rota.f4Pressures[measurement])
-                    .disabled(!startOrCalculateButtonActive[measurement])
+                    .disabled(!startOrCalculateButtonActive[measurement] && !editData)
                     .disabled(startOrCalculateButtonActive[measurement-1])
             }
-            if startOrCalculateButtonActive[measurement] == false {
+            if !startOrCalculateButtonActive[measurement] && !editData {
                 Text(rota.time?[measurement].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)
                     .foregroundColor(.secondary)
             } else {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
+                    editData = false
                 } label: {
                     Text("Oblicz")
                 }
