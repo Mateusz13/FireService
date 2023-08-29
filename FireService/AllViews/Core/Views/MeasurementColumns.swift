@@ -25,17 +25,19 @@ struct MeasurementColumns: View {
     
     var body: some View {
         VStack {
-            Button {
-                editDataAlert = true
-            } label: {
-                Text("POMIAR \(measurement)")
-//                    .foregroundColor(.black)
-                    .alert("Edytować dane?", isPresented: $editDataAlert) {
-                        Button("Tak", role: .destructive) { editData = true }
-                        Button("Nie", role: .cancel) { }
-                    }
-            }
-            .disabled(startOrCalculateButtonActive[measurement])
+                Button {
+                    editDataAlert = true
+                } label: {
+                    Text("POMIAR \(measurement)")
+    //                    .foregroundColor(.black)
+                        .alert("Edytować dane?", isPresented: $editDataAlert) {
+                            Button("Tak", role: .destructive) { editData = true }
+                            Button("Nie", role: .cancel) { }
+                        }
+                }
+                .disabled(startOrCalculateButtonActive[measurement])
+//                .disabled(measurement < 9 ? !startOrCalculateButtonActive[measurement+2] : false)
+                .disabled(!startOrCalculateButtonActive[measurement+2])
             TextField("BAR", text: $rota.f1Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f1Pressures[measurement])
@@ -74,11 +76,12 @@ struct MeasurementColumns: View {
                 .disabled(!endButtonActive)
                 //                .frame(height: 33)
                 .buttonStyle(.borderedProminent)
+                .foregroundColor(.red)
                 
             } else {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
-                    editData = false
+//                    editData = false
                 } label: {
                     Text("Oblicz")
                 }

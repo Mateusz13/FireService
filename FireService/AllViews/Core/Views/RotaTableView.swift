@@ -23,6 +23,8 @@ struct RotaTableView: View {
     //            case name, pressure0, pressure1, pressure2
     //        }
     //        @FocusState var fieldInFocus: FocusField?
+    @State private var editDataAlert: Bool = false
+    @State private var editData: Bool = false
     
     var body: some View {
         
@@ -139,34 +141,55 @@ extension RotaTableView {
     
     private var entryColumn: some View {
         VStack {
-            Text("WEJŚCIE")
+            Button {
+                editDataAlert = true
+            } label: {
+                Text("WEJŚCIE")
+            }
+            .alert("Edytować dane?", isPresented: $editDataAlert) {
+                Button("Tak", role: .destructive) { editData = true }
+                Button("Nie", role: .cancel) { }
+            }
+            .disabled(startOrCalculateButtonActive[0])
+            .disabled(!startOrCalculateButtonActive[2])
             TextField("BAR", text: $rota.f1Pressures[0])
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($rota.f1Pressures[0])
-                .disabled(!startOrCalculateButtonActive[0])
+                .disabled(!startOrCalculateButtonActive[0] && !editData)
             TextField("BAR", text: $rota.f2Pressures[0])
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($rota.f2Pressures[0])
-                .disabled(!startOrCalculateButtonActive[0])
+                .disabled(!startOrCalculateButtonActive[0] && !editData)
             if numberOfFiremens > 1 {
                 TextField("BAR", text: $rota.f3Pressures[0])
                 //                .focused($fieldInFocus, equals: .pressure0)
                     .numbersOnly($rota.f3Pressures[0])
-                    .disabled(!startOrCalculateButtonActive[0])
+                    .disabled(!startOrCalculateButtonActive[0] && !editData)
             }
             if numberOfFiremens > 2 {
                 TextField("BAR", text: $rota.f4Pressures[0])
                 //                .focused($fieldInFocus, equals: .pressure0)
                     .numbersOnly($rota.f4Pressures[0])
-                    .disabled(!startOrCalculateButtonActive[0])
+                    .disabled(!startOrCalculateButtonActive[0] && !editData)
             }
-            if startOrCalculateButtonActive[0] == false {
+            if !startOrCalculateButtonActive[0] && !editData {
                 Text(rota.time?[0].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)
                     .foregroundColor(.secondary)
-            } else {
+            } else if editData {
+                Button {
+                    editData = false
+                } label: {
+                    Text("Edytuj")
+                }
+                .disabled(!endButtonActive)
+                .buttonStyle(.borderedProminent)
+                .foregroundColor(.red)
+            }
+            else {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: 0)
+//                    editData = false
                 } label: {
                     Text("Start")
                 }

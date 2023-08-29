@@ -43,7 +43,7 @@ final class CoreViewModel: ObservableObject {
         }
     }
     
-    let measurementsNumber: Int = 11 //10
+    let measurementsNumber: Int = 13 //12 (2 more for: .disabled(!startOrCalculateButtonActive[measurement+2])
     let exitNotificationTime = 300.0
 //    let minimalPressure: Double = 50
     var cancellables = Set<AnyCancellable>()
