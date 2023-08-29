@@ -378,13 +378,20 @@ final class CoreViewModel: ObservableObject {
             return self.rotas[forRota].time?[forMeasurement].timeIntervalSince(self.rotas[forRota].time?[forMeasurement-1] ?? Date()) ?? 0
         }
         
-        // calculation:
+        var timeInterval2: TimeInterval {
+            return Date().timeIntervalSince(self.rotas[forRota].time?[forMeasurement] ?? Date())
+        }
+        
+        print(timeInterval)
+        print(timeInterval2)
+        
+        //calculation:
         
         //fireman1
         let initialPressureF1 = rota.doubleF1Pressures[forMeasurement-1] - minimalPressure[forRota]
         let pressureUsedF1 = rota.doubleF1Pressures[forMeasurement-1] - rota.doubleF1Pressures[forMeasurement]
         let entireTimeOnActionF1 = initialPressureF1 / pressureUsedF1 * timeInterval
-        let timeToLeaveF1 = entireTimeOnActionF1 - timeInterval
+        let timeToLeaveF1 = entireTimeOnActionF1 - timeInterval - timeInterval2
         
         
         //fireman2
@@ -392,7 +399,7 @@ final class CoreViewModel: ObservableObject {
         let initialPressureF2 = rota.doubleF2Pressures[forMeasurement-1] - minimalPressure[forRota]
         let pressureUsedF2 = rota.doubleF2Pressures[forMeasurement-1] - rota.doubleF2Pressures[forMeasurement]
         let entireTimeOnActionF2 = initialPressureF2 / pressureUsedF2 * timeInterval
-        let timeToLeaveF2 = entireTimeOnActionF2 - timeInterval
+        let timeToLeaveF2 = entireTimeOnActionF2 - timeInterval - timeInterval2
         
         let timesToLeave2: [Double] = [timeToLeaveF1, timeToLeaveF2]
         rota.timeToLeave = timesToLeave2.min()
@@ -403,7 +410,7 @@ final class CoreViewModel: ObservableObject {
             let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure[forRota]
             let pressureUsedF3 = rota.doubleF3Pressures[forMeasurement-1] - rota.doubleF3Pressures[forMeasurement]
             let entireTimeOnActionF3 = initialPressureF3 / pressureUsedF3 * timeInterval
-            let timeToLeaveF3 = entireTimeOnActionF3 - timeInterval
+            let timeToLeaveF3 = entireTimeOnActionF3 - timeInterval - timeInterval2
             
             let timesToLeave3: [Double] = [timeToLeaveF1, timeToLeaveF2, timeToLeaveF3]
             rota.timeToLeave = timesToLeave3.min()
@@ -413,12 +420,12 @@ final class CoreViewModel: ObservableObject {
             let initialPressureF3 = rota.doubleF3Pressures[forMeasurement-1] - minimalPressure[forRota]
             let pressureUsedF3 = rota.doubleF3Pressures[forMeasurement-1] - rota.doubleF3Pressures[forMeasurement]
             let entireTimeOnActionF3 = initialPressureF3 / pressureUsedF3 * timeInterval
-            let timeToLeaveF3 = entireTimeOnActionF3 - timeInterval
+            let timeToLeaveF3 = entireTimeOnActionF3 - timeInterval - timeInterval2
             //fireman4
             let initialPressureF4 = rota.doubleF4Pressures[forMeasurement-1] - minimalPressure[forRota]
             let pressureUsedF4 = rota.doubleF4Pressures[forMeasurement-1] - rota.doubleF4Pressures[forMeasurement]
             let entireTimeOnActionF4 = initialPressureF4 / pressureUsedF4 * timeInterval
-            let timeToLeaveF4 = entireTimeOnActionF4 - timeInterval
+            let timeToLeaveF4 = entireTimeOnActionF4 - timeInterval - timeInterval2
             
             let timesToLeave4: [Double] = [timeToLeaveF1, timeToLeaveF2, timeToLeaveF3, timeToLeaveF4]
             rota.timeToLeave = timesToLeave4.min()

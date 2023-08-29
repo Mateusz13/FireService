@@ -19,16 +19,23 @@ struct MeasurementColumns: View {
     @Binding var numberOfFiremens: Int
     @Binding var endButtonActive: Bool
     
+    @State private var editDataAlert: Bool = false
     @State private var editData: Bool = false
+    
     
     var body: some View {
         VStack {
             Button {
-                editData = true
+                editDataAlert = true
             } label: {
                 Text("POMIAR \(measurement)")
-                    .foregroundColor(.black)
+//                    .foregroundColor(.black)
+                    .alert("Edytować dane?", isPresented: $editDataAlert) {
+                        Button("Tak", role: .destructive) { editData = true }
+                        Button("Nie", role: .cancel) { }
+                    }
             }
+            .disabled(startOrCalculateButtonActive[measurement])
             TextField("BAR", text: $rota.f1Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f1Pressures[measurement])
