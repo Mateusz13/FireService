@@ -38,6 +38,7 @@ struct MeasurementColumns: View {
                 .disabled(startOrCalculateButtonActive[measurement])
 //                .disabled(measurement < 9 ? !startOrCalculateButtonActive[measurement+2] : false)
                 .disabled(!startOrCalculateButtonActive[measurement+2])
+                .disabled(!endButtonActive)
             TextField("BAR", text: $rota.f1Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f1Pressures[measurement])

@@ -121,6 +121,7 @@ extension RotaTableView {
                 }
                 .foregroundColor(vm.minimalPressure[rota.number] == 50.0 ? .green : .red)
                 .frame(height: 34)
+                .disabled(!endButtonActive)
                 .disabled(vm.minimalPressure[rota.number] == 0.0)
                 .alert("Usunąć rezerwę 50 BAR?!", isPresented: $removeTheReserveConfirmationAlert) {
                     Button("Tak") {
@@ -152,6 +153,7 @@ extension RotaTableView {
             }
             .disabled(startOrCalculateButtonActive[0])
             .disabled(!startOrCalculateButtonActive[2])
+            .disabled(!endButtonActive)
             TextField("BAR", text: $rota.f1Pressures[0])
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($rota.f1Pressures[0])
