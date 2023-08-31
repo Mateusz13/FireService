@@ -127,6 +127,10 @@ extension RotaTableView {
                     Button("Tak") {
                         withAnimation(.easeIn) {
                             vm.minimalPressure[rota.number] = 0.0
+                            if let index = startOrCalculateButtonActive.lastIndex(of: false) { if index > 0 {
+                                editData[index] = true
+                            }
+                            }
                         }
                     }
                     Button("Nie", role: .cancel) { }

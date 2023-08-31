@@ -43,7 +43,11 @@ final class CoreViewModel: ObservableObject {
         }
     }
     
-    @Published var editData: [[Bool]]
+    @Published var editData: [[Bool]] {
+        didSet {
+            saveEditData()
+        }
+    }
     
     
     let measurementsNumber: Int = 11 //10
@@ -60,6 +64,7 @@ final class CoreViewModel: ObservableObject {
     let endButtonActiveKey: String = "endButtonActive"
     let numberOfRotasKey: String = "numberOfRotas"
     let startOrCalculateButtonActiveKey: String = "startOrCalculateButtonActive"
+    let editDataKey: String = "editData"
     
     
     init() {
@@ -76,6 +81,7 @@ final class CoreViewModel: ObservableObject {
         getEndButtonActive()
         getRotasInputs()
         getMinimalPressure()
+        getEditData()
     }
     
     func saveNumberOfRotas() {
@@ -111,6 +117,12 @@ final class CoreViewModel: ObservableObject {
     func saveStartOrCalculateButtonActive() {
         if let encodedData = try? JSONEncoder().encode(startOrCalculateButtonActive) {
             UserDefaults.standard.set(encodedData, forKey: startOrCalculateButtonActiveKey)
+        }
+    }
+    
+    func saveEditData() {
+        if let encodedData = try? JSONEncoder().encode(editData) {
+            UserDefaults.standard.set(encodedData, forKey: editDataKey)
         }
     }
     
@@ -161,6 +173,15 @@ final class CoreViewModel: ObservableObject {
         else { return }
         self.startOrCalculateButtonActive = savedData
     }
+    
+    func getEditData() {
+        guard
+            let data = UserDefaults.standard.data(forKey: editDataKey),
+            let savedData = try? JSONDecoder().decode([[Bool]].self, from: data)
+        else { return }
+        self.editData = savedData
+    }
+    
     
     func addRota() {
         numberOfRotas += 1
