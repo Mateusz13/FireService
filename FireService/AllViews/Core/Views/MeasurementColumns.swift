@@ -75,7 +75,7 @@ struct MeasurementColumns: View {
                 .buttonStyle(.borderedProminent)
             } else if editData[measurement] || editData[measurement-1] {
                 Button {
-                    vm.startActionOrCalculateExitTime2(forRota: rota.number, forMeasurement: measurement, previousTime: rota.time?[measurement] ?? Date())
+                    vm.recalculateExitTime(forRota: rota.number, forMeasurement: measurement, previousTime: rota.time?[measurement] ?? Date())
                     editData[measurement] = false
                     if !startOrCalculateButtonActive[measurement+1] {
                         editData[measurement+1] = true

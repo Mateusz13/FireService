@@ -185,7 +185,9 @@ extension RotaTableView {
             } else if editData[0] {
                 Button {
                     editData[0] = false
-                    editData[1] = true
+                    if !startOrCalculateButtonActive[1] {
+                        editData[1] = true
+                    }
                 } label: {
                     Text("Edytuj")
                 }
