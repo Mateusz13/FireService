@@ -11,8 +11,6 @@ import Combine
 
 final class CoreViewModel: ObservableObject {
     
-    @Published var editData: [[Bool]] = [Array(repeating: false, count: 11), Array(repeating: false, count: 11), Array(repeating: false, count: 11)]
-    
     @Published var rotas: [Rota] {
         didSet {
             saveRotasInputs()
@@ -45,7 +43,10 @@ final class CoreViewModel: ObservableObject {
         }
     }
     
-    let measurementsNumber: Int = 13 //12 (2 more for: .disabled(!startOrCalculateButtonActive[measurement+2])
+    @Published var editData: [[Bool]]
+    
+    
+    let measurementsNumber: Int = 11 //10
     let exitNotificationTime = 300.0
 //    let minimalPressure: Double = 50
     var cancellables = Set<AnyCancellable>()
@@ -64,10 +65,11 @@ final class CoreViewModel: ObservableObject {
     init() {
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
-        self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
+        self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber+2), Array(repeating: true, count: measurementsNumber+2), Array(repeating: true, count: measurementsNumber+2)] //(2 more for: .disabled(!startOrCalculateButtonActive[measurement+2])
         self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
         self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
         self.minimalPressure = Array(repeating: 50.0, count: 50)
+        self.editData = [Array(repeating: false, count: measurementsNumber), Array(repeating: false, count: measurementsNumber), Array(repeating: false, count: measurementsNumber)]
         getNumberOfRotas()
         getNumberOfFiremans()
         getStartOrCalculateButtonActive()
@@ -163,7 +165,8 @@ final class CoreViewModel: ObservableObject {
     func addRota() {
         numberOfRotas += 1
         self.rotas.append(Rota(number: numberOfRotas))
-        self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber))
+        self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber+2))
+        self.editData.append(Array(repeating: false, count: measurementsNumber))
         self.endButtonActive.append(true)
         self.numberOfFiremens.append(1)
     }
@@ -185,10 +188,11 @@ final class CoreViewModel: ObservableObject {
         self.numberOfRotas = 2
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
-        self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber), Array(repeating: true, count: measurementsNumber)]
+        self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber+2), Array(repeating: true, count: measurementsNumber+2), Array(repeating: true, count: measurementsNumber+2)]
         self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
         self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
         self.minimalPressure = Array(repeating: 50.0, count: 50)
+        self.editData = [Array(repeating: false, count: measurementsNumber), Array(repeating: false, count: measurementsNumber), Array(repeating: false, count: measurementsNumber)]
         NotificationManager.instance.cancelAllNotifications()
     }
     
@@ -232,7 +236,7 @@ final class CoreViewModel: ObservableObject {
         
         //for the first measurement (start timer and save start time)
         guard forMeasurement != 0 else {
-            self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber)
+            self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = false
             hideKeyboard()
             timer
@@ -352,7 +356,7 @@ final class CoreViewModel: ObservableObject {
         
         //for the first measurement (start timer and save start time)
         guard forMeasurement != 0 else {
-            self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber)
+            self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
             self.startOrCalculateButtonActive[forRota][forMeasurement] = false
             hideKeyboard()
             timer
