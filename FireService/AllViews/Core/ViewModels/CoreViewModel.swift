@@ -11,6 +11,8 @@ import Combine
 
 final class CoreViewModel: ObservableObject {
     
+    @Published var editData: [[Bool]] = [Array(repeating: false, count: 11), Array(repeating: false, count: 11), Array(repeating: false, count: 11)]
+    
     @Published var rotas: [Rota] {
         didSet {
             saveRotasInputs()

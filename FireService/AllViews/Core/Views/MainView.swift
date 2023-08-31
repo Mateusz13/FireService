@@ -72,7 +72,7 @@ extension MainView {
         
         ForEach(vm.rotas) { rota in
             VStack {
-                RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremens: $vm.numberOfFiremens[rota.number], endButtonActive: $vm.endButtonActive[rota.number])
+                RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremens: $vm.numberOfFiremens[rota.number], endButtonActive: $vm.endButtonActive[rota.number], editData: $vm.editData[rota.number])
                 HStack() {
                     if (0...12600).contains(vm.rotas[rota.number].duration ?? 0) {
                         Text(vm.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")

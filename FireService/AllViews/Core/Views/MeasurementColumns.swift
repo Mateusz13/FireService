@@ -18,9 +18,9 @@ struct MeasurementColumns: View {
     @Binding var startOrCalculateButtonActive: [Bool]
     @Binding var numberOfFiremens: Int
     @Binding var endButtonActive: Bool
+    @Binding var editData: [Bool]
     
     @State private var editDataAlert: Bool = false
-    @State private var editData: Bool = false
     
     
     var body: some View {
@@ -31,7 +31,7 @@ struct MeasurementColumns: View {
                     Text("POMIAR \(measurement)")
     //                    .foregroundColor(.black)
                         .alert("Edytować dane?", isPresented: $editDataAlert) {
-                            Button("Tak", role: .destructive) { editData = true }
+                            Button("Tak", role: .destructive) { editData[measurement] = true }
                             Button("Nie", role: .cancel) { }
                         }
                 }
@@ -41,35 +41,44 @@ struct MeasurementColumns: View {
             TextField("BAR", text: $rota.f1Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f1Pressures[measurement])
-                .disabled(!startOrCalculateButtonActive[measurement] && !editData)
+                .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                 .disabled(startOrCalculateButtonActive[measurement-1])
             TextField("BAR", text: $rota.f2Pressures[measurement])
             //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f2Pressures[measurement])
-                .disabled(!startOrCalculateButtonActive[measurement] && !editData)
+                .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                 .disabled(startOrCalculateButtonActive[measurement-1])
             if numberOfFiremens > 1 {
                 TextField("BAR", text: $rota.f3Pressures[measurement])
                 //                .focused($fieldInFocus, equals: .pressure1)
                     .numbersOnly($rota.f3Pressures[measurement])
-                    .disabled(!startOrCalculateButtonActive[measurement] && !editData)
+                    .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                     .disabled(startOrCalculateButtonActive[measurement-1])
             }
             if numberOfFiremens > 2 {
                 TextField("BAR", text: $rota.f4Pressures[measurement])
                 //                .focused($fieldInFocus, equals: .pressure1)
                     .numbersOnly($rota.f4Pressures[measurement])
-                    .disabled(!startOrCalculateButtonActive[measurement] && !editData)
+                    .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                     .disabled(startOrCalculateButtonActive[measurement-1])
             }
-            if !startOrCalculateButtonActive[measurement] && !editData {
-                Text(rota.time?[measurement].getFormattedDateToHHmm() ?? "error")
-                    .frame(height: 33)
-                    .foregroundColor(.secondary)
-            } else if editData {
+            if startOrCalculateButtonActive[measurement] {
+                Button {
+                    vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
+//                    editData2 = false
+                } label: {
+                    Text("Oblicz")
+                }
+                .disabled(!endButtonActive)
+                //                .frame(height: 33)
+                .buttonStyle(.borderedProminent)
+            } else if editData[measurement] || editData[measurement-1] {
                 Button {
                     vm.startActionOrCalculateExitTime2(forRota: rota.number, forMeasurement: measurement, previousTime: rota.time?[measurement] ?? Date())
-                    editData = false
+                    editData[measurement] = false
+                    if !startOrCalculateButtonActive[measurement+1] {
+                        editData[measurement+1] = true
+                    }
                 } label: {
                     Text("Oblicz")
                 }
@@ -77,18 +86,10 @@ struct MeasurementColumns: View {
                 //                .frame(height: 33)
                 .buttonStyle(.borderedProminent)
                 .foregroundColor(.red)
-                
             } else {
-                Button {
-                    vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
-//                    editData = false
-                } label: {
-                    Text("Oblicz")
-                }
-                .disabled(!endButtonActive)
-                //                .frame(height: 33)
-                .buttonStyle(.borderedProminent)
-                
+                Text(rota.time?[measurement].getFormattedDateToHHmm() ?? "error")
+                    .frame(height: 33)
+                    .foregroundColor(.secondary)
             }
         }
     }
@@ -96,6 +97,7 @@ struct MeasurementColumns: View {
 
 struct measurementColumns_Previews: PreviewProvider {
     static var previews: some View {
-        MeasurementColumns(measurement: 1, rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremens: .constant(1), endButtonActive: .constant(true))            .environmentObject(CoreViewModel())
+        MeasurementColumns(measurement: 1, rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremens: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
+            .environmentObject(CoreViewModel())
     }
 }

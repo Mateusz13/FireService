@@ -19,12 +19,12 @@ struct RotaTableView: View {
     @Binding var startOrCalculateButtonActive: [Bool]
     @Binding var numberOfFiremens: Int
     @Binding var endButtonActive: Bool
+    @Binding var editData: [Bool]
     //        enum FocusField {
     //            case name, pressure0, pressure1, pressure2
     //        }
     //        @FocusState var fieldInFocus: FocusField?
     @State private var editDataAlert: Bool = false
-    @State private var editData: Bool = false
     
     var body: some View {
         
@@ -33,7 +33,7 @@ struct RotaTableView: View {
                 namesColumn
                 entryColumn
                 ForEach(1...10, id: \.self) { measurement in
-                    MeasurementColumns(measurement: measurement, rota: $rota, startOrCalculateButtonActive: $startOrCalculateButtonActive, numberOfFiremens: $numberOfFiremens, endButtonActive: $endButtonActive)
+                    MeasurementColumns(measurement: measurement, rota: $rota, startOrCalculateButtonActive: $startOrCalculateButtonActive, numberOfFiremens: $numberOfFiremens, endButtonActive: $endButtonActive, editData: $editData)
                 }
             }
         }
@@ -54,7 +54,7 @@ struct RotaTableView: View {
 
 struct RotaTableView_Previews: PreviewProvider {
     static var previews: some View {
-        RotaTableView(rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremens: .constant(1), endButtonActive: .constant(true))
+        RotaTableView(rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 13)), numberOfFiremens: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
             .environmentObject(CoreViewModel())
     }
 }
@@ -147,7 +147,7 @@ extension RotaTableView {
                 Text("WEJŚCIE")
             }
             .alert("Edytować dane?", isPresented: $editDataAlert) {
-                Button("Tak", role: .destructive) { editData = true }
+                Button("Tak", role: .destructive) { editData[0] = true }
                 Button("Nie", role: .cancel) { }
             }
             .disabled(startOrCalculateButtonActive[0])
@@ -155,30 +155,31 @@ extension RotaTableView {
             TextField("BAR", text: $rota.f1Pressures[0])
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($rota.f1Pressures[0])
-                .disabled(!startOrCalculateButtonActive[0] && !editData)
+                .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             TextField("BAR", text: $rota.f2Pressures[0])
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($rota.f2Pressures[0])
-                .disabled(!startOrCalculateButtonActive[0] && !editData)
+                .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             if numberOfFiremens > 1 {
                 TextField("BAR", text: $rota.f3Pressures[0])
                 //                .focused($fieldInFocus, equals: .pressure0)
                     .numbersOnly($rota.f3Pressures[0])
-                    .disabled(!startOrCalculateButtonActive[0] && !editData)
+                    .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             }
             if numberOfFiremens > 2 {
                 TextField("BAR", text: $rota.f4Pressures[0])
                 //                .focused($fieldInFocus, equals: .pressure0)
                     .numbersOnly($rota.f4Pressures[0])
-                    .disabled(!startOrCalculateButtonActive[0] && !editData)
+                    .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             }
-            if !startOrCalculateButtonActive[0] && !editData {
+            if !startOrCalculateButtonActive[0] && !editData[0] {
                 Text(rota.time?[0].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)
                     .foregroundColor(.secondary)
-            } else if editData {
+            } else if editData[0] {
                 Button {
-                    editData = false
+                    editData[0] = false
+                    editData[1] = true
                 } label: {
                     Text("Edytuj")
                 }
@@ -189,7 +190,7 @@ extension RotaTableView {
             else {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: 0)
-//                    editData = false
+//                    editData2 = false
                 } label: {
                     Text("Start")
                 }
