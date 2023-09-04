@@ -30,7 +30,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         let content = UNMutableNotificationContent()
         content.title = "Upłyneło 5 minut od wejścia!"
 //        content.subtitle = "Czas na pierwszy pomiar"
-        content.body = "Czas na pierwszy pomiar"
+        content.body = "Czas na pierwszy pomiar Roty \(forRota == 2 ? "RIT" : "\(forRota+1)")"
         content.sound = .default
         //content.badge = 1
         //NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
@@ -55,12 +55,13 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
 
     }
     
-    func scheduleExitNotification(time: TimeInterval, forRota: Int) {
+    func scheduleExitNotification(time: TimeInterval, forRota: Int, minimalPressure: Double) {
+        
         
         
         let content = UNMutableNotificationContent()
-        content.title = "Pozostało 5 minut do gwizdka!"
-//        content.body = ""
+        content.title = minimalPressure == 50.0 ? "Pozostało 5 minut do gwizdka!" : "Pozostało 5 minut do 0 BAR!!!"
+        content.body = "Dla Roty \(forRota == 2 ? "RIT" : "\(forRota+1)")"
         content.sound = .default
                 
         // time

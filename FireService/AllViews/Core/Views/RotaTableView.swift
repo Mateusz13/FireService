@@ -151,7 +151,7 @@ extension RotaTableView {
             } label: {
                 Text("WEJŚCIE")
             }
-            .alert("Edytować dane?", isPresented: $editDataAlert) {
+            .alert("Edytować dane dla wejścia?", isPresented: $editDataAlert) {
                 Button("Tak", role: .destructive) { editData[0] = true }
                 Button("Nie", role: .cancel) { }
             }

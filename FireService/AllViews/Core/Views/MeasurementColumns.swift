@@ -30,7 +30,7 @@ struct MeasurementColumns: View {
                 } label: {
                     Text("POMIAR \(measurement)")
     //                    .foregroundColor(.black)
-                        .alert("Edytować dane?", isPresented: $editDataAlert) {
+                        .alert("Edytować pomiar \(measurement)?", isPresented: $editDataAlert) {
                             Button("Tak", role: .destructive) { editData[measurement] = true }
                             Button("Nie", role: .cancel) { }
                         }

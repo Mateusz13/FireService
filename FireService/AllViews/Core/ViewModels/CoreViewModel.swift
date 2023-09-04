@@ -342,7 +342,7 @@ final class CoreViewModel: ObservableObject {
                 self.rotas[forRota].exitDate = Date().addingTimeInterval(timeToLeave)
                 if timeToLeave > exitNotificationTime {
                     let leaveNotificationTime = timeToLeave - exitNotificationTime
-                    NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota)
+                    NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota, minimalPressure: minimalPressure[forRota])
                 }
             }
         }
@@ -473,7 +473,7 @@ final class CoreViewModel: ObservableObject {
                 self.rotas[forRota].exitDate = Date().addingTimeInterval(timeToLeave)
                 if timeToLeave > exitNotificationTime {
                     let leaveNotificationTime = timeToLeave - exitNotificationTime
-                    NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota)
+                    NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota, minimalPressure: minimalPressure[forRota])
                 }
             }
         }
