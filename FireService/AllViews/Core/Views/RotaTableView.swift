@@ -124,7 +124,7 @@ extension RotaTableView {
                 .disabled(!endButtonActive)
                 .disabled(vm.minimalPressure[rota.number] == 0.0)
                 .alert("Usunąć rezerwę 50 BAR?!", isPresented: $removeTheReserveConfirmationAlert) {
-                    Button("Tak") {
+                    Button("Tak", role: .destructive) {
                         withAnimation(.easeIn) {
                             vm.minimalPressure[rota.number] = 0.0
                             if let index = startOrCalculateButtonActive.lastIndex(of: false) { if index > 0 {
