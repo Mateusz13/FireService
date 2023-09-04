@@ -73,7 +73,7 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = [Array(repeating: true, count: measurementsNumber+2), Array(repeating: true, count: measurementsNumber+2), Array(repeating: true, count: measurementsNumber+2)] //(2 more for: .disabled(!startOrCalculateButtonActive[measurement+2])
         self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
         self.numberOfFiremens = Array(repeating: 1, count: numberOfRotas+1)
-        self.minimalPressure = Array(repeating: 50.0, count: 50)
+        self.minimalPressure = Array(repeating: 50.0, count: measurementsNumber)
         self.editData = [Array(repeating: false, count: measurementsNumber), Array(repeating: false, count: measurementsNumber), Array(repeating: false, count: measurementsNumber)]
         getNumberOfRotas()
         getNumberOfFiremans()
@@ -476,6 +476,14 @@ final class CoreViewModel: ObservableObject {
                     NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota)
                 }
             }
+        }
+    }
+    
+    func timeToLeaveTitle(forRota: Int) -> String {
+        if minimalPressure[forRota] == 0.0 {
+            return "Do 0 BAR(!): "
+        } else {
+            return "Do gwizdka: "
         }
     }
 }
