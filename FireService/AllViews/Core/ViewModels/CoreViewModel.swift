@@ -49,6 +49,7 @@ final class CoreViewModel: ObservableObject {
         }
     }
     
+    
     let measurementsNumber: Int = 11 //10
     let exitNotificationTime = 300.0
     let validTimeToLeaveRange = (0.001...12600)
