@@ -16,7 +16,6 @@ struct MainView: View {
     @State private var endConfirmationAlert: Bool = false
     @State private var cleanConfirmationAlert: Bool = false
     @State private var number: Int = 0
-//    @State private var timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         
@@ -25,7 +24,6 @@ struct MainView: View {
             endLine
             Spacer()
         }
-        .navigationTitle("\(currentTime)          POWIETRZE DLA ROT")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .keyboard) {
@@ -39,20 +37,27 @@ struct MainView: View {
                 }
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    ClockView()
+                    Spacer()
+                    Text("POWIETRZE DLA ROT")
+                        .bold()
+                    Spacer()
+                }
+            }
+        }
         .alert(isPresented: $vm.showAlert) {
             getAlert()
         }
         .onAppear {
             NotificationManager.instance.requestAuthorization()
-            self.currentTime = Date().getFormattedDateToHHmmSS()
-            // Disabling the idle timer when this view appears
+            // Disabling the idle timer when this view appears (do I need this?)
             UIApplication.shared.isIdleTimerDisabled = true
         }
-        .onReceive(vm.timer2) { _ in
-            self.currentTime = Date().getFormattedDateToHHmmSS()
-        }
         .onDisappear {
-            // Enabling the idle timer back when this view disappears
+            // Enabling the idle timer back when this view disappears (do I need this?)
             UIApplication.shared.isIdleTimerDisabled = false
         }
     }
@@ -198,7 +203,20 @@ extension MainView {
     }
 }
 
+struct ClockView: View {
+    @EnvironmentObject private var vm: CoreViewModel
+    @State private var currentTime: String = ""
+    //@State private var currentTime = Date().getFormattedDateToHHmmSS()
 
+    
+    var body: some View {
+        Text(currentTime)
+            .bold()
+            .onReceive(vm.timer2) { _ in
+                self.currentTime = Date().getFormattedDateToHHmmSS()
+            }
+    }
+}
 
 
 
