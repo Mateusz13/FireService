@@ -183,8 +183,7 @@ final class CoreViewModel: ObservableObject {
         
         //checking if all required pressure textfields are filled
         if !validatePressures(forRota: forRota, forMeasurement: forMeasurement) {
-            showAlert = true
-            HapticManager.notifiaction(type: .error)
+            showError()
             return
         }
         
@@ -244,8 +243,7 @@ final class CoreViewModel: ObservableObject {
         if validTimeToLeaveRange.contains(minimumTimeToLeave) {
             handleValidTimeToLeave(minimumTimeToLeave, forRota: forRota)
         } else {
-            showAlert = true
-            HapticManager.notifiaction(type: .error)
+            showError()
             self.startOrCalculateButtonActive[forRota][forMeasurement] = true
         }
     }
@@ -286,45 +284,10 @@ final class CoreViewModel: ObservableObject {
         var rota = rotas[forRota]
         
         //checking if all required pressure textfields are filled
-        guard rota.f1Pressures[forMeasurement] != "" && rota.f2Pressures[forMeasurement] != "" else {
-            showAlert = true
-            HapticManager.notifiaction(type: .error)
+        if !validatePressures(forRota: forRota, forMeasurement: forMeasurement) {
+            showError()
             return
         }
-        
-        if numberOfFiremens[forRota] == 2 {
-            guard rota.f3Pressures[forMeasurement] != "" else {
-                showAlert = true
-                HapticManager.notifiaction(type: .error)
-                return
-            }
-        } else if numberOfFiremens[forRota] == 3 {
-            guard rota.f3Pressures[forMeasurement] != "" && rota.f4Pressures[forMeasurement] != "" else {
-                showAlert = true
-                HapticManager.notifiaction(type: .error)
-                return
-            }
-        }
-        
-        //for the first measurement (start timer and save start time)
-//        guard forMeasurement != 0 else {
-//            self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
-//            self.startOrCalculateButtonActive[forRota][forMeasurement] = false
-//            hideKeyboard()
-//            timer
-//                .sink { [weak self] _ in
-//                    guard let self = self else { return }
-//                    //                    self.rotas[forRota].duration += 1
-//                    if endButtonActive[forRota] {
-//                        self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-//                        self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-//                    }
-//                }
-//                .store(in: &cancellables)
-//            NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
-//            return
-//        }
-        
         
         //set time:
             self.rotas[forRota].time?[forMeasurement] = previousTime
@@ -342,9 +305,6 @@ final class CoreViewModel: ObservableObject {
         var timeInterval2: TimeInterval {
             return Date().timeIntervalSince(self.rotas[forRota].time?[forMeasurement] ?? Date())
         }
-        
-//        print(timeInterval)
-//        print(timeInterval2)
         
         //calculation:
         
@@ -394,8 +354,7 @@ final class CoreViewModel: ObservableObject {
         
         
         if !validTimeToLeaveRange.contains(rota.timeToLeave ?? 0) {
-            showAlert = true
-            HapticManager.notifiaction(type: .error)
+            showError()
             self.startOrCalculateButtonActive[forRota][forMeasurement] = true
             return
         } else {
