@@ -48,6 +48,21 @@ struct Rota: Identifiable, Codable {
         return f4Pressures.compactMap(Double.init)
     }
     
+    func doublePressures(forFireman index: Int, _ measurement: Int) -> Double {
+            switch index {
+            case 0:
+                return doubleF1Pressures[measurement]
+            case 1:
+                return doubleF2Pressures[measurement]
+            case 2:
+                return doubleF3Pressures[measurement]
+            case 3:
+                return doubleF4Pressures[measurement]
+            default:
+                return 0.0
+            }
+        }
+    
     init(number: Int, f1Name: String = "", f2Name: String = "", f3Name: String = "", f4Name: String = "", f1Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f2Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f3Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f4Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""]) {
         self.number = number
         self.f1Name = f1Name

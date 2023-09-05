@@ -22,6 +22,7 @@
 		E642E14E29DC0EF400F53B07 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E642E14D29DC0EF400F53B07 /* NotificationManager.swift */; };
 		E65122FD2A9B3C51004C9B40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65122FC2A9B3C51004C9B40 /* LaunchScreen.storyboard */; };
 		E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65122FE2A9B71CD004C9B40 /* LaunchView.swift */; };
+		E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68186862AA65F610021731F /* UserDefaultsManager.swift */; };
 		E6B79C1029E1489E005BF832 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B79C0F29E1489E005BF832 /* HapticManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		E642E14D29DC0EF400F53B07 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E65122FC2A9B3C51004C9B40 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E65122FE2A9B71CD004C9B40 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		E68186862AA65F610021731F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		E6B79C0F29E1489E005BF832 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +144,7 @@
 			children = (
 				E642E14D29DC0EF400F53B07 /* NotificationManager.swift */,
 				E6B79C0F29E1489E005BF832 /* HapticManager.swift */,
+				E68186862AA65F610021731F /* UserDefaultsManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				E63B863D299ABB5E000F6CCE /* Fireman.swift in Sources */,
 				E63B863F299AC225000F6CCE /* CoreViewModel.swift in Sources */,
 				E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */,
+				E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */,
 				E634833B29CF14FC00AEB05A /* Date.swift in Sources */,
 				E6B79C1029E1489E005BF832 /* HapticManager.swift in Sources */,
 				E63B8641299AD42D000F6CCE /* RotaTableView.swift in Sources */,
