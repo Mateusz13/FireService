@@ -16,7 +16,7 @@ struct MeasurementColumns: View {
     
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
-    @Binding var numberOfFiremens: Int
+    @Binding var numberOfFiremans: Int
     @Binding var endButtonActive: Bool
     @Binding var editData: [Bool]
     
@@ -49,14 +49,14 @@ struct MeasurementColumns: View {
                 .numbersOnly($rota.f2Pressures[measurement])
                 .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                 .disabled(startOrCalculateButtonActive[measurement-1])
-            if numberOfFiremens > 1 {
+            if numberOfFiremans > 1 {
                 TextField("BAR", text: $rota.f3Pressures[measurement])
                 //                .focused($fieldInFocus, equals: .pressure1)
                     .numbersOnly($rota.f3Pressures[measurement])
                     .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                     .disabled(startOrCalculateButtonActive[measurement-1])
             }
-            if numberOfFiremens > 2 {
+            if numberOfFiremans > 2 {
                 TextField("BAR", text: $rota.f4Pressures[measurement])
                 //                .focused($fieldInFocus, equals: .pressure1)
                     .numbersOnly($rota.f4Pressures[measurement])
@@ -98,7 +98,7 @@ struct MeasurementColumns: View {
 
 struct measurementColumns_Previews: PreviewProvider {
     static var previews: some View {
-        MeasurementColumns(measurement: 1, rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremens: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
+        MeasurementColumns(measurement: 1, rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
             .environmentObject(CoreViewModel())
     }
 }

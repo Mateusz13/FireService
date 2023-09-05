@@ -17,7 +17,7 @@ struct RotaTableView: View {
     
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
-    @Binding var numberOfFiremens: Int
+    @Binding var numberOfFiremans: Int
     @Binding var endButtonActive: Bool
     @Binding var editData: [Bool]
     //        enum FocusField {
@@ -33,12 +33,12 @@ struct RotaTableView: View {
                 namesColumn
                 entryColumn
                 ForEach(1...10, id: \.self) { measurement in
-                    MeasurementColumns(measurement: measurement, rota: $rota, startOrCalculateButtonActive: $startOrCalculateButtonActive, numberOfFiremens: $numberOfFiremens, endButtonActive: $endButtonActive, editData: $editData)
+                    MeasurementColumns(measurement: measurement, rota: $rota, startOrCalculateButtonActive: $startOrCalculateButtonActive, numberOfFiremans: $numberOfFiremans, endButtonActive: $endButtonActive, editData: $editData)
                 }
             }
         }
         .textFieldStyle(.roundedBorder)
-        //.frame(height: vm.numberOfFiremens[rotaNumber] == 2 ? 192 : 150)//150/192/234
+        //.frame(height: vm.numberOfFiremans[rotaNumber] == 2 ? 192 : 150)//150/192/234
         //.frame(maxWidth: 500)
         //.padding(.horizontal, 3)
         //.padding(.vertical, 3)
@@ -54,7 +54,7 @@ struct RotaTableView: View {
 
 struct RotaTableView_Previews: PreviewProvider {
     static var previews: some View {
-        RotaTableView(rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 13)), numberOfFiremens: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
+        RotaTableView(rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 13)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
             .environmentObject(CoreViewModel())
     }
 }
@@ -77,15 +77,15 @@ extension RotaTableView {
             // .focused($fieldInFocus, equals: .name)
             TextField("name2", text: $rota.f2Name)
             // .focused($fieldInFocus, equals: .name)
-            if numberOfFiremens > 1 {
+            if numberOfFiremans > 1 {
                 TextField("name3", text: $rota.f3Name)
                 // .focused($fieldInFocus, equals: .name)
             }
-            if numberOfFiremens > 2 {
+            if numberOfFiremans > 2 {
                 TextField("name4", text: $rota.f4Name)
                 // .focused($fieldInFocus, equals: .name)
             }
-            if startOrCalculateButtonActive[0] && numberOfFiremens != 3 {
+            if startOrCalculateButtonActive[0] && numberOfFiremans != 3 {
                 Button {
                     addFiremanConfirmationAlert = true
                 } label: {
@@ -94,7 +94,7 @@ extension RotaTableView {
                 }
                 .foregroundColor(.green)
                 .frame(height: 34)
-//                .disabled(numberOfFiremens == 3)
+//                .disabled(numberOfFiremans == 3)
                 .alert("Dodać strażaka?", isPresented: $addFiremanConfirmationAlert) {
                     Button("Tak") { if startOrCalculateButtonActive[0] {
                         withAnimation(.easeIn) {
@@ -166,13 +166,13 @@ extension RotaTableView {
             //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($rota.f2Pressures[0])
                 .disabled(!startOrCalculateButtonActive[0] && !editData[0])
-            if numberOfFiremens > 1 {
+            if numberOfFiremans > 1 {
                 TextField("BAR", text: $rota.f3Pressures[0])
                 //                .focused($fieldInFocus, equals: .pressure0)
                     .numbersOnly($rota.f3Pressures[0])
                     .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             }
-            if numberOfFiremens > 2 {
+            if numberOfFiremans > 2 {
                 TextField("BAR", text: $rota.f4Pressures[0])
                 //                .focused($fieldInFocus, equals: .pressure0)
                     .numbersOnly($rota.f4Pressures[0])
