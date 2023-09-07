@@ -26,11 +26,12 @@ struct Rota: Identifiable, Codable {
     var f3Pressures: [String]
     var f4Pressures: [String]
     
+//    var startTime: Date? (added because of chatGPT)
+    
     var timeToLeave: TimeInterval?
     var exitDate: Date?
     var remainingTime: TimeInterval?
     var duration: TimeInterval?
-    
     
     var doubleF1Pressures: [Double] {
         return f1Pressures.compactMap(Double.init)
@@ -78,16 +79,89 @@ struct Rota: Identifiable, Codable {
 
 
 
+//struct TimerRota {
+//    let number: Int
+//    var duration: TimeInterval?
+//    var remainingTime: TimeInterval?
+//    
+//    init(number: Int) {
+//        self.number = number
+//    }
+//}
 
 
+import Combine
 
 
-
-
-
-
-
-
+final class TimerViewModel {
+    
+    @Published var timerRotas: [Rota]
+    
+    let measurementsNumber: Int = 11 //10
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        let timerRotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
+        self.timerRotas = timerRotas
+    }
+    
+    func endAction(forRota: Int) {
+//        endButtonActive[forRota] = false
+        self.timerRotas[forRota].remainingTime = (self.timerRotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+        self.timerRotas[forRota].duration = Date().timeIntervalSince1970 - (self.timerRotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+        NotificationManager.instance.cancelExitNotification(forRota: forRota)
+        NotificationManager.instance.cancelFirstMeasurementNotification(forRota: forRota)
+    }
+    
+    func updateDurationAndRemiaingTime(forRota: Int) {
+        timer
+        .sink { [weak self] _ in
+            DispatchQueue.global(qos: .background).async { // Move to a background queue
+                guard let self = self else { return }
+                var duration: Double = 0
+                var remainingTime: Double = 0
+//                if self.endButtonActive[forRota] {
+                    duration = Date().timeIntervalSince1970 - (self.timerRotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+                    remainingTime = (self.timerRotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+//                }
+                
+                DispatchQueue.main.async { // Return to main thread to update UI
+                    self.timerRotas[forRota].duration = duration
+                    self.timerRotas[forRota].remainingTime = remainingTime
+                }
+            }
+        }
+        .store(in: &cancellables)
+    }
+    
+    func handleFirstMeasurement(forRota: Int, forMeasurement: Int) {
+        self.timerRotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
+//        self.startOrCalculateButtonActive[forRota][forMeasurement] = false
+        hideKeyboard()
+        timer
+            .sink { [weak self] _ in
+                DispatchQueue.global(qos: .background).async { // Move to a background queue
+                    guard let self = self else { return }
+                    var duration: Double = 0
+                    var remainingTime: Double = 0
+//                    if self.endButtonActive[forRota] {
+                        duration = Date().timeIntervalSince1970 - (self.timerRotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+                        remainingTime = (self.timerRotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+//                    }
+                    
+                    DispatchQueue.main.async { // Return to main thread to update UI
+                        self.timerRotas[forRota].duration = duration
+                        self.timerRotas[forRota].remainingTime = remainingTime
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
+        NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
+        return
+    }
+}
 
 
 

@@ -78,66 +78,70 @@ extension MainView {
         ForEach(vm.rotas) { rota in
             VStack {
                 RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremans: $vm.numberOfFiremans[rota.number], endButtonActive: $vm.endButtonActive[rota.number], editData: $vm.editData[rota.number])
-                HStack() {
-                    if (0...12600).contains(vm.rotas[rota.number].duration ?? 0) {
-                        Text(vm.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
-                            .frame(minWidth: 69)
-                            .foregroundColor(.blue)
-                            .padding(.horizontal, 3)
-//                            .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
-                    } else {
-                        Text("0:00")
-                            .foregroundColor(.blue)
+//                HStack() {
+//                    if (0...12600).contains(vm.timerRotas[rota.number].duration ?? 0) {
+//                        Text(vm.timerRotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
+//                            .frame(minWidth: 69)
+//                            .foregroundColor(.blue)
+//                            .padding(.horizontal, 3)
+////                            .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
+//                    } else {
+//                        Text("0:00")
+//                            .foregroundColor(.blue)
+////                            .frame(height: 33)
+//                            .frame(minWidth: 69)
+//                            .padding(.horizontal, 3)
+//                    }
+//                    if vm.endButtonActive[rota.number] == false {
+//                        Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
+//                            .font(.subheadline)
 //                            .frame(height: 33)
-                            .frame(minWidth: 69)
-                            .padding(.horizontal, 3)
-                    }
-                    if vm.endButtonActive[rota.number] == false {
-                        Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
-                            .font(.subheadline)
-                            .frame(height: 33)
-                            .foregroundColor(.secondary)
-                    } else {
-                        Button {
-                            endConfirmationAlert = true
-                            number = rota.number
-                        } label: {
-                            Text("Zakończ")
-                        }
-                        .font(.subheadline)
-                        .buttonStyle(.bordered)
-                        .background(.purple)
-                        .cornerRadius(10)
-                        .foregroundColor(.black)
-                        .padding(.vertical, 4)
-                        .alert("Zakończyć?", isPresented: $endConfirmationAlert) {
-                            Button("Tak") { vm.endAction(forRota: number) }
-                            Button("Nie", role: .cancel) { }
-                        } message: {
-                            if number == 2 {
-                                Text("Czy na pewno zakończyć akcję dla Roty RIT?")
-                            } else if number < 2 {
-                                Text("Czy na pewno zakończyć akcję dla Roty \(number+1)?")
-                            } else {
-                                Text("Czy na pewno zakończyć akcję dla Roty \(number)?")
-                            }
-                        }
-                    }
-                    Spacer()
-                    Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-                        .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
-                    //.foregroundColor(rota.number == 2 ? .orange : .red)
-                        .padding(.horizontal, 3)
-                        .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
-                    Spacer()
-                    Spacer()
-                }
-                .onChange(of: scenePhase) { newScenePhase in
-                    if newScenePhase ==  .active {
-                        print("didBecomeAtive")
-                        vm.updateDurationAndRemiaingTime(forRota: rota.number)
-                    }
-                }
+//                            .foregroundColor(.secondary)
+//                    } else {
+//                        Button {
+//                            endConfirmationAlert = true
+//                            number = rota.number
+//                        } label: {
+//                            Text("Zakończ")
+//                        }
+//                        .font(.subheadline)
+//                        .buttonStyle(.bordered)
+//                        .background(.purple)
+//                        .cornerRadius(10)
+//                        .foregroundColor(.black)
+//                        .padding(.vertical, 4)
+//                        .alert("Zakończyć?", isPresented: $endConfirmationAlert) {
+//                            Button("Tak") { vm.endAction(forRota: number) }
+//                            Button("Nie", role: .cancel) { }
+//                        } message: {
+//                            if number == 2 {
+//                                Text("Czy na pewno zakończyć akcję dla Roty RIT?")
+//                            } else if number < 2 {
+//                                Text("Czy na pewno zakończyć akcję dla Roty \(number+1)?")
+//                            } else {
+//                                Text("Czy na pewno zakończyć akcję dla Roty \(number)?")
+//                            }
+//                        }
+//                    }
+//                    Spacer()
+                    
+//                    Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+//                        .foregroundColor((-3599...300).contains(timerRotas.remainingTime ?? 301) ? .white : .red)
+//                    //.foregroundColor(rota.number == 2 ? .orange : .red)
+//                        .padding(.horizontal, 3)
+//                        .background((-3599...300).contains(timerRotas.remainingTime ?? 301) ? .red : .clear)
+                    
+//                    Spacer()
+//                    Spacer()
+//                }
+                
+//                .onChange(of: scenePhase) { newScenePhase in
+//                    if newScenePhase ==  .active {
+//                        print("didBecomeAtive")
+//                        vm.updateDurationAndRemiaingTime(forRota: rota.number)
+//                    }
+//                }
+                
                 //                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification), perform: {_ in
                 //                    print("didBecomeAtive")
                 //                    vm.updateDurationAndRemiaingTime(forRota: rota.number)

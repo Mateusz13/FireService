@@ -23,6 +23,7 @@
 		E65122FD2A9B3C51004C9B40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65122FC2A9B3C51004C9B40 /* LaunchScreen.storyboard */; };
 		E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65122FE2A9B71CD004C9B40 /* LaunchView.swift */; };
 		E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68186862AA65F610021731F /* UserDefaultsManager.swift */; };
+		E681868B2AA88C790021731F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E681868A2AA88C790021731F /* Timer.swift */; };
 		E6B79C1029E1489E005BF832 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B79C0F29E1489E005BF832 /* HapticManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		E65122FC2A9B3C51004C9B40 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E65122FE2A9B71CD004C9B40 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		E68186862AA65F610021731F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		E681868A2AA88C790021731F /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		E6B79C0F29E1489E005BF832 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				E63B863E299AC225000F6CCE /* CoreViewModel.swift */,
+				E681868A2AA88C790021731F /* Timer.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				E642E14929DA249100F53B07 /* MeasurementColumns.swift in Sources */,
 				E63B8649299E1C24000F6CCE /* MainView.swift in Sources */,
 				E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */,
+				E681868B2AA88C790021731F /* Timer.swift in Sources */,
 				E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */,
 				E634064A29B75499000BFE5F /* Double.swift in Sources */,
 				E642E14E29DC0EF400F53B07 /* NotificationManager.swift in Sources */,
