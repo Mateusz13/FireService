@@ -11,7 +11,7 @@ import Combine
 
 final class CoreViewModel: ObservableObject {
     
-    let timerRotas = TimerViewModel()
+//    let timerRotas = TimerViewModel()
     
     @Published var rotas: [Rota] {
         didSet {
@@ -170,26 +170,26 @@ final class CoreViewModel: ObservableObject {
         NotificationManager.instance.cancelAllNotifications()
     }
     
-    func updateDurationAndRemiaingTime(forRota: Int) {
-        timer
-        .sink { [weak self] _ in
-            DispatchQueue.global(qos: .background).async { // Move to a background queue
-                guard let self = self else { return }
-                var duration: Double = 0
-                var remainingTime: Double = 0
-                if self.endButtonActive[forRota] {
-                    duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-                    remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-                }
-                
-                DispatchQueue.main.async { // Return to main thread to update UI
-//                    self.timerRotas[forRota].duration = duration
-//                    self.timerRotas[forRota].remainingTime = remainingTime
-                }
-            }
-        }
-        .store(in: &cancellables)
-    }
+//    func updateDurationAndRemiaingTime(forRota: Int) {
+//        timer
+//        .sink { [weak self] _ in
+//            DispatchQueue.global(qos: .background).async { // Move to a background queue
+//                guard let self = self else { return }
+//                var duration: Double = 0
+//                var remainingTime: Double = 0
+//                if self.endButtonActive[forRota] {
+//                    duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+//                    remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+//                }
+//
+//                DispatchQueue.main.async { // Return to main thread to update UI
+////                    self.timerRotas[forRota].duration = duration
+////                    self.timerRotas[forRota].remainingTime = remainingTime
+//                }
+//            }
+//        }
+//        .store(in: &cancellables)
+//    }
     
 
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
@@ -204,7 +204,8 @@ final class CoreViewModel: ObservableObject {
         
         // Handle first measurement
         if forMeasurement == 0 {
-            timerRotas.handleFirstMeasurement(forRota: forRota, forMeasurement: forMeasurement)
+//            timerRotas.handleFirstMeasurement(forRota: forRota, forMeasurement: forMeasurement)
+            self.startOrCalculateButtonActive[forRota][forMeasurement] = false
             return
         }
         

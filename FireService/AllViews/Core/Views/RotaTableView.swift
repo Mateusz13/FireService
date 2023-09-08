@@ -14,6 +14,8 @@ struct RotaTableView: View {
     @EnvironmentObject private var vm: CoreViewModel
     @State private var addFiremanConfirmationAlert: Bool = false
     @State private var removeTheReserveConfirmationAlert: Bool = false
+//    @EnvironmentObject private var timerVM: TimerViewModel
+    @StateObject private var timerVM = TimerViewModel()
     
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
@@ -179,7 +181,7 @@ extension RotaTableView {
                     .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             }
             if !startOrCalculateButtonActive[0] && !editData[0] {
-                Text(rota.time?[0].getFormattedDateToHHmm() ?? "error")
+                Text(timerVM.timerRotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")
                     .frame(height: 33)
                     .foregroundColor(.secondary)
             } else if editData[0] {
@@ -198,6 +200,7 @@ extension RotaTableView {
             else {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: 0)
+                    timerVM.handleFirstMeasurement(forRota: rota.number, forMeasurement: 0)
 //                    editData2 = false
                 } label: {
                     Text("Start")

@@ -12,6 +12,7 @@ struct FireServiceApp: App {
     
 //    let vm = CoreViewModel() ??
     @StateObject private var vm = CoreViewModel()
+//    @StateObject private var timerVM = TimerViewModel()
     @State private var showLaunchView: Bool = true
     
     var body: some Scene {
@@ -21,11 +22,13 @@ struct FireServiceApp: App {
                     NavigationStack {
                         MainView()
                             .environmentObject(vm)
+//                            .environmentObject(timerVM)
                     }
                 } else {
                     NavigationView {
                         MainView()
                             .environmentObject(vm)
+//                            .environmentObject(timerVM)
                     }
                     .navigationViewStyle(StackNavigationViewStyle())
                 }

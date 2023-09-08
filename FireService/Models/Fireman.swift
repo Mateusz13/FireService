@@ -19,7 +19,7 @@ struct Rota: Identifiable, Codable {
     var f3Name: String
     var f4Name: String
     
-    var time: [Date]?
+    var time: [Date]? //start time?
     
     var f1Pressures: [String]
     var f2Pressures: [String]
@@ -83,7 +83,7 @@ struct Rota: Identifiable, Codable {
 //    let number: Int
 //    var duration: TimeInterval?
 //    var remainingTime: TimeInterval?
-//    
+//
 //    init(number: Int) {
 //        self.number = number
 //    }
@@ -93,8 +93,8 @@ struct Rota: Identifiable, Codable {
 import Combine
 
 
-final class TimerViewModel {
-    
+final class TimerViewModel: ObservableObject {
+        
     @Published var timerRotas: [Rota]
     
     let measurementsNumber: Int = 11 //10
@@ -137,32 +137,58 @@ final class TimerViewModel {
     
     func handleFirstMeasurement(forRota: Int, forMeasurement: Int) {
         self.timerRotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
-//        self.startOrCalculateButtonActive[forRota][forMeasurement] = false
-        hideKeyboard()
-        timer
-            .sink { [weak self] _ in
-                DispatchQueue.global(qos: .background).async { // Move to a background queue
-                    guard let self = self else { return }
-                    var duration: Double = 0
-                    var remainingTime: Double = 0
-//                    if self.endButtonActive[forRota] {
+            hideKeyboard()
+            timer
+                .sink { [weak self] _ in
+                    DispatchQueue.global(qos: .background).async { // Move to a background queue
+                        guard let self = self else { return }
+                        var duration: Double = 0
+                        var remainingTime: Double = 0
+//                        if self.vm.endButtonActive[forRota] {
                         duration = Date().timeIntervalSince1970 - (self.timerRotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
                         remainingTime = (self.timerRotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-//                    }
-                    
-                    DispatchQueue.main.async { // Return to main thread to update UI
-                        self.timerRotas[forRota].duration = duration
-                        self.timerRotas[forRota].remainingTime = remainingTime
+//                        }
+
+                        DispatchQueue.main.async { // Return to main thread to update UI
+                            self.timerRotas[forRota].duration = duration
+                            self.timerRotas[forRota].remainingTime = remainingTime
+                        }
                     }
                 }
-            }
-            .store(in: &cancellables)
-        
-        NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
-        return
-    }
+                .store(in: &cancellables)
+    
+            NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
+            return
+        }
 }
 
+
+//    func handleFirstMeasurement(forRota: Int, forMeasurement: Int) {
+//        self.timerRotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
+////        self.startOrCalculateButtonActive[forRota][forMeasurement] = false
+//        hideKeyboard()
+//        timer
+//            .sink { [weak self] _ in
+//                DispatchQueue.global(qos: .background).async { // Move to a background queue
+//                    guard let self = self else { return }
+//                    var duration: Double = 0
+//                    var remainingTime: Double = 0
+////                    if self.endButtonActive[forRota] {
+//                        duration = Date().timeIntervalSince1970 - (self.timerRotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+//                        remainingTime = (self.timerRotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+////                    }
+//
+//                    DispatchQueue.main.async { // Return to main thread to update UI
+//                        self.timerRotas[forRota].duration = duration
+//                        self.timerRotas[forRota].remainingTime = remainingTime
+//                    }
+//                }
+//            }
+//            .store(in: &cancellables)
+//
+//        NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
+//        return
+//    }
 
 
 
