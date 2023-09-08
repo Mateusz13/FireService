@@ -123,13 +123,14 @@ extension MainView {
                             }
                         }
                     }
-                    Spacer()
+//                    Spacer()
                     Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+//                        .font(.callout)
                         .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
                     //.foregroundColor(rota.number == 2 ? .orange : .red)
-                        .padding(.horizontal, 3)
+                        .padding(.horizontal, 1)
                         .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
-                    Spacer()
+//                    Spacer()
                     Spacer()
                 }
                 .onChange(of: scenePhase) { newScenePhase in
