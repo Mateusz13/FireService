@@ -11,8 +11,8 @@ import SwiftUI
 struct FireServiceApp: App {
     
 //    let vm = CoreViewModel() ??
-    @StateObject private var vm = CoreViewModel()
 //    @StateObject private var timerVM = TimerViewModel()
+    @StateObject private var vm = CoreViewModel()
     @State private var showLaunchView: Bool = true
     
     var body: some Scene {
@@ -21,14 +21,14 @@ struct FireServiceApp: App {
                 if #available(iOS 16.0, *) {
                     NavigationStack {
                         MainView()
-                            .environmentObject(vm)
 //                            .environmentObject(timerVM)
+                            .environmentObject(vm)
                     }
                 } else {
                     NavigationView {
                         MainView()
-                            .environmentObject(vm)
 //                            .environmentObject(timerVM)
+                            .environmentObject(vm)
                     }
                     .navigationViewStyle(StackNavigationViewStyle())
                 }

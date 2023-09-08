@@ -16,10 +16,20 @@ struct MainView: View {
     @State private var endConfirmationAlert: Bool = false
     @State private var cleanConfirmationAlert: Bool = false
     @State private var number: Int = 0
+    @StateObject private var timerVM = TimerViewModel()
+//    @EnvironmentObject private var timerVM: TimerViewModel
     
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: true) {
+            Text(timerVM.timerRotas[0].duration?.asString(style: .abbreviated) ?? "0:00")
+            Button {
+                timerVM.handleFirstMeasurement(forRota: 0, forMeasurement: 0)
+//                    editData2 = false
+            } label: {
+                Text("Start")
+            }
+            
             allRotas
             endLine
             Spacer()
@@ -40,7 +50,7 @@ struct MainView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
-                    ClockView()
+//                    ClockView()
                     Spacer()
                     Text("POWIETRZE DLA ROT")
                         .bold()
@@ -79,19 +89,19 @@ extension MainView {
             VStack {
                 RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremans: $vm.numberOfFiremans[rota.number], endButtonActive: $vm.endButtonActive[rota.number], editData: $vm.editData[rota.number])
 //                HStack() {
-//                    if (0...12600).contains(vm.timerRotas[rota.number].duration ?? 0) {
-//                        Text(vm.timerRotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
+////                    if (0...12600).contains(timerVM.timerRotas[rota.number].duration ?? 0) {
+//                    Text(timerVM.timerRotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
 //                            .frame(minWidth: 69)
 //                            .foregroundColor(.blue)
 //                            .padding(.horizontal, 3)
 ////                            .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
-//                    } else {
-//                        Text("0:00")
-//                            .foregroundColor(.blue)
-////                            .frame(height: 33)
-//                            .frame(minWidth: 69)
-//                            .padding(.horizontal, 3)
-//                    }
+////                    } else {
+////                        Text("0:00")
+////                            .foregroundColor(.blue)
+//////                            .frame(height: 33)
+////                            .frame(minWidth: 69)
+////                            .padding(.horizontal, 3)
+////                    }
 //                    if vm.endButtonActive[rota.number] == false {
 //                        Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
 //                            .font(.subheadline)
@@ -124,29 +134,29 @@ extension MainView {
 //                        }
 //                    }
 //                    Spacer()
-                    
+//
 //                    Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-//                        .foregroundColor((-3599...300).contains(timerRotas.remainingTime ?? 301) ? .white : .red)
+//                        .foregroundColor((-3599...300).contains(timerVM.timerRotas[rota.number].remainingTime ?? 301) ? .white : .red)
 //                    //.foregroundColor(rota.number == 2 ? .orange : .red)
 //                        .padding(.horizontal, 3)
-//                        .background((-3599...300).contains(timerRotas.remainingTime ?? 301) ? .red : .clear)
-                    
+//                        .background((-3599...300).contains(timerVM.timerRotas[rota.number].remainingTime ?? 301) ? .red : .clear)
+//
 //                    Spacer()
 //                    Spacer()
 //                }
-                
-//                .onChange(of: scenePhase) { newScenePhase in
-//                    if newScenePhase ==  .active {
-//                        print("didBecomeAtive")
-//                        vm.updateDurationAndRemiaingTime(forRota: rota.number)
-//                    }
-//                }
-                
-                //                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification), perform: {_ in
-                //                    print("didBecomeAtive")
-                //                    vm.updateDurationAndRemiaingTime(forRota: rota.number)
-                //                })
-                .padding(.horizontal, 2)
+//
+////                .onChange(of: scenePhase) { newScenePhase in
+////                    if newScenePhase ==  .active {
+////                        print("didBecomeAtive")
+////                        vm.updateDurationAndRemiaingTime(forRota: rota.number)
+////                    }
+////                }
+//
+//                //                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification), perform: {_ in
+//                //                    print("didBecomeAtive")
+//                //                    vm.updateDurationAndRemiaingTime(forRota: rota.number)
+//                //                })
+//                .padding(.horizontal, 2)
             }
         }
     }
@@ -207,20 +217,20 @@ extension MainView {
     }
 }
 
-struct ClockView: View {
-    @EnvironmentObject private var vm: CoreViewModel
-    @State private var currentTime: String = ""
-    //@State private var currentTime = Date().getFormattedDateToHHmmSS()
-
-    
-    var body: some View {
-        Text(currentTime)
-            .bold()
-            .onReceive(vm.timer2) { _ in
-                self.currentTime = Date().getFormattedDateToHHmmSS()
-            }
-    }
-}
+//struct ClockView: View {
+//    @EnvironmentObject private var vm: CoreViewModel
+//    @State private var currentTime: String = ""
+//    //@State private var currentTime = Date().getFormattedDateToHHmmSS()
+//
+//
+//    var body: some View {
+//        Text(currentTime)
+//            .bold()
+//            .onReceive(vm.timer2) { _ in
+//                self.currentTime = Date().getFormattedDateToHHmmSS()
+//            }
+//    }
+//}
 
 
 

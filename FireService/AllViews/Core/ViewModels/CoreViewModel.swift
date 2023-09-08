@@ -57,8 +57,8 @@ final class CoreViewModel: ObservableObject {
     let measurementsNumber: Int = 11 //10
     let exitNotificationTime = 300.0
     let validTimeToLeaveRange = (0.001...12600)
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    let timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+//    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+//    let timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var cancellables = Set<AnyCancellable>()
     //var timerCancellable: Cancellable?  // creat array ?
     
@@ -158,7 +158,7 @@ final class CoreViewModel: ObservableObject {
     }
     
     func reset() {
-        timer.upstream.connect().cancel()
+//        timer.upstream.connect().cancel()
         self.numberOfRotas = 2
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
