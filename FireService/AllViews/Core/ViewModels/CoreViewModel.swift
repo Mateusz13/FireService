@@ -275,7 +275,7 @@ final class CoreViewModel: ObservableObject {
     private func calculateTimesToLeave(rota: Rota, forRota: Int, forMeasurement: Int, timeInterval: TimeInterval, timeInterval2: TimeInterval) -> [Double] {
         var timesToLeave = [Double]()
 
-        for index in 0..<numberOfFiremans[forRota] {
+        for index in 0..<numberOfFiremans[forRota]+1 {
             let initialPressure = rota.doublePressures(forFireman: index, forMeasurement-1) - minimalPressure[forRota]
             let pressureUsed = rota.doublePressures(forFireman: index, forMeasurement-1) - rota.doublePressures(forFireman: index, forMeasurement)
             let entireTimeOnAction = initialPressure / pressureUsed * timeInterval

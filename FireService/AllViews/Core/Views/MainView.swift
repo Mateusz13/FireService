@@ -95,7 +95,7 @@ extension MainView {
                     if vm.endButtonActive[rota.number] == false {
                         Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
                             .font(.subheadline)
-                            .frame(height: 33)
+                            .frame(minHeight: 33)
                             .foregroundColor(.secondary)
                     } else {
                         Button {

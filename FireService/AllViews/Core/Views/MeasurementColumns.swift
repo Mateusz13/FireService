@@ -89,7 +89,7 @@ struct MeasurementColumns: View {
                 .foregroundColor(.red)
             } else {
                 Text(rota.time?[measurement].getFormattedDateToHHmm() ?? "error")
-                    .frame(height: 33)
+                    .frame(minHeight: 33)
                     .foregroundColor(.secondary)
             }
         }

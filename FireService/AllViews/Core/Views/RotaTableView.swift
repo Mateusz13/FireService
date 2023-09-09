@@ -93,7 +93,7 @@ extension RotaTableView {
                         .font(.title)
                 }
                 .foregroundColor(.green)
-                .frame(height: 34)
+                .frame(minHeight: 34)
 //                .disabled(numberOfFiremans == 3)
                 .alert("Dodać strażaka?", isPresented: $addFiremanConfirmationAlert) {
                     Button("Tak") { if startOrCalculateButtonActive[0] {
@@ -120,7 +120,7 @@ extension RotaTableView {
                         .font(.title)
                 }
                 .foregroundColor(vm.minimalPressure[rota.number] == 50.0 ? .green : .red)
-                .frame(height: 34)
+                .frame(minHeight: 34)
                 .disabled(!endButtonActive)
                 .disabled(vm.minimalPressure[rota.number] == 0.0)
                 .alert("Usunąć rezerwę 50 BAR?!", isPresented: $removeTheReserveConfirmationAlert) {
@@ -180,7 +180,7 @@ extension RotaTableView {
             }
             if !startOrCalculateButtonActive[0] && !editData[0] {
                 Text(rota.time?[0].getFormattedDateToHHmm() ?? "error")
-                    .frame(height: 33)
+                    .frame(minHeight: 33)
                     .foregroundColor(.secondary)
             } else if editData[0] {
                 Button {
