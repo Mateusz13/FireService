@@ -110,6 +110,7 @@ extension MainView {
                         .cornerRadius(10)
                         .foregroundColor(.black)
                         .padding(.vertical, 4)
+                        .disabled(vm.startOrCalculateButtonActive[rota.number][0])
                         .alert("Zakończyć?", isPresented: $endConfirmationAlert) {
                             Button("Tak") { vm.endAction(forRota: number) }
                             Button("Nie", role: .cancel) { }
