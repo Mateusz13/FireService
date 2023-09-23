@@ -136,8 +136,12 @@ extension MainView {
                 }
                 .onChange(of: scenePhase) { newScenePhase in
                     if newScenePhase ==  .active {
-                        print("didBecomeAtive")
                         vm.updateDurationAndRemiaingTime(forRota: rota.number)
+                    }
+                }
+                .onChange(of: scenePhase) { newScenePhase in
+                    if newScenePhase ==  .background {
+                        vm.timer.upstream.connect().cancel()
                     }
                 }
                 //                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification), perform: {_ in
