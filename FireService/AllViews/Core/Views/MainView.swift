@@ -37,6 +37,9 @@ struct MainView: View {
                 }
             }
         }
+        .onTapGesture {
+                hideKeyboard()
+            }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
