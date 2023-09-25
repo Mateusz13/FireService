@@ -81,6 +81,8 @@ final class CoreViewModel: ObservableObject {
         getRotasInputs()
         getMinimalPressure()
         getEditData()
+//        print(numberOfRotas)
+//        print(numberOfFiremans)
     }
 
     
@@ -107,25 +109,45 @@ final class CoreViewModel: ObservableObject {
     }
     
     func getNumberOfRotas() {
-        self.numberOfRotas = UserDefaultsManager.shared.retrieve(Int.self, forKey: numberOfRotasKey) ?? 0
+        if let storedNumberOfRotas = UserDefaultsManager.shared.retrieve(Int.self, forKey: numberOfRotasKey) {
+            self.numberOfRotas = storedNumberOfRotas
+        }
     }
+    
     func getRotasInputs() {
-        self.rotas = UserDefaultsManager.shared.retrieve([Rota].self, forKey: rotasInputsKey) ?? []
+        if let storedRotas = UserDefaultsManager.shared.retrieve([Rota].self, forKey: rotasInputsKey) {
+            self.rotas = storedRotas
+        }
     }
+
     func getNumberOfFiremans() {
-        self.numberOfFiremans = UserDefaultsManager.shared.retrieve([Int].self, forKey: numberOfFiremansKey) ?? []
+        if let storedNumberOfFiremans = UserDefaultsManager.shared.retrieve([Int].self, forKey: numberOfFiremansKey) {
+            self.numberOfFiremans = storedNumberOfFiremans
+        }
     }
+
     func getMinimalPressure() {
-        self.minimalPressure = UserDefaultsManager.shared.retrieve([Double].self, forKey: minimalPressureKey) ?? []
+        if let storedMinimalPressure = UserDefaultsManager.shared.retrieve([Double].self, forKey: minimalPressureKey) {
+            self.minimalPressure = storedMinimalPressure
+        }
     }
+
     func getEndButtonActive() {
-        self.endButtonActive = UserDefaultsManager.shared.retrieve([Bool].self, forKey: endButtonActiveKey) ?? []
+        if let storedEndButtonActive = UserDefaultsManager.shared.retrieve([Bool].self, forKey: endButtonActiveKey) {
+            self.endButtonActive = storedEndButtonActive
+        }
     }
+
     func getStartOrCalculateButtonActive() {
-        self.startOrCalculateButtonActive = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: startOrCalculateButtonActiveKey) ?? [[]]
+        if let storedStartOrCalculateButtonActive = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: startOrCalculateButtonActiveKey) {
+            self.startOrCalculateButtonActive = storedStartOrCalculateButtonActive
+        }
     }
+
     func getEditData() {
-        self.editData = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: editDataKey) ?? [[]]
+        if let storedEditData = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: editDataKey) {
+            self.editData = storedEditData
+        }
     }
 
     
@@ -158,7 +180,7 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = Array(repeating: Array(repeating: true, count: measurementsNumber+2), count: 3)
         self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
         self.numberOfFiremans = Array(repeating: 1, count: numberOfRotas+1)
-        self.minimalPressure = Array(repeating: 50.0, count: 50)
+        self.minimalPressure = Array(repeating: 50.0, count: measurementsNumber)
         self.editData = Array(repeating: Array(repeating: false, count: measurementsNumber), count: 3)
         NotificationManager.instance.cancelAllNotifications()
     }
