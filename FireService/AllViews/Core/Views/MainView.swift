@@ -167,8 +167,8 @@ extension MainView {
                 Label("", systemImage: "plus.app.fill")
                     .font(.largeTitle)
             }
-            
-            .foregroundColor(.green)
+            .disabled(vm.numberOfRotas == 15)
+            .foregroundColor(vm.numberOfRotas == 15 ? .gray : .green)
             .padding()
 //            Button {
 //                withAnimation(.easeOut) {
