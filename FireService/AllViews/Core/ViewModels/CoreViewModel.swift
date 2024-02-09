@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 
-
 final class CoreViewModel: ObservableObject {
     
     @Published var rotas: [Rota] {
@@ -49,14 +48,12 @@ final class CoreViewModel: ObservableObject {
         }
     }
     
-    
     let measurementsNumber: Int = 16 //15
     let exitNotificationTime = 300.0
     let validTimeToLeaveRange = (0.001...12600)
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var cancellables = Set<AnyCancellable>()
-    //var timerCancellable: Cancellable?  // creat array ?
-    
+    //var timerCancellable: Cancellable?  // creat array?
     let rotasInputsKey: String = "rotasInputs"
     let numberOfFiremansKey: String = "numberOfFiremans"
     let minimalPressureKey: String = "minimalPressure"
@@ -64,7 +61,6 @@ final class CoreViewModel: ObservableObject {
     let numberOfRotasKey: String = "numberOfRotas"
     let startOrCalculateButtonActiveKey: String = "startOrCalculateButtonActive"
     let editDataKey: String = "editData"
-    
     
     init() {
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
@@ -81,10 +77,7 @@ final class CoreViewModel: ObservableObject {
         getRotasInputs()
         getMinimalPressure()
         getEditData()
-//        print(numberOfRotas)
-//        print(numberOfFiremans)
     }
-
     
     func saveNumberOfRotas() {
         UserDefaultsManager.shared.save(numberOfRotas, forKey: numberOfRotasKey)
@@ -119,37 +112,36 @@ final class CoreViewModel: ObservableObject {
             self.rotas = storedRotas
         }
     }
-
+    
     func getNumberOfFiremans() {
         if let storedNumberOfFiremans = UserDefaultsManager.shared.retrieve([Int].self, forKey: numberOfFiremansKey) {
             self.numberOfFiremans = storedNumberOfFiremans
         }
     }
-
+    
     func getMinimalPressure() {
         if let storedMinimalPressure = UserDefaultsManager.shared.retrieve([Double].self, forKey: minimalPressureKey) {
             self.minimalPressure = storedMinimalPressure
         }
     }
-
+    
     func getEndButtonActive() {
         if let storedEndButtonActive = UserDefaultsManager.shared.retrieve([Bool].self, forKey: endButtonActiveKey) {
             self.endButtonActive = storedEndButtonActive
         }
     }
-
+    
     func getStartOrCalculateButtonActive() {
         if let storedStartOrCalculateButtonActive = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: startOrCalculateButtonActiveKey) {
             self.startOrCalculateButtonActive = storedStartOrCalculateButtonActive
         }
     }
-
+    
     func getEditData() {
         if let storedEditData = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: editDataKey) {
             self.editData = storedEditData
         }
     }
-
     
     func addRota() {
         numberOfRotas += 1
@@ -187,18 +179,18 @@ final class CoreViewModel: ObservableObject {
     
     func updateDurationAndRemiaingTime(forRota: Int) {
         timer
-        .sink { [weak self] _ in
-            guard let self = self else { return }
-            //self.rotas[forRota].duration += 1
-            if endButtonActive[forRota] {
-                self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-                self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                //self.rotas[forRota].duration += 1
+                if endButtonActive[forRota] {
+                    self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+                    self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                }
             }
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
     }
     
-
+    
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
         
         let rota = rotas[forRota]
@@ -231,7 +223,7 @@ final class CoreViewModel: ObservableObject {
         
         handleSubsequentMeasurements(forRota: forRota, forMeasurement: forMeasurement, rota: rota, time: previousTime)
     }
-
+    
     
     private func validatePressures(forRota: Int, forMeasurement: Int) -> Bool {
         let rota = rotas[forRota]
@@ -239,12 +231,12 @@ final class CoreViewModel: ObservableObject {
         
         return !pressures.prefix(numberOfFiremans[forRota]+1).contains { $0[forMeasurement].isEmpty }
     }
-
+    
     private func showError() {
         showAlert = true
         HapticManager.notifiaction(type: .error)
     }
-
+    
     private func handleFirstMeasurement(forRota: Int, forMeasurement: Int) {
         self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
         self.startOrCalculateButtonActive[forRota][forMeasurement] = false
@@ -274,7 +266,7 @@ final class CoreViewModel: ObservableObject {
         let timeInterval2 = calculateTimeInterval2(forRota: forRota, forMeasurement: forMeasurement)
         let timesToLeave = calculateTimesToLeave(rota: rota, forRota: forRota, forMeasurement: forMeasurement, timeInterval: timeInterval, timeInterval2: timeInterval2)
         let minimumTimeToLeave = timesToLeave.min() ?? 0
-
+        
         if validTimeToLeaveRange.contains(minimumTimeToLeave) {
             handleValidTimeToLeave(minimumTimeToLeave, forRota: forRota)
         } else {
@@ -284,7 +276,6 @@ final class CoreViewModel: ObservableObject {
     }
     
     // Helper Functions
-
     private func calculateTimeInterval(forRota: Int, forMeasurement: Int) -> TimeInterval {
         return self.rotas[forRota].time?[forMeasurement].timeIntervalSince(self.rotas[forRota].time?[forMeasurement-1] ?? Date()) ?? 0
     }
@@ -292,10 +283,10 @@ final class CoreViewModel: ObservableObject {
     private func calculateTimeInterval2(forRota: Int, forMeasurement: Int) -> TimeInterval {
         return Date().timeIntervalSince(self.rotas[forRota].time?[forMeasurement] ?? Date())
     }
-
+    
     private func calculateTimesToLeave(rota: Rota, forRota: Int, forMeasurement: Int, timeInterval: TimeInterval, timeInterval2: TimeInterval) -> [Double] {
         var timesToLeave = [Double]()
-
+        
         for index in 0..<numberOfFiremans[forRota]+1 {
             let initialPressure = rota.doublePressures(forFireman: index, forMeasurement-1) - minimalPressure[forRota]
             let pressureUsed = rota.doublePressures(forFireman: index, forMeasurement-1) - rota.doublePressures(forFireman: index, forMeasurement)
@@ -303,10 +294,10 @@ final class CoreViewModel: ObservableObject {
             let timeToLeave = entireTimeOnAction - timeInterval - timeInterval2
             timesToLeave.append(timeToLeave)
         }
-
+        
         return timesToLeave
     }
-
+    
     private func handleValidTimeToLeave(_ timeToLeave: Double, forRota: Int) {
         self.rotas[forRota].timeToLeave = timeToLeave
         self.rotas[forRota].exitDate = Date().addingTimeInterval(timeToLeave)
@@ -315,7 +306,6 @@ final class CoreViewModel: ObservableObject {
             NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota, minimalPressure: minimalPressure[forRota])
         }
     }
-
     
     func timeToLeaveTitle(forRota: Int) -> String {
         if minimalPressure[forRota] == 0.0 {
@@ -325,173 +315,3 @@ final class CoreViewModel: ObservableObject {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    func subtractRota() {
-////        timer.upstream.connect().cancel()
-//        numberOfRotas -= 1
-//        self.rotas.removeLast()
-//        self.startOrCalculateButtonActive.removeLast()
-//        self.endButtonActive.removeLast()
-//        self.numberOfFiremans.removeLast()
-//    }
-
-
-
-
-
-//    @Published var startButtonActive: [Bool]
-//    self.startButtonActive = Array(repeating: true, count: 2)
-
-//    func startAction(forRota: Int) {
-//
-//        let rota = rotas[forRota]
-//
-//        if rota.f1Pressures[0] == "" || rota.f2Pressures[0] == "" {
-//            showAlert = true
-//        } else {
-//
-//            self.rotas[forRota].time = Array(repeating: Date(), count: 3)
-            
-            //self.rotas[forRota].time?[0] = Date()
-            //self.startButtonActive = Array(repeating: true, count: 10)
-            
-//            self.startButtonActive[forRota] = false
-//            hideKeyboard()
-//        }
-        
-//        timer
-//            .sink { [weak self] _ in
-//                guard let self = self else { return }
-//                self.rotas[forRota].duration += 1
-//            }
-//            .store(in: &cancellables)
-        //should we cancal the timer in ceratain condition?
-//    }
-    
-//    func calculateExitTime(forRota: Int) {
-//
-//
-//        var rota = rotas[forRota]
-//        // calculation:
-//
-//        //fireman1
-//        let pressureLeft0F1 = rota.doubleF1Pressure0 - minimalPressure
-//        let pressureLeft1F1 = rota.doubleF1Pressure1 - minimalPressure
-//        //let pressureLeft2 = iPressure2[fireman1] - 70
-//
-//        let pressureUsed1F1 = rota.doubleF1Pressure0 - rota.doubleF1Pressure1
-//        let pressureUsed2F1 = rota.doubleF1Pressure1 - rota.doubleF1Pressure2
-//
-//
-//        let entireTime1F1 = pressureLeft0F1 / pressureUsed1F1 * rota.timeInterval1
-//        let entireTime2F1 = pressureLeft1F1 / pressureUsed2F1 * rota.timeInterval2
-//
-//        let leftTime1F1 = entireTime1F1 - rota.timeInterval1
-//        let leftTime2F1 = entireTime2F1 - rota.timeInterval2
-//
-//
-//        //fireman2
-//        let pressureLeft0F2 = rota.doubleF2Pressure0 - minimalPressure
-//        let pressureLeft1F2 = rota.doubleF2Pressure1 - minimalPressure
-//        //let pressureLeft2 = iPressure2[fireman1] - 70
-//
-//        let pressureUsed1F2 = rota.doubleF2Pressure0 - rota.doubleF2Pressure1
-//        let pressureUsed2F2 = rota.doubleF2Pressure1 - rota.doubleF2Pressure2
-//
-//
-//        let entireTime1F2 = pressureLeft0F2 / pressureUsed1F2 * rota.timeInterval1
-//        let entireTime2F2 = pressureLeft1F2 / pressureUsed2F2 * rota.timeInterval2
-//
-//        let leftTime1F2 = entireTime1F2 - rota.timeInterval1
-//        let leftTime2F2 = entireTime2F2 - rota.timeInterval2
-//
-//
-//        guard rota.doubleF2Pressure2 == 0 else {
-//            if leftTime2F1 > leftTime2F2 {
-//                rota.timeToLeave = leftTime2F2
-//            } else {
-//                rota.exitDate = leftTime2F1
-//            }
-//            self.rotas[forRota].exitTime = rota.exitTime
-//            return
-//        }
-//
-//        if leftTime1F1 > leftTime1F2 {
-//            rota.exitTime = leftTime1F2
-//        } else {
-//            rota.exitTime = leftTime1F1
-//        }
-//
-//        self.rotas[forRota].exitTime = rota.exitTime
-//
-//        timer
-//                .sink { [weak self] _ in
-//                    guard let self = self else { return }
-//
-//                    if self.rotas[forRota].exitTime! > 0 {
-//                        self.rotas[forRota].exitTime! -= 1
-//                    } else {
-//                        //self.timerCancellable?.cancel()
-//                        // should we cancal the timer in ceratain condition?
-//                    }
-//                }
-//                .store(in: &cancellables)
-//    }
-
-
-
-//if forMeasurement == 1 {
-//    timer
-//        .sink { [weak self] _ in
-//            guard let self = self else { return }
-            
-//                        guard self.rotas[forRota].timeToLeave != nil else {
-//                            return
-//                        }
-//                        if self.rotas[forRota].timeToLeave ?? 2 > 1 {
-//                            self.rotas[forRota].timeToLeave! -= 1
-            
-//                            self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-            
-//                        } else {
-                // should we cancal the timer in ceratain condition?
-                //                             self.timer.upstream.connect().cancel()
-                //                             self.timerCancellable?[forRota].cancel()
-//                        }
-//        }
-//        .store(in: &cancellables)
-//}

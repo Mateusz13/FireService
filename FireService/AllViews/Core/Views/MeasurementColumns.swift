@@ -9,11 +9,8 @@ import SwiftUI
 
 struct MeasurementColumns: View {
     
-//  let rotaNumber: Int
     let measurement: Int
-    
     @EnvironmentObject private var vm: CoreViewModel
-    
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
     @Binding var numberOfFiremans: Int
@@ -22,43 +19,36 @@ struct MeasurementColumns: View {
     
     @State private var editDataAlert: Bool = false
     
-    
     var body: some View {
         VStack {
-                Button {
-                    editDataAlert = true
-                } label: {
-                    Text("POMIAR \(measurement)")
-    //                    .foregroundColor(.black)
-                        .alert("Edytować pomiar \(measurement)?", isPresented: $editDataAlert) {
-                            Button("Tak", role: .destructive) { editData[measurement] = true }
-                            Button("Nie", role: .cancel) { }
-                        }
-                }
-                .disabled(startOrCalculateButtonActive[measurement])
-//                .disabled(measurement < 9 ? !startOrCalculateButtonActive[measurement+2] : false)
-                .disabled(!startOrCalculateButtonActive[measurement+2])
-                .disabled(!endButtonActive)
+            Button {
+                editDataAlert = true
+            } label: {
+                Text("POMIAR \(measurement)")
+                    .alert("Edytować pomiar \(measurement)?", isPresented: $editDataAlert) {
+                        Button("Tak", role: .destructive) { editData[measurement] = true }
+                        Button("Nie", role: .cancel) { }
+                    }
+            }
+            .disabled(startOrCalculateButtonActive[measurement])
+            .disabled(!startOrCalculateButtonActive[measurement+2])
+            .disabled(!endButtonActive)
             TextField("BAR", text: $rota.f1Pressures[measurement])
-            //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f1Pressures[measurement])
                 .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                 .disabled(startOrCalculateButtonActive[measurement-1])
             TextField("BAR", text: $rota.f2Pressures[measurement])
-            //                .focused($fieldInFocus, equals: .pressure1)
                 .numbersOnly($rota.f2Pressures[measurement])
                 .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                 .disabled(startOrCalculateButtonActive[measurement-1])
             if numberOfFiremans > 1 {
                 TextField("BAR", text: $rota.f3Pressures[measurement])
-                //                .focused($fieldInFocus, equals: .pressure1)
                     .numbersOnly($rota.f3Pressures[measurement])
                     .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                     .disabled(startOrCalculateButtonActive[measurement-1])
             }
             if numberOfFiremans > 2 {
                 TextField("BAR", text: $rota.f4Pressures[measurement])
-                //                .focused($fieldInFocus, equals: .pressure1)
                     .numbersOnly($rota.f4Pressures[measurement])
                     .disabled(!startOrCalculateButtonActive[measurement] && !editData[measurement])
                     .disabled(startOrCalculateButtonActive[measurement-1])
@@ -66,12 +56,10 @@ struct MeasurementColumns: View {
             if startOrCalculateButtonActive[measurement] {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
-//                    editData2 = false
                 } label: {
                     Text("Oblicz")
                 }
                 .disabled(!endButtonActive)
-                //                .frame(height: 33)
                 .buttonStyle(.borderedProminent)
             } else if editData[measurement] || editData[measurement-1] {
                 Button {
@@ -84,7 +72,6 @@ struct MeasurementColumns: View {
                     Text("Oblicz")
                 }
                 .disabled(!endButtonActive)
-                //                .frame(height: 33)
                 .buttonStyle(.borderedProminent)
                 .foregroundColor(.red)
             } else {

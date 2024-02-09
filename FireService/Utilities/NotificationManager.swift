@@ -26,54 +26,47 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
     
     func scheduleFirstMeasurementNotification(forRota: Int) {
         
-        
         let content = UNMutableNotificationContent()
         content.title = "Upłyneło 5 minut od wejścia!"
-//        content.subtitle = "Czas na pierwszy pomiar"
         content.body = "Czas na pierwszy pomiar Roty \(forRota == 2 ? "RIT" : "\(forRota+1)")"
         content.sound = .default
         //content.badge = 1
         //NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
-                
+        
         // time
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 300.0, repeats: false)
- 
+        
         // calendar
-//        var dateComponents = DateComponents()
-//        dateComponents.hour = 8
-//        dateComponents.minute = 0
-//        dateComponents.weekday = 2
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        
-        
+        //        var dateComponents = DateComponents()
+        //        dateComponents.hour = 8
+        //        dateComponents.minute = 0
+        //        dateComponents.weekday = 2
+        //        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+    
         let request = UNNotificationRequest(
             identifier: "FirstM\(forRota)",
             content: content,
             trigger: trigger)
         
         UNUserNotificationCenter.current().add(request)
-
     }
     
     func scheduleExitNotification(time: TimeInterval, forRota: Int, minimalPressure: Double) {
-        
-        
         
         let content = UNMutableNotificationContent()
         content.title = minimalPressure == 50.0 ? "Pozostało 5 minut do gwizdka!" : "Pozostało 5 minut do 0 BAR!!!"
         content.body = "Dla Roty \(forRota == 2 ? "RIT" : "\(forRota+1)")"
         content.sound = .default
-                
+        
         // time
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: time, repeats: false)
- 
-        // calendar
-//        var dateComponents = DateComponents()
-//        dateComponents.hour = 8
-//        dateComponents.minute = 0
-//        dateComponents.weekday = 2
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
+        // calendar
+        //        var dateComponents = DateComponents()
+        //        dateComponents.hour = 8
+        //        dateComponents.minute = 0
+        //        dateComponents.weekday = 2
+        //        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         let request = UNNotificationRequest(
             identifier: String(forRota),
@@ -81,7 +74,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
             trigger: trigger)
         
         UNUserNotificationCenter.current().add(request)
-
+        
     }
     
     func cancelFirstMeasurementNotification(forRota: Int) {
@@ -98,8 +91,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // Specify that the notification should be shown even when the app is in the foreground
+        // Specify that the notification should be shown also when the app is in the foreground
         completionHandler([.banner, .sound])
     }
 }
-

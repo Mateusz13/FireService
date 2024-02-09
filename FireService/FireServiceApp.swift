@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct FireServiceApp: App {
     
-//    let vm = CoreViewModel() ??
     @StateObject private var vm = CoreViewModel()
     @State private var showLaunchView: Bool = true
     

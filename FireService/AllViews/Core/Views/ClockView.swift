@@ -13,8 +13,6 @@ struct ClockView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime: String = ""
-    //@State private var currentTime = Date().getFormattedDateToHHmmSS()
-
     
     var body: some View {
         Text(currentTime)

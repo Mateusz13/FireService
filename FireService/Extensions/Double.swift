@@ -29,5 +29,5 @@ extension Double {
         formatter.allowedUnits = [.hour, .minute, .second, .nanosecond]
         formatter.unitsStyle = style
         return formatter.string(from: self) ?? "error"
-      }
+    }
 }

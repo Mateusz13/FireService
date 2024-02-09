@@ -38,8 +38,8 @@ struct MainView: View {
             }
         }
         .onTapGesture {
-                hideKeyboard()
-            }
+            hideKeyboard()
+        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
@@ -75,7 +75,6 @@ struct MainView_Previews: PreviewProvider {
 
 extension MainView {
     
-    
     private var allRotas: some View {
         
         ForEach(vm.rotas) { rota in
@@ -87,11 +86,11 @@ extension MainView {
                             .frame(minWidth: 69)
                             .foregroundColor(.blue)
                             .padding(.horizontal, 3)
-//                            .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
+                        //.background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
                     } else {
                         Text("0:00")
                             .foregroundColor(.blue)
-//                            .frame(height: 33)
+                        //.frame(height: 33)
                             .frame(minWidth: 69)
                             .padding(.horizontal, 3)
                     }
@@ -127,14 +126,12 @@ extension MainView {
                             }
                         }
                     }
-//                    Spacer()
                     Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-//                        .font(.callout)
+                    //.font(.callout)
                         .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
                     //.foregroundColor(rota.number == 2 ? .orange : .red)
                         .padding(.horizontal, 1)
                         .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
-//                    Spacer()
                     Spacer()
                 }
                 .onChange(of: scenePhase) { newScenePhase in
@@ -147,10 +144,6 @@ extension MainView {
                         vm.timer.upstream.connect().cancel()
                     }
                 }
-                //                .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification), perform: {_ in
-                //                    print("didBecomeAtive")
-                //                    vm.updateDurationAndRemiaingTime(forRota: rota.number)
-                //                })
                 .padding(.horizontal, 2)
             }
         }
@@ -170,17 +163,6 @@ extension MainView {
             .disabled(vm.numberOfRotas == 15)
             .foregroundColor(vm.numberOfRotas == 15 ? .gray : .green)
             .padding()
-//            Button {
-//                withAnimation(.easeOut) {
-//                    vm.subtractRota()
-//                }
-//            } label: {
-//                Label("", systemImage: "minus.square.fill")
-//                    .font(.largeTitle)
-//            }
-//            
-//            .foregroundColor(.red)
-//            .padding()
             Button {
                 cleanConfirmationAlert = true
             } label: {
@@ -201,77 +183,9 @@ extension MainView {
     
     private func getAlert() -> Alert {
         
-        //        return Alert(
-        //            title: Text(alertTitle),
-        //            message: Text(alertMessage),
-        //            dismissButton: .default(Text("OK")))
         return Alert(
             title: Text("Błąd"),
             message: Text("Wprowadź prawidłowe dane"),
             dismissButton: .default(Text("OK")))
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//IOS 16:
-
-//                if endDate ?? Date() > Date() {
-//                    Text("Pozostały czas: \(timerInterval: Date()...(endDate ?? Date().addingTimeInterval(1)), countsDown: true)")
-//                        .foregroundColor(.red)
-//                }
-//                Text("Pozostały czas: \(timerInterval: Date()...(rota.exitDate ?? Date()), countsDown: true)")
-//                    .foregroundColor(.red)
-
-
-// .onAppear solution:
-
-//Text("Pozostały czas: \(timeToLeave?.asString(style: .abbreviated) ?? "")")
-//    .foregroundColor(.red)
-//
-//    .onAppear
-//    {
-//        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-//            if rota.exitTime != nil {
-//                timeToLeave! -= 1
-//            }
-//        }
-//
-//    }
-
-//Earlier solutions:
-
-//                if let timeToLeave = rota.timeToLeave {
-//                    if (-1...3600).contains(timeToLeave) { // we will get alert anyway (vm solution?)
-
-//                    Text("Pozostały czas: \(rota.remainingTime?.asString(style: .abbreviated) ?? "")")
-//                        .foregroundColor(.red)

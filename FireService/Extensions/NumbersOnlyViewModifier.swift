@@ -36,7 +36,6 @@ struct NumbersOnlyViewModifier: ViewModifier {
     }
 }
 
-
 extension View {
     func numbersOnly(_ text: Binding<String>, includeDecimal: Bool = false) -> some View {
         self.modifier(NumbersOnlyViewModifier(text: text, includeDecimal: includeDecimal))

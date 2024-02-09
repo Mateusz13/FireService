@@ -5,25 +5,18 @@
 //  Created by Mateusz Szafarczyk on 13/02/2023.
 //
 
-import SwiftUI 
+import SwiftUI
 
 struct RotaTableView: View {
-    
-    //    let rotaNumber: Int
     
     @EnvironmentObject private var vm: CoreViewModel
     @State private var addFiremanConfirmationAlert: Bool = false
     @State private var removeTheReserveConfirmationAlert: Bool = false
-    
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
     @Binding var numberOfFiremans: Int
     @Binding var endButtonActive: Bool
     @Binding var editData: [Bool]
-    //        enum FocusField {
-    //            case name, pressure0, pressure1, pressure2
-    //        }
-    //        @FocusState var fieldInFocus: FocusField?
     @State private var editDataAlert: Bool = false
     
     var body: some View {
@@ -38,17 +31,12 @@ struct RotaTableView: View {
             }
         }
         .textFieldStyle(.roundedBorder)
-        //.frame(height: vm.numberOfFiremans[rotaNumber] == 2 ? 192 : 150)//150/192/234
-        //.frame(maxWidth: 500)
-        //.padding(.horizontal, 3)
-        //.padding(.vertical, 3)
         .padding(3)
         .background(rota.number == 2 ? Color(hue: 0.01, saturation: 0.63, brightness: 0.94, opacity: 1.00) : Color(white: 0.80, opacity: 1.00))
         .cornerRadius(10)
         .onAppear {
             UITextField.appearance().clearButtonMode = .whileEditing
         }
-        //        Spacer()
     }
 }
 
@@ -74,16 +62,12 @@ extension RotaTableView {
                     .underline()
             }
             TextField("name1", text: $rota.f1Name)
-            // .focused($fieldInFocus, equals: .name)
             TextField("name2", text: $rota.f2Name)
-            // .focused($fieldInFocus, equals: .name)
             if numberOfFiremans > 1 {
                 TextField("name3", text: $rota.f3Name)
-                // .focused($fieldInFocus, equals: .name)
             }
             if numberOfFiremans > 2 {
                 TextField("name4", text: $rota.f4Name)
-                // .focused($fieldInFocus, equals: .name)
             }
             if startOrCalculateButtonActive[0] && numberOfFiremans != 3 {
                 Button {
@@ -94,7 +78,6 @@ extension RotaTableView {
                 }
                 .foregroundColor(.green)
                 .frame(minHeight: 34)
-//                .disabled(numberOfFiremans == 3)
                 .alert("Dodać strażaka?", isPresented: $addFiremanConfirmationAlert) {
                     Button("Tak") { if startOrCalculateButtonActive[0] {
                         withAnimation(.easeIn) {
@@ -135,14 +118,10 @@ extension RotaTableView {
                     }
                     Button("Nie", role: .cancel) { }
                 }
-//                message: {
-//                    Text("Usunąć rezerwę?")
-//                }
             }
         }
         .frame(minWidth: 80)
     }
-    
     
     private var entryColumn: some View {
         VStack {
@@ -159,22 +138,18 @@ extension RotaTableView {
             .disabled(!startOrCalculateButtonActive[2])
             .disabled(!endButtonActive)
             TextField("BAR", text: $rota.f1Pressures[0])
-            //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($rota.f1Pressures[0])
                 .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             TextField("BAR", text: $rota.f2Pressures[0])
-            //                .focused($fieldInFocus, equals: .pressure0)
                 .numbersOnly($rota.f2Pressures[0])
                 .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             if numberOfFiremans > 1 {
                 TextField("BAR", text: $rota.f3Pressures[0])
-                //                .focused($fieldInFocus, equals: .pressure0)
                     .numbersOnly($rota.f3Pressures[0])
                     .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             }
             if numberOfFiremans > 2 {
                 TextField("BAR", text: $rota.f4Pressures[0])
-                //                .focused($fieldInFocus, equals: .pressure0)
                     .numbersOnly($rota.f4Pressures[0])
                     .disabled(!startOrCalculateButtonActive[0] && !editData[0])
             }
@@ -198,7 +173,6 @@ extension RotaTableView {
             else {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: 0)
-//                    editData2 = false
                 } label: {
                     Text("Start")
                 }
@@ -208,85 +182,4 @@ extension RotaTableView {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    private var check1Column: some View {
-//        VStack {
-//            Text("POMIAR 1")
-//            TextField("BAR", text: $vm.rotas[rotaNumber].f1Pressures[1])
-//            //                .focused($fieldInFocus, equals: .pressure1)
-//                .numbersOnly($vm.rotas[rotaNumber].f1Pressures[1])
-//            TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[1])
-//            //                .focused($fieldInFocus, equals: .pressure1)
-//                .numbersOnly($vm.rotas[rotaNumber].f2Pressures[1])
-//            if vm.startOrCalculateButtonActive[rotaNumber][1] == false {
-//                Text(vm.rotas[rotaNumber].time?[1].getFormattedDateToHHmm() ?? "error")
-//                    .foregroundColor(.secondary)
-//            } else {
-//                Button {
-//                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 1)
-//                } label: {
-//                    Text("Oblicz")
-//                }
-//                .buttonStyle(.borderedProminent)
-//            }
-//        }
-//    }
-    
-//    private var check2Column: some View {
-//
-//        VStack {
-//            Text("POMIAR 2")
-//            TextField("BAR", text: $vm.rotas[rotaNumber].f1Pressures[2])
-//            //                .focused($fieldInFocus, equals: .pressure2)
-//                .numbersOnly($vm.rotas[rotaNumber].f1Pressures[2])
-//            TextField("BAR", text: $vm.rotas[rotaNumber].f2Pressures[2])
-//            //                .focused($fieldInFocus, equals: .pressure2)
-//                .numbersOnly($vm.rotas[rotaNumber].f2Pressures[2])
-//            if vm.startOrCalculateButtonActive[rotaNumber][2] == false {
-//                Text(vm.rotas[rotaNumber].time?[2].getFormattedDateToHHmm() ?? "error")
-//                    .foregroundColor(.secondary)
-//            } else {
-//                Button {
-//                    vm.startActionOrCalculateExitTime(forRota: rotaNumber, forMeasurement: 2)
-//
-//                } label: {
-//                    Text("Oblicz")
-//                }
-//                .buttonStyle(.borderedProminent)
-//            }
-//        }
-//    }
 }
-
-
-
-//IOS 16:
-//            Text(timerInterval: (vm.rotas[rotaNumber].time?[0] ?? Date())...Date(), countsDown: false)
-
