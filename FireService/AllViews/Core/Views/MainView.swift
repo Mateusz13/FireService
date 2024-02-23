@@ -14,14 +14,13 @@ struct MainView: View {
     @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime = ""
     @State private var endConfirmationAlert: Bool = false
-    @State private var cleanConfirmationAlert: Bool = false
     @State private var number: Int = 0
     
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: true) {
             allRotas
-            endLine
+            AddResetRow()
             Spacer()
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -95,37 +94,6 @@ extension MainView {
         }
     }
     
-    private var endLine: some View {
-        
-        HStack {
-            Button {
-                withAnimation(.easeIn) {
-                    vm.addRota()
-                }
-            } label: {
-                Label("", systemImage: "plus.app.fill")
-                    .font(.largeTitle)
-            }
-            .disabled(vm.numberOfRotas == 15)
-            .foregroundColor(vm.numberOfRotas == 15 ? .gray : .green)
-            .padding()
-            Button {
-                cleanConfirmationAlert = true
-            } label: {
-                Text("Wyczyść")
-            }
-            .font(.body)
-            .buttonStyle(.bordered)
-            .background(.orange)
-            .cornerRadius(10)
-            .foregroundColor(.black)
-            .alert("Zakończyć wszystkie akcje i wyczyścić dane?", isPresented: $cleanConfirmationAlert) {
-                Button("Tak", role: .destructive) { vm.reset() }
-                Button("Nie", role: .cancel) { }
-            }
-            Spacer()
-        }
-    }
     
     private func getAlert() -> Alert {
         

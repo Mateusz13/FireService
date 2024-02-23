@@ -31,6 +31,7 @@ struct MeasurementColumns: View {
                     }
             }
             .disabled(startOrCalculateButtonActive[measurement])
+//            vm.startOrCalculateButtonActive[rota.number]
             .disabled(!startOrCalculateButtonActive[measurement+2])
             .disabled(!endButtonActive)
             TextField("BAR", text: $rota.f1Pressures[measurement])

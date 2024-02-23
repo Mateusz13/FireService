@@ -22,6 +22,7 @@
 		E642E14E29DC0EF400F53B07 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E642E14D29DC0EF400F53B07 /* NotificationManager.swift */; };
 		E6470DC82B7B950B00E0B683 /* TimersRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6470DC72B7B950B00E0B683 /* TimersRowView.swift */; };
 		E6470DCA2B7BCC3900E0B683 /* TimersRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6470DC92B7BCC3900E0B683 /* TimersRowViewModel.swift */; };
+		E6470DCC2B88FC5900E0B683 /* AddResetRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6470DCB2B88FC5900E0B683 /* AddResetRow.swift */; };
 		E65122FD2A9B3C51004C9B40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65122FC2A9B3C51004C9B40 /* LaunchScreen.storyboard */; };
 		E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65122FE2A9B71CD004C9B40 /* LaunchView.swift */; };
 		E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68186862AA65F610021731F /* UserDefaultsManager.swift */; };
@@ -46,6 +47,7 @@
 		E642E14D29DC0EF400F53B07 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E6470DC72B7B950B00E0B683 /* TimersRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersRowView.swift; sourceTree = "<group>"; };
 		E6470DC92B7BCC3900E0B683 /* TimersRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimersRowViewModel.swift; sourceTree = "<group>"; };
+		E6470DCB2B88FC5900E0B683 /* AddResetRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResetRow.swift; sourceTree = "<group>"; };
 		E65122FC2A9B3C51004C9B40 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E65122FE2A9B71CD004C9B40 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		E68186862AA65F610021731F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				E63B8640299AD42D000F6CCE /* RotaTableView.swift */,
 				E642E14829DA249100F53B07 /* MeasurementColumns.swift */,
 				E6470DC72B7B950B00E0B683 /* TimersRowView.swift */,
+				E6470DCB2B88FC5900E0B683 /* AddResetRow.swift */,
 				E69FDA932B75147C00C8197F /* ClockView.swift */,
 				E65123002A9BE04B004C9B40 /* Launch */,
 			);
@@ -280,6 +283,7 @@
 				E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */,
 				E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */,
 				E6470DC82B7B950B00E0B683 /* TimersRowView.swift in Sources */,
+				E6470DCC2B88FC5900E0B683 /* AddResetRow.swift in Sources */,
 				E634064A29B75499000BFE5F /* Double.swift in Sources */,
 				E6470DCA2B7BCC3900E0B683 /* TimersRowViewModel.swift in Sources */,
 				E642E14E29DC0EF400F53B07 /* NotificationManager.swift in Sources */,
