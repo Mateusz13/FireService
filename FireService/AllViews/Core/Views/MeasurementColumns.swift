@@ -11,12 +11,12 @@ struct MeasurementColumns: View {
     
     let measurement: Int
     @EnvironmentObject private var vm: CoreViewModel
+    @ObservedObject var timersVM: TimersRowViewModel
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
     @Binding var numberOfFiremans: Int
     @Binding var endButtonActive: Bool
     @Binding var editData: [Bool]
-    
     @State private var editDataAlert: Bool = false
     
     var body: some View {
@@ -56,6 +56,7 @@ struct MeasurementColumns: View {
             if startOrCalculateButtonActive[measurement] {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
+                    timersVM.updateDurationAndRemainingTime(forRota: rota.number)
                 } label: {
                     Text("Oblicz")
                 }
@@ -83,9 +84,9 @@ struct MeasurementColumns: View {
     }
 }
 
-struct measurementColumns_Previews: PreviewProvider {
-    static var previews: some View {
-        MeasurementColumns(measurement: 1, rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
-            .environmentObject(CoreViewModel())
-    }
-}
+//struct measurementColumns_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MeasurementColumns(measurement: 1, rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
+//            .environmentObject(CoreViewModel())
+//    }
+//}

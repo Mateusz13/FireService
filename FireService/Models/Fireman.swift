@@ -18,7 +18,7 @@ struct Rota: Identifiable, Codable {
     var f3Name: String
     var f4Name: String
     
-    var time: [Date]? //start time?
+    var time: [Date]? //start time
     
     var f1Pressures: [String]
     var f2Pressures: [String]

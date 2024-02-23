@@ -10,7 +10,7 @@ import SwiftUI
 struct RotaTableView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
-    @StateObject var timersVM = TimersRowViewModel()
+    @StateObject var timersVM: TimersRowViewModel
     @State private var addFiremanConfirmationAlert: Bool = false
     @State private var removeTheReserveConfirmationAlert: Bool = false
     @Binding var rota: Rota
@@ -27,7 +27,7 @@ struct RotaTableView: View {
                     namesColumn
                     entryColumn
                     ForEach(1...10, id: \.self) { measurement in
-                        MeasurementColumns(measurement: measurement, rota: $rota, startOrCalculateButtonActive: $startOrCalculateButtonActive, numberOfFiremans: $numberOfFiremans, endButtonActive: $endButtonActive, editData: $editData)
+                        MeasurementColumns(measurement: measurement, timersVM: timersVM, rota: $rota, startOrCalculateButtonActive: $startOrCalculateButtonActive, numberOfFiremans: $numberOfFiremans, endButtonActive: $endButtonActive, editData: $editData)
                     }
                 }
             }
@@ -43,12 +43,12 @@ struct RotaTableView: View {
     }
 }
 
-struct RotaTableView_Previews: PreviewProvider {
-    static var previews: some View {
-        RotaTableView(rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 13)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
-            .environmentObject(CoreViewModel())
-    }
-}
+//struct RotaTableView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RotaTableView(rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 13)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
+//            .environmentObject(CoreViewModel())
+//    }
+//}
 
 extension RotaTableView {
     

@@ -31,11 +31,6 @@ final class CoreViewModel: ObservableObject {
         }
     }
     @Published var showAlert: Bool = false
-    var numberOfRotas: Int = 2 {
-        didSet {
-            saveNumberOfRotas()
-        }
-    }
     @Published var minimalPressure : [Double] {
         didSet {
             saveMinimalPressure()
@@ -46,8 +41,13 @@ final class CoreViewModel: ObservableObject {
             saveEditData()
         }
     }
+    var numberOfRotas: Int = 2 {
+        didSet {
+            saveNumberOfRotas()
+        }
+    }
     
-    let measurementsNumber: Int = 16 //15
+    let measurementsNumber: Int = 16 //15 (shouldn't be 11?) I think it set max Rotas quantity
     let exitNotificationTime = 300.0
     let validTimeToLeaveRange = (0.001...12600)
     var cancellables = Set<AnyCancellable>()
@@ -173,19 +173,6 @@ final class CoreViewModel: ObservableObject {
         NotificationManager.instance.cancelAllNotifications()
     }
     
-    //    func updateDurationAndRemainingTime(forRota: Int) {
-    //        timer
-    //            .sink { [weak self] _ in
-    //                guard let self = self else { return }
-    //                //self.rotas[forRota].duration += 1
-    //                if endButtonActive[forRota] {
-    //                    self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-    //                    self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-    //                }
-    //            }
-    //            .store(in: &cancellables)
-    //    }
-    
     
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
         
@@ -237,17 +224,7 @@ final class CoreViewModel: ObservableObject {
         self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
         self.startOrCalculateButtonActive[forRota][forMeasurement] = false
         hideKeyboard()
-        //        timer
-        //            .sink { [weak self] _ in
-        //                guard let self = self else { return }
-        //                if endButtonActive[forRota] {
-        //                    self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-        //                    self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-        //                }
-        //            }
-        //            .store(in: &cancellables)
         NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
-        return
     }
     
     private func handleSubsequentMeasurements(forRota: Int, forMeasurement: Int, rota: Rota, time: Date) {

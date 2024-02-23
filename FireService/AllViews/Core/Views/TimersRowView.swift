@@ -20,19 +20,19 @@ struct TimersRowView: View {
     
     var body: some View {
         HStack() {
-            //            if (0...12600).contains(timerVM.rotas[rota.number].duration ?? 0) {
-            Text(timersVM.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
-                .frame(minWidth: 69)
-                .foregroundColor(.blue)
-                .padding(.horizontal, 3)
-            //.background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
-            //            } else {
-            //                Text("0:00")
-            //                    .foregroundColor(.blue)
-            //                //.frame(height: 33)
-            //                    .frame(minWidth: 69)
-            //                    .padding(.horizontal, 3)
-            //            }
+            if (0...12600).contains(timersVM.rotas[rota.number].duration ?? 0) {
+                Text(timersVM.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
+                    .frame(minWidth: 69)
+                    .foregroundColor(.blue)
+                    .padding(.horizontal, 3)
+                    .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
+            } else {
+                Text("0:00")
+                    .foregroundColor(.blue)
+                //.frame(height: 33)
+                    .frame(minWidth: 69)
+                    .padding(.horizontal, 3)
+            }
             if vm.endButtonActive[rota.number] == false {
                 Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
                     .font(.subheadline)
@@ -65,7 +65,7 @@ struct TimersRowView: View {
                     }
                 }
             }
-            Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+            Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(timersVM.rotas[rota.number].remainingTime ?? 12601) ? timersVM.rotas[rota.number].remainingTime?.asString(style: .abbreviated) ?? "" : "")")
             //.font(.callout)
                 .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
             //.foregroundColor(rota.number == 2 ? .orange : .red)
@@ -76,7 +76,7 @@ struct TimersRowView: View {
     }
 }
 
-#Preview {
-    TimersRowView(timersVM: TimersRowViewModel(), rota: .constant(Rota(number: 0)))
-        .environmentObject(CoreViewModel())
-}
+//#Preview {
+//    TimersRowView(timersVM: TimersRowViewModel(), rota: .constant(Rota(number: 0)))
+//        .environmentObject(CoreViewModel())
+//}
