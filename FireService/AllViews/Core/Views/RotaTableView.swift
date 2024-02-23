@@ -43,12 +43,12 @@ struct RotaTableView: View {
     }
 }
 
-//struct RotaTableView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        RotaTableView(rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 13)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
-//            .environmentObject(CoreViewModel())
-//    }
-//}
+struct RotaTableView_Previews: PreviewProvider {
+    static var previews: some View {
+        RotaTableView(timersVM: TimersRowViewModel(coreVM: CoreViewModel()), rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 13)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
+            .environmentObject(CoreViewModel())
+    }
+}
 
 extension RotaTableView {
     

@@ -76,7 +76,7 @@ struct TimersRowView: View {
     }
 }
 
-//#Preview {
-//    TimersRowView(timersVM: TimersRowViewModel(), rota: .constant(Rota(number: 0)))
-//        .environmentObject(CoreViewModel())
-//}
+#Preview {
+    TimersRowView(timersVM: TimersRowViewModel(coreVM: CoreViewModel()), rota: .constant(Rota(number: 0)))
+        .environmentObject(CoreViewModel())
+}
