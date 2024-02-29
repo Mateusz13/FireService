@@ -69,10 +69,10 @@ struct TimersRowView: View {
             }
             Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(timersVM.rotaTimers.remainingTime ?? 12601) ? timersVM.rotaTimers.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
             //.font(.callout)
-                .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
+                .foregroundColor((-3599...300).contains(timersVM.rotaTimers.remainingTime ?? 301) ? .white : .red)
             //.foregroundColor(rota.number == 2 ? .orange : .red)
                 .padding(.horizontal, 1)
-                .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
+                .background((-3599...300).contains(timersVM.rotaTimers.remainingTime ?? 301) ? .red : .clear)
             Spacer()
         }
         .onChange(of: startOrCalculateButtonActive[0]) { _ in

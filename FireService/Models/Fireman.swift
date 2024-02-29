@@ -18,17 +18,17 @@ struct Rota: Identifiable, Codable {
     var f3Name: String
     var f4Name: String
     
-    var time: [Date]? //start time
+    var time: [Date]? //start time?    IMPROVE COMMENT
     
     var f1Pressures: [String]
     var f2Pressures: [String]
     var f3Pressures: [String]
     var f4Pressures: [String]
     
-    var timeToLeave: TimeInterval?
-    var exitDate: Date?
-    var remainingTime: TimeInterval?
-    var duration: TimeInterval?
+    var timeToLeave: TimeInterval? // ADD COMMENT
+    var exitDate: Date? // ADD COMMENT
+//    var remainingTime: TimeInterval?
+//    var duration: TimeInterval?
     
     var doubleF1Pressures: [Double] {
         return f1Pressures.compactMap(Double.init)
