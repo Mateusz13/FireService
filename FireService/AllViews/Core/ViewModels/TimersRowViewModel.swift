@@ -32,13 +32,12 @@ final class TimersRowViewModel: ObservableObject {
         timer
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                //                self.rotas[forRota].duration += 1
-                //                IMPORTANT:
-                //                                if vm.endButtonActive[forRota] {
-                self.rotaTimers.duration = Date().timeIntervalSince1970 - (self.rotaTimers.time?[0].timeIntervalSince1970 ?? 0)
-                self.rotaTimers.remainingTime = (coreVM.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                //                self.rotas[forRota].duration += 1 (was commented earlier as well)
+                if coreVM.endButtonActive[forRota] {
+                    self.rotaTimers.duration = Date().timeIntervalSince1970 - (self.rotaTimers.time?[0].timeIntervalSince1970 ?? 0)
+                    self.rotaTimers.remainingTime = (coreVM.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                }
             }
-        //                    }
             .store(in: &cancellables)
     }
     
@@ -48,11 +47,11 @@ final class TimersRowViewModel: ObservableObject {
         timer
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                //                if vm.endButtonActive[forRota] {
-                self.rotaTimers.duration = Date().timeIntervalSince1970 - (self.rotaTimers.time?[0].timeIntervalSince1970 ?? 0)
-                //                self.rotas[forRota].remainingTime = (coreVM.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                if coreVM.endButtonActive[forRota] {
+                    self.rotaTimers.duration = Date().timeIntervalSince1970 - (self.rotaTimers.time?[0].timeIntervalSince1970 ?? 0)
+                    //                self.rotas[forRota].remainingTime = (coreVM.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+                }
             }
-        //            }
             .store(in: &cancellables)
     }
 }

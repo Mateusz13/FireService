@@ -11,6 +11,7 @@ import Combine
 
 struct TimersRowView: View {
     
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var vm: CoreViewModel
     @StateObject var timersVM: TimersRowViewModel
     @Binding var rota: Rota
@@ -80,6 +81,16 @@ struct TimersRowView: View {
         }
         .onChange(of: startOrCalculateButtonActive) { _ in
             timersVM.updateDurationAndRemainingTime(forRota: rota.number)
+        }
+        .onChange(of: scenePhase) { newScenePhase in
+            if newScenePhase ==  .active {
+                timersVM.updateDurationAndRemainingTime(forRota: rota.number)
+            }
+        }
+        .onChange(of: scenePhase) { newScenePhase in
+            if newScenePhase ==  .background {
+                timersVM.timer.upstream.connect().cancel()
+            }
         }
     }
 }

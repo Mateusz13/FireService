@@ -10,7 +10,6 @@ import UIKit
 
 struct MainView: View {
     
-    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime = ""
     @State private var endConfirmationAlert: Bool = false
@@ -79,16 +78,6 @@ extension MainView {
         ForEach(vm.rotas) { rota in
             VStack {
                 RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremans: $vm.numberOfFiremans[rota.number], endButtonActive: $vm.endButtonActive[rota.number], editData: $vm.editData[rota.number])
-                //                .onChange(of: scenePhase) { newScenePhase in
-                //                    if newScenePhase ==  .active {
-                //                        vm.updateDurationAndRemainingTime(forRota: rota.number)
-                //                    }
-                //                }
-                //                .onChange(of: scenePhase) { newScenePhase in
-                //                    if newScenePhase ==  .background {
-                //                        vm.timer.upstream.connect().cancel()
-                //                    }
-                //                }
                     .padding(.horizontal, 2)
             }
         }
