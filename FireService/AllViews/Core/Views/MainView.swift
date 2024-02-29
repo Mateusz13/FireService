@@ -78,7 +78,7 @@ extension MainView {
         
         ForEach(vm.rotas) { rota in
             VStack {
-                RotaTableView(timersVM: TimersRowViewModel(coreVM: vm), rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremans: $vm.numberOfFiremans[rota.number], endButtonActive: $vm.endButtonActive[rota.number], editData: $vm.editData[rota.number])
+                RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremans: $vm.numberOfFiremans[rota.number], endButtonActive: $vm.endButtonActive[rota.number], editData: $vm.editData[rota.number])
                 //                .onChange(of: scenePhase) { newScenePhase in
                 //                    if newScenePhase ==  .active {
                 //                        vm.updateDurationAndRemainingTime(forRota: rota.number)

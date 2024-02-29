@@ -74,6 +74,7 @@ final class CoreViewModel: ObservableObject {
         getRotasInputs()
         getMinimalPressure()
         getEditData()
+        print(rotas)
     }
     
     func saveNumberOfRotas() {

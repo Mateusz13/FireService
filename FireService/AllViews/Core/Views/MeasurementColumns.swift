@@ -11,7 +11,7 @@ struct MeasurementColumns: View {
     
     let measurement: Int
     @EnvironmentObject private var vm: CoreViewModel
-    @ObservedObject var timersVM: TimersRowViewModel
+    //    @ObservedObject var timersVM: TimersRowViewModel
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
     @Binding var numberOfFiremans: Int
@@ -31,7 +31,6 @@ struct MeasurementColumns: View {
                     }
             }
             .disabled(startOrCalculateButtonActive[measurement])
-//            vm.startOrCalculateButtonActive[rota.number]
             .disabled(!startOrCalculateButtonActive[measurement+2])
             .disabled(!endButtonActive)
             TextField("BAR", text: $rota.f1Pressures[measurement])
@@ -57,7 +56,7 @@ struct MeasurementColumns: View {
             if startOrCalculateButtonActive[measurement] {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
-                    timersVM.updateDurationAndRemainingTime(forRota: rota.number)
+                    //                    timersVM.updateDurationAndRemainingTime(forRota: rota.number)
                 } label: {
                     Text("Oblicz")
                 }
@@ -87,7 +86,7 @@ struct MeasurementColumns: View {
 
 struct measurementColumns_Previews: PreviewProvider {
     static var previews: some View {
-        MeasurementColumns(measurement: 1, timersVM: TimersRowViewModel(coreVM: CoreViewModel()), rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
+        MeasurementColumns(measurement: 1, rota: .constant(Rota(number: 0)), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)), numberOfFiremans: .constant(1), endButtonActive: .constant(true), editData: .constant(Array(repeating: false, count: 11)))
             .environmentObject(CoreViewModel())
     }
 }

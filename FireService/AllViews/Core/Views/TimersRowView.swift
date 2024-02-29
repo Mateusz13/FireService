@@ -12,20 +12,21 @@ import Combine
 struct TimersRowView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
-    //    @StateObject private var timersVM = TimersRowViewModel()
-    @ObservedObject var timersVM: TimersRowViewModel
+    @StateObject var timersVM: TimersRowViewModel
     @Binding var rota: Rota
+    @Binding var endButtonActive: Bool
+    @Binding var startOrCalculateButtonActive: [Bool]
     @State private var endConfirmationAlert: Bool = false
     @State private var number: Int = 0
     
     var body: some View {
         HStack() {
-            if (0...12600).contains(timersVM.rotas[rota.number].duration ?? 0) {
-                Text(timersVM.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
+            if (0...12600).contains(timersVM.rotaTimers.duration ?? 0) {
+                Text(timersVM.rotaTimers.duration?.asString(style: .abbreviated) ?? "0:00")
                     .frame(minWidth: 69)
                     .foregroundColor(.blue)
                     .padding(.horizontal, 3)
-                    .background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
+                    .background((300...330).contains(timersVM.rotaTimers.duration ?? 0) ? .green : .clear)
             } else {
                 Text("0:00")
                     .foregroundColor(.blue)
@@ -33,7 +34,7 @@ struct TimersRowView: View {
                     .frame(minWidth: 69)
                     .padding(.horizontal, 3)
             }
-            if vm.endButtonActive[rota.number] == false {
+            if endButtonActive == false {
                 Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
                     .font(.subheadline)
                     .frame(minHeight: 33)
@@ -51,7 +52,7 @@ struct TimersRowView: View {
                 .cornerRadius(10)
                 .foregroundColor(.black)
                 .padding(.vertical, 4)
-                .disabled(vm.startOrCalculateButtonActive[rota.number][0])
+                .disabled(startOrCalculateButtonActive[0])
                 .alert("Zakończyć?", isPresented: $endConfirmationAlert) {
                     Button("Tak") { vm.endAction(forRota: number) }
                     Button("Nie", role: .cancel) { }
@@ -65,7 +66,7 @@ struct TimersRowView: View {
                     }
                 }
             }
-            Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(timersVM.rotas[rota.number].remainingTime ?? 12601) ? timersVM.rotas[rota.number].remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+            Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(timersVM.rotaTimers.remainingTime ?? 12601) ? timersVM.rotaTimers.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
             //.font(.callout)
                 .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
             //.foregroundColor(rota.number == 2 ? .orange : .red)
@@ -73,10 +74,17 @@ struct TimersRowView: View {
                 .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
             Spacer()
         }
+        .onChange(of: startOrCalculateButtonActive[0]) { _ in
+            timersVM.handleFirstMeasurement(forRota: rota.number)
+            
+        }
+        .onChange(of: startOrCalculateButtonActive) { _ in
+            timersVM.updateDurationAndRemainingTime(forRota: rota.number)
+        }
     }
 }
 
 #Preview {
-    TimersRowView(timersVM: TimersRowViewModel(coreVM: CoreViewModel()), rota: .constant(Rota(number: 0)))
+    TimersRowView(timersVM: TimersRowViewModel(coreVM: CoreViewModel()), rota: .constant(Rota(number: 0)), endButtonActive: .constant(true), startOrCalculateButtonActive: .constant(Array(repeating: true, count: 11)))
         .environmentObject(CoreViewModel())
 }
