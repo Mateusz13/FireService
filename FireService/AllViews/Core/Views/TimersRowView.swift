@@ -75,10 +75,6 @@ struct TimersRowView: View {
                 .background((-3599...300).contains(timersVM.rotaTimers.remainingTime ?? 301) ? .red : .clear)
             Spacer()
         }
-        .onChange(of: startOrCalculateButtonActive[0]) { _ in
-            timersVM.handleFirstMeasurement(forRota: rota.number)
-            
-        }
         .onChange(of: startOrCalculateButtonActive) { _ in
             timersVM.updateDurationAndRemainingTime(forRota: rota.number)
         }

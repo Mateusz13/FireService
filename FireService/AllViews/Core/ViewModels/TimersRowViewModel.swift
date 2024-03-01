@@ -24,6 +24,7 @@ final class TimersRowViewModel: ObservableObject {
     }
     
     func updateDurationAndRemainingTime(forRota: Int) {
+        print(rotaTimers)
         timer
             .sink { [weak self] _ in
                 guard let self = self else { return }
@@ -34,21 +35,6 @@ final class TimersRowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
-    //    func handleFirstMeasurement(forRota: Int, forMeasurement: Int)
-    func handleFirstMeasurement(forRota: Int) {
-        print(rotaTimers)
-        timer
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                if coreVM.endButtonActive[forRota] {
-                    self.rotaTimers.duration = Date().timeIntervalSince1970 - (coreVM.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-                    //                self.rotas[forRota].remainingTime = (coreVM.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-                }
-            }
-            .store(in: &cancellables)
-    }
-    
     //    deinit {
     //        timer.upstream.connect().cancel()
     //    }
