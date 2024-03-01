@@ -12,7 +12,6 @@ struct RotaTimers: Identifiable, Codable {
     var id = UUID().uuidString
     //    let number: Int
     
-    var startTime: Date? // action start time
     var remainingTime: TimeInterval?   // how much time remain to exit (updating every second)
     var duration: TimeInterval? // duration of the action (updating every second)
     

@@ -50,14 +50,6 @@ final class CoreViewModel: ObservableObject {
     let measurementsNumber: Int = 11
     let exitNotificationTime = 300.0
     let validTimeToLeaveRange = (0.001...12600)
-    var cancellables = Set<AnyCancellable>()
-    let rotasInputsKey: String = "rotasInputs"
-    let numberOfFiremansKey: String = "numberOfFiremans"
-    let minimalPressureKey: String = "minimalPressure"
-    let endButtonActiveKey: String = "endButtonActive"
-    let numberOfRotasKey: String = "numberOfRotas"
-    let startOrCalculateButtonActiveKey: String = "startOrCalculateButtonActive"
-    let editDataKey: String = "editData"
     
     init() {
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
@@ -76,6 +68,14 @@ final class CoreViewModel: ObservableObject {
         getEditData()
         print(rotas)
     }
+    
+    let rotasInputsKey: String = "rotasInputs"
+    let numberOfFiremansKey: String = "numberOfFiremans"
+    let minimalPressureKey: String = "minimalPressure"
+    let endButtonActiveKey: String = "endButtonActive"
+    let numberOfRotasKey: String = "numberOfRotas"
+    let startOrCalculateButtonActiveKey: String = "startOrCalculateButtonActive"
+    let editDataKey: String = "editData"
     
     func saveNumberOfRotas() {
         UserDefaultsManager.shared.save(numberOfRotas, forKey: numberOfRotasKey)
