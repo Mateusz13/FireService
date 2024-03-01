@@ -12,7 +12,7 @@ final class TimersRowViewModel: ObservableObject {
     
     @Published var rotaTimers: RotaTimers
     private var coreVM: CoreViewModel
-    let measurementsNumber: Int = 16 //15 (shouldn't be 11?)
+    let measurementsNumber: Int = 11
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var cancellables = Set<AnyCancellable>()
     
@@ -34,7 +34,7 @@ final class TimersRowViewModel: ObservableObject {
                 guard let self = self else { return }
                 //                self.rotas[forRota].duration += 1 (was commented earlier as well)
                 if coreVM.endButtonActive[forRota] {
-                    self.rotaTimers.duration = Date().timeIntervalSince1970 - (self.rotaTimers.time?[0].timeIntervalSince1970 ?? 0)
+                    self.rotaTimers.duration = Date().timeIntervalSince1970 - (self.rotaTimers.startTime?.timeIntervalSince1970 ?? 0)
                     self.rotaTimers.remainingTime = (coreVM.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
                 }
             }
@@ -43,12 +43,15 @@ final class TimersRowViewModel: ObservableObject {
     
     //    func handleFirstMeasurement(forRota: Int, forMeasurement: Int)
     func handleFirstMeasurement(forRota: Int) {
-        self.rotaTimers.time = Array(repeating: Date(), count: measurementsNumber+2) //why (measurementsNumber+2)?
+//        self.rotaTimers.startTime = Array(repeating: Date(), count: measurementsNumber+2)
+        self.rotaTimers.startTime = Date()
+        
+        print(rotaTimers)
         timer
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 if coreVM.endButtonActive[forRota] {
-                    self.rotaTimers.duration = Date().timeIntervalSince1970 - (self.rotaTimers.time?[0].timeIntervalSince1970 ?? 0)
+                    self.rotaTimers.duration = Date().timeIntervalSince1970 - (self.rotaTimers.startTime?.timeIntervalSince1970 ?? 0)
                     //                self.rotas[forRota].remainingTime = (coreVM.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
                 }
             }

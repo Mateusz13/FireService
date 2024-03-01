@@ -47,7 +47,7 @@ final class CoreViewModel: ObservableObject {
         }
     }
     
-    let measurementsNumber: Int = 16 //15 (shouldn't be 11?) I think it set max Rotas quantity
+    let measurementsNumber: Int = 11
     let exitNotificationTime = 300.0
     let validTimeToLeaveRange = (0.001...12600)
     var cancellables = Set<AnyCancellable>()
@@ -156,6 +156,7 @@ final class CoreViewModel: ObservableObject {
     
     func endAction(forRota: Int) {
         endButtonActive[forRota] = false
+        self.rotas[forRota].exitTime = Date()
         //        self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
         //        self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
         NotificationManager.instance.cancelExitNotification(forRota: forRota)

@@ -18,17 +18,15 @@ struct Rota: Identifiable, Codable {
     var f3Name: String
     var f4Name: String
     
-    var time: [Date]? //start time?    IMPROVE COMMENT
-    
     var f1Pressures: [String]
     var f2Pressures: [String]
     var f3Pressures: [String]
     var f4Pressures: [String]
     
-    var timeToLeave: TimeInterval? // ADD COMMENT
-    var exitDate: Date? // ADD COMMENT
-//    var remainingTime: TimeInterval?
-//    var duration: TimeInterval?
+    var time: [Date]? // sets current time (Date()) for every measurements
+    var exitTime: Date? // time of the end of action
+    var timeToLeave: TimeInterval? // how much time remain to exit (not updating every second)
+    var exitDate: Date? // current exit date from action
     
     var doubleF1Pressures: [Double] {
         return f1Pressures.compactMap(Double.init)

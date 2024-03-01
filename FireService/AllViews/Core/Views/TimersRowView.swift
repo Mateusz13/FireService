@@ -36,7 +36,7 @@ struct TimersRowView: View {
                     .padding(.horizontal, 3)
             }
             if endButtonActive == false {
-                Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
+                Text("Zakończono: \(vm.rotas[rota.number].exitTime?.getFormattedDateToHHmm() ?? "error")")
                     .font(.subheadline)
                     .frame(minHeight: 33)
                     .foregroundColor(.secondary)
