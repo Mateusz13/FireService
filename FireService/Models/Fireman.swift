@@ -27,6 +27,8 @@ struct Rota: Identifiable, Codable {
     var exitTime: Date? // time of the end of action
     var timeToLeave: TimeInterval? // how much time remain to exit (not updating every second)
     var exitDate: Date? // current exit date from action
+    var totalDuration: TimeInterval? // How long the action last
+    var remainingTimeAtEnd: TimeInterval? // How much time left after finishing the action
     
     var doubleF1Pressures: [Double] {
         return f1Pressures.compactMap(Double.init)

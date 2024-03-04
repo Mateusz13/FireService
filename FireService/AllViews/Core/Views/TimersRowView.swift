@@ -22,12 +22,17 @@ struct TimersRowView: View {
     
     var body: some View {
         HStack() {
-            if (0...12600).contains(timersVM.rotaTimers.duration ?? 0) {
+            if !endButtonActive {
+                Text(rota.totalDuration?.asString(style: .abbreviated) ?? "error")
+                    .frame(minWidth: 69)
+                    .foregroundColor(.blue)
+                    .padding(.horizontal, 3)
+            } else if (0...12600).contains(timersVM.rotaTimers.duration ?? 0) {
                 Text(timersVM.rotaTimers.duration?.asString(style: .abbreviated) ?? "0:00")
                     .frame(minWidth: 69)
                     .foregroundColor(.blue)
                     .padding(.horizontal, 3)
-                    .background((300...330).contains(timersVM.rotaTimers.duration ?? 0) ? .green : .clear)
+                //                    .background((300...330).contains(timersVM.rotaTimers.duration ?? 0) ? .green : .clear)
             } else {
                 Text("0:00")
                     .foregroundColor(.blue)
@@ -67,12 +72,18 @@ struct TimersRowView: View {
                     }
                 }
             }
-            Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(timersVM.rotaTimers.remainingTime ?? 12601) ? timersVM.rotaTimers.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-            //.font(.callout)
-                .foregroundColor((-3599...300).contains(timersVM.rotaTimers.remainingTime ?? 301) ? .white : .red)
-            //.foregroundColor(rota.number == 2 ? .orange : .red)
-                .padding(.horizontal, 1)
-                .background((-3599...300).contains(timersVM.rotaTimers.remainingTime ?? 301) ? .red : .clear)
+            if !endButtonActive {
+                Text("\(vm.timeToLeaveTitle(forRota: rota.number))\(rota.remainingTimeAtEnd?.asString(style: .abbreviated) ?? "error")")
+                    .foregroundColor((-3599...300).contains(rota.remainingTimeAtEnd ?? 301) ? .white : .red)
+                    .padding(.horizontal, 1)
+                    .background((-3599...300).contains(rota.remainingTimeAtEnd ?? 301) ? .red : .clear)
+            } else {
+                Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(timersVM.rotaTimers.remainingTime ?? 12601) ? timersVM.rotaTimers.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
+                //.font(.callout)
+                    .foregroundColor((-3599...300).contains(timersVM.rotaTimers.remainingTime ?? 301) ? .white : .red)
+                    .padding(.horizontal, 1)
+                    .background((-3599...300).contains(timersVM.rotaTimers.remainingTime ?? 301) ? .red : .clear)
+            }
             Spacer()
         }
         .onChange(of: startOrCalculateButtonActive) { _ in

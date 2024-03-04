@@ -157,8 +157,8 @@ final class CoreViewModel: ObservableObject {
     func endAction(forRota: Int) {
         endButtonActive[forRota] = false
         self.rotas[forRota].exitTime = Date()
-        //        self.rotas[forRota].remainingTime = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-        //        self.rotas[forRota].duration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
+        self.rotas[forRota].remainingTimeAtEnd = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
+        self.rotas[forRota].totalDuration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
         NotificationManager.instance.cancelExitNotification(forRota: forRota)
         NotificationManager.instance.cancelFirstMeasurementNotification(forRota: forRota)
     }
