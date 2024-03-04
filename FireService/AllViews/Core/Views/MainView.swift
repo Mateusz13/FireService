@@ -23,18 +23,18 @@ struct MainView: View {
             Spacer()
         }
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                Spacer()
-            }
-            ToolbarItem(placement: .keyboard) {
-                Button {
-                    hideKeyboard()
-                } label: {
-                    Image(systemName: "keyboard.chevron.compact.down")
-                }
-            }
-        }
+//        .toolbar {
+//            ToolbarItem(placement: .keyboard) {
+//                Spacer()
+//            }
+//            ToolbarItem(placement: .keyboard) {
+//                Button {
+//                    hideKeyboard()
+//                } label: {
+//                    Image(systemName: "keyboard.chevron.compact.down")
+//                }
+//            }
+//        }
         .onTapGesture {
             hideKeyboard()
         }
@@ -54,11 +54,10 @@ struct MainView: View {
         }
         .onAppear {
             NotificationManager.instance.requestAuthorization()
-            // Disabling the idle timer when this view appears (do I need this?)
+            // modifier ensures that the screen will not automatically dim or turn off
             UIApplication.shared.isIdleTimerDisabled = true
         }
         .onDisappear {
-            // Enabling the idle timer back when this view disappears (do I need this?)
             UIApplication.shared.isIdleTimerDisabled = false
         }
     }
