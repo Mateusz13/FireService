@@ -13,7 +13,7 @@ final class TimersRowViewModel: ObservableObject {
     @Published var rotaTimers: RotaTimers
     private var coreVM: CoreViewModel
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
     init(coreVM: CoreViewModel) {
         self.coreVM = coreVM
