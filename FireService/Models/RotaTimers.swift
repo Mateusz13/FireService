@@ -10,13 +10,6 @@ import Foundation
 struct RotaTimers: Identifiable, Codable {
     
     var id = UUID().uuidString
-    //    let number: Int
-    
     var remainingTime: TimeInterval?   // how much time remain to exit (updating every second)
     var duration: TimeInterval? // duration of the action (updating every second)
-    
-    
-    //    init(number: Int) {
-    //        self.number = number
-    //    }
 }

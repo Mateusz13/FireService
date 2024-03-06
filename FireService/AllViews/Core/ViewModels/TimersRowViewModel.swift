@@ -35,7 +35,4 @@ final class TimersRowViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    //    deinit {
-    //        timer.upstream.connect().cancel()
-    //    }
 }
