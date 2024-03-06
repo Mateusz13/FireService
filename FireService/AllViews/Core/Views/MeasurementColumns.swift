@@ -11,12 +11,12 @@ struct MeasurementColumns: View {
     
     let measurement: Int
     @EnvironmentObject private var vm: CoreViewModel
+    //    @ObservedObject var timersVM: TimersRowViewModel
     @Binding var rota: Rota
     @Binding var startOrCalculateButtonActive: [Bool]
     @Binding var numberOfFiremans: Int
     @Binding var endButtonActive: Bool
     @Binding var editData: [Bool]
-    
     @State private var editDataAlert: Bool = false
     
     var body: some View {
@@ -56,6 +56,7 @@ struct MeasurementColumns: View {
             if startOrCalculateButtonActive[measurement] {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: measurement)
+                    //                    timersVM.updateDurationAndRemainingTime(forRota: rota.number)
                 } label: {
                     Text("Oblicz")
                 }

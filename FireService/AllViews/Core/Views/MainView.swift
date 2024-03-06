@@ -10,33 +10,31 @@ import UIKit
 
 struct MainView: View {
     
-    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime = ""
     @State private var endConfirmationAlert: Bool = false
-    @State private var cleanConfirmationAlert: Bool = false
     @State private var number: Int = 0
     
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: true) {
             allRotas
-            endLine
+            AddResetRow()
             Spacer()
         }
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                Spacer()
-            }
-            ToolbarItem(placement: .keyboard) {
-                Button {
-                    hideKeyboard()
-                } label: {
-                    Image(systemName: "keyboard.chevron.compact.down")
-                }
-            }
-        }
+//        .toolbar {
+//            ToolbarItem(placement: .keyboard) {
+//                Spacer()
+//            }
+//            ToolbarItem(placement: .keyboard) {
+//                Button {
+//                    hideKeyboard()
+//                } label: {
+//                    Image(systemName: "keyboard.chevron.compact.down")
+//                }
+//            }
+//        }
         .onTapGesture {
             hideKeyboard()
         }
@@ -56,11 +54,10 @@ struct MainView: View {
         }
         .onAppear {
             NotificationManager.instance.requestAuthorization()
-            // Disabling the idle timer when this view appears (do I need this?)
+            // modifier ensures that the screen will not automatically dim or turn off
             UIApplication.shared.isIdleTimerDisabled = true
         }
         .onDisappear {
-            // Enabling the idle timer back when this view disappears (do I need this?)
             UIApplication.shared.isIdleTimerDisabled = false
         }
     }
@@ -80,106 +77,11 @@ extension MainView {
         ForEach(vm.rotas) { rota in
             VStack {
                 RotaTableView(rota: $vm.rotas[rota.number], startOrCalculateButtonActive: $vm.startOrCalculateButtonActive[rota.number], numberOfFiremans: $vm.numberOfFiremans[rota.number], endButtonActive: $vm.endButtonActive[rota.number], editData: $vm.editData[rota.number])
-                HStack() {
-                    if (0...12600).contains(vm.rotas[rota.number].duration ?? 0) {
-                        Text(vm.rotas[rota.number].duration?.asString(style: .abbreviated) ?? "0:00")
-                            .frame(minWidth: 69)
-                            .foregroundColor(.blue)
-                            .padding(.horizontal, 3)
-                        //.background((300...330).contains(vm.rotas[rota.number].duration ?? 0) ? .green : .clear)
-                    } else {
-                        Text("0:00")
-                            .foregroundColor(.blue)
-                        //.frame(height: 33)
-                            .frame(minWidth: 69)
-                            .padding(.horizontal, 3)
-                    }
-                    if vm.endButtonActive[rota.number] == false {
-                        Text("Zakończono: \(vm.rotas[rota.number].time?[0].getFormattedDateToHHmm() ?? "error")")
-                            .font(.subheadline)
-                            .frame(minHeight: 33)
-                            .foregroundColor(.secondary)
-                    } else {
-                        Button {
-                            endConfirmationAlert = true
-                            number = rota.number
-                        } label: {
-                            Text("Zakończ")
-                        }
-                        .font(.subheadline)
-                        .buttonStyle(.bordered)
-                        .background(.purple)
-                        .cornerRadius(10)
-                        .foregroundColor(.black)
-                        .padding(.vertical, 4)
-                        .disabled(vm.startOrCalculateButtonActive[rota.number][0])
-                        .alert("Zakończyć?", isPresented: $endConfirmationAlert) {
-                            Button("Tak") { vm.endAction(forRota: number) }
-                            Button("Nie", role: .cancel) { }
-                        } message: {
-                            if number == 2 {
-                                Text("Czy na pewno zakończyć akcję dla Roty RIT?")
-                            } else if number < 2 {
-                                Text("Czy na pewno zakończyć akcję dla Roty \(number+1)?")
-                            } else {
-                                Text("Czy na pewno zakończyć akcję dla Roty \(number)?")
-                            }
-                        }
-                    }
-                    Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(rota.remainingTime ?? 12601) ? rota.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
-                    //.font(.callout)
-                        .foregroundColor((-3599...300).contains(rota.remainingTime ?? 301) ? .white : .red)
-                    //.foregroundColor(rota.number == 2 ? .orange : .red)
-                        .padding(.horizontal, 1)
-                        .background((-3599...300).contains(rota.remainingTime ?? 301) ? .red : .clear)
-                    Spacer()
-                }
-                .onChange(of: scenePhase) { newScenePhase in
-                    if newScenePhase ==  .active {
-                        vm.updateDurationAndRemiaingTime(forRota: rota.number)
-                    }
-                }
-                .onChange(of: scenePhase) { newScenePhase in
-                    if newScenePhase ==  .background {
-                        vm.timer.upstream.connect().cancel()
-                    }
-                }
-                .padding(.horizontal, 2)
+                    .padding(.horizontal, 2)
             }
         }
     }
     
-    private var endLine: some View {
-        
-        HStack {
-            Button {
-                withAnimation(.easeIn) {
-                    vm.addRota()
-                }
-            } label: {
-                Label("", systemImage: "plus.app.fill")
-                    .font(.largeTitle)
-            }
-            .disabled(vm.numberOfRotas == 15)
-            .foregroundColor(vm.numberOfRotas == 15 ? .gray : .green)
-            .padding()
-            Button {
-                cleanConfirmationAlert = true
-            } label: {
-                Text("Wyczyść")
-            }
-            .font(.body)
-            .buttonStyle(.bordered)
-            .background(.orange)
-            .cornerRadius(10)
-            .foregroundColor(.black)
-            .alert("Zakończyć wszystkie akcje i wyczyścić dane?", isPresented: $cleanConfirmationAlert) {
-                Button("Tak", role: .destructive) { vm.reset() }
-                Button("Nie", role: .cancel) { }
-            }
-            Spacer()
-        }
-    }
     
     private func getAlert() -> Alert {
         

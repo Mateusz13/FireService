@@ -10,6 +10,7 @@ import SwiftUI
 struct RotaTableView: View {
     
     @EnvironmentObject private var vm: CoreViewModel
+    //    @StateObject var timersVM: TimersRowViewModel
     @State private var addFiremanConfirmationAlert: Bool = false
     @State private var removeTheReserveConfirmationAlert: Bool = false
     @Binding var rota: Rota
@@ -20,22 +21,24 @@ struct RotaTableView: View {
     @State private var editDataAlert: Bool = false
     
     var body: some View {
-        
-        ScrollView(.horizontal, showsIndicators: true) {
-            HStack {
-                namesColumn
-                entryColumn
-                ForEach(1...10, id: \.self) { measurement in
-                    MeasurementColumns(measurement: measurement, rota: $rota, startOrCalculateButtonActive: $startOrCalculateButtonActive, numberOfFiremans: $numberOfFiremans, endButtonActive: $endButtonActive, editData: $editData)
+        VStack {
+            ScrollView(.horizontal, showsIndicators: true) {
+                HStack {
+                    namesColumn
+                    entryColumn
+                    ForEach(1...10, id: \.self) { measurement in
+                        MeasurementColumns(measurement: measurement, rota: $rota, startOrCalculateButtonActive: $startOrCalculateButtonActive, numberOfFiremans: $numberOfFiremans, endButtonActive: $endButtonActive, editData: $editData)
+                    }
                 }
             }
-        }
-        .textFieldStyle(.roundedBorder)
-        .padding(3)
-        .background(rota.number == 2 ? Color(hue: 0.01, saturation: 0.63, brightness: 0.94, opacity: 1.00) : Color(white: 0.80, opacity: 1.00))
-        .cornerRadius(10)
-        .onAppear {
-            UITextField.appearance().clearButtonMode = .whileEditing
+            .textFieldStyle(.roundedBorder)
+            .padding(3)
+            .background(rota.number == 2 ? Color(hue: 0.01, saturation: 0.63, brightness: 0.94, opacity: 1.00) : Color(white: 0.80, opacity: 1.00))
+            .cornerRadius(10)
+            .onAppear {
+                UITextField.appearance().clearButtonMode = .whileEditing
+            }
+            TimersRowView(timersVM: TimersRowViewModel(coreVM: vm), rota: $rota, endButtonActive: $endButtonActive, startOrCalculateButtonActive: $startOrCalculateButtonActive)
         }
     }
 }
@@ -173,6 +176,7 @@ extension RotaTableView {
             else {
                 Button {
                     vm.startActionOrCalculateExitTime(forRota: rota.number, forMeasurement: 0)
+                    //                    timersVM.handleFirstMeasurement(forRota: rota.number, forMeasurement: 0)
                 } label: {
                     Text("Start")
                 }

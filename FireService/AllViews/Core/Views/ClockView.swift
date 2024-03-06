@@ -11,7 +11,6 @@ struct ClockView: View {
     
     @State private var timer2 = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject private var vm: CoreViewModel
     @State private var currentTime: String = ""
     
     var body: some View {
