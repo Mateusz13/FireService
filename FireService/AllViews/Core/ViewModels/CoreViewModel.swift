@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 final class CoreViewModel: ObservableObject {
-    
+    @Published var resetting = false
     @Published var rotas: [Rota] {
         didSet {
             saveRotasInputs()
@@ -31,7 +31,11 @@ final class CoreViewModel: ObservableObject {
         }
     }
     @Published var showAlert: Bool = false
-    @Published var minimalPressure : [Double]
+    @Published var minimalPressure : [Double] {
+        didSet {
+            saveMinimalPressure()
+        }
+    }
     @Published var editData: [[Bool]] {
         didSet {
             saveEditData()
@@ -47,6 +51,7 @@ final class CoreViewModel: ObservableObject {
     private let maxRotasNumber: Int = 16
     private let exitNotificationTime = 300.0
     private let validTimeToLeaveRange = (0.001...12600)
+    private let initialMinimalPressure = 50.0
     
     init() {
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
@@ -54,14 +59,14 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = Array(repeating: Array(repeating: true, count: measurementsNumber+2), count: numberOfRotas+1)//(2 more for: .disabled(!startOrCalculateButtonActive[measurement+2])
         self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
         self.numberOfFiremans = Array(repeating: 1, count: numberOfRotas+1)
-        self.minimalPressure = Array(repeating: 50.0, count: maxRotasNumber)
+        self.minimalPressure = Array(repeating: initialMinimalPressure, count: numberOfRotas+1)
         self.editData = Array(repeating: Array(repeating: false, count: measurementsNumber), count: numberOfRotas+1)
         getNumberOfRotas()
         getNumberOfFiremans()
         getStartOrCalculateButtonActive()
         getEndButtonActive()
         getRotasInputs()
-//        getMinimalPressure()
+        getMinimalPressure()
         getEditData()
         print(rotas)
     }
@@ -73,6 +78,7 @@ final class CoreViewModel: ObservableObject {
         self.editData.append(Array(repeating: false, count: measurementsNumber))
         self.endButtonActive.append(true)
         self.numberOfFiremans.append(1)
+        self.minimalPressure.append(initialMinimalPressure)
     }
     
     func addFireman(forRota: Int) {
@@ -89,14 +95,22 @@ final class CoreViewModel: ObservableObject {
     }
     
     func reset() {
+        resetting = true
         self.numberOfRotas = 2
         let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
         self.rotas = rotas
         self.startOrCalculateButtonActive = Array(repeating: Array(repeating: true, count: measurementsNumber+2), count: numberOfRotas+1)
         self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
         self.numberOfFiremans = Array(repeating: 1, count: numberOfRotas+1)
+        self.minimalPressure = Array(repeating: initialMinimalPressure, count: numberOfRotas+1)
         self.editData = Array(repeating: Array(repeating: false, count: measurementsNumber), count: numberOfRotas+1)
         NotificationManager.instance.cancelAllNotifications()
+        Task {
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            DispatchQueue.main.async {
+                self.resetting = false
+            }
+        }
     }
     
     func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
@@ -197,6 +211,7 @@ final class CoreViewModel: ObservableObject {
     }
     
     func timeToLeaveTitle(forRota: Int) -> String {
+        guard resetting == false else { return "" }
         if minimalPressure[forRota] == 0.0 {
             return "Do 0 BAR(!): "
         } else {
@@ -207,7 +222,7 @@ final class CoreViewModel: ObservableObject {
     //SAVE AND GET DATA FROM USER DEFAULTS:
     let rotasInputsKey: String = "rotasInputs"
     let numberOfFiremansKey: String = "numberOfFiremans"
-//    let minimalPressureKey: String = "minimalPressure"
+    let minimalPressureKey: String = "minimalPressure"
     let endButtonActiveKey: String = "endButtonActive"
     let numberOfRotasKey: String = "numberOfRotas"
     let startOrCalculateButtonActiveKey: String = "startOrCalculateButtonActive"
@@ -224,9 +239,11 @@ final class CoreViewModel: ObservableObject {
     func saveNumberOfFiremans() {
         UserDefaultsManager.shared.save(numberOfFiremans, forKey: numberOfFiremansKey)
     }
-//    func saveMinimalPressure() {
-//        UserDefaultsManager.shared.save(minimalPressure, forKey: minimalPressureKey)
-//    }
+    
+    func saveMinimalPressure() {
+        UserDefaultsManager.shared.save(minimalPressure, forKey: minimalPressureKey)
+    }
+    
     func saveEndButtonActive() {
         UserDefaultsManager.shared.save(endButtonActive, forKey: endButtonActiveKey)
     }
@@ -256,11 +273,13 @@ final class CoreViewModel: ObservableObject {
             self.numberOfFiremans = storedNumberOfFiremans
         }
     }
-//    func getMinimalPressure() {
-//        if let storedMinimalPressure = UserDefaultsManager.shared.retrieve([Double].self, forKey: minimalPressureKey) {
-//            self.minimalPressure = storedMinimalPressure
-//        }
-//    }
+    
+    func getMinimalPressure() {
+        if let storedMinimalPressure = UserDefaultsManager.shared.retrieve([Double].self, forKey: minimalPressureKey) {
+            self.minimalPressure = storedMinimalPressure
+        }
+    }
+    
     func getEndButtonActive() {
         if let storedEndButtonActive = UserDefaultsManager.shared.retrieve([Bool].self, forKey: endButtonActiveKey) {
             self.endButtonActive = storedEndButtonActive
