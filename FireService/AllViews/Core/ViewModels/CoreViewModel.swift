@@ -59,7 +59,7 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = Array(repeating: Array(repeating: true, count: measurementsNumber+2), count: numberOfRotas+1)//(2 more for: .disabled(!startOrCalculateButtonActive[measurement+2])
         self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
         self.numberOfFiremans = Array(repeating: 1, count: numberOfRotas+1)
-        self.minimalPressure = Array(repeating: initialMinimalPressure, count: numberOfRotas+1)
+        self.minimalPressure = Array(repeating: initialMinimalPressure, count: maxRotasNumber)
         self.editData = Array(repeating: Array(repeating: false, count: measurementsNumber), count: numberOfRotas+1)
         getNumberOfRotas()
         getNumberOfFiremans()
@@ -102,7 +102,7 @@ final class CoreViewModel: ObservableObject {
         self.startOrCalculateButtonActive = Array(repeating: Array(repeating: true, count: measurementsNumber+2), count: numberOfRotas+1)
         self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
         self.numberOfFiremans = Array(repeating: 1, count: numberOfRotas+1)
-        self.minimalPressure = Array(repeating: initialMinimalPressure, count: numberOfRotas+1)
+        self.minimalPressure = Array(repeating: initialMinimalPressure, count: maxRotasNumber)
         self.editData = Array(repeating: Array(repeating: false, count: measurementsNumber), count: numberOfRotas+1)
         NotificationManager.instance.cancelAllNotifications()
         Task {
@@ -211,7 +211,7 @@ final class CoreViewModel: ObservableObject {
     }
     
     func timeToLeaveTitle(forRota: Int) -> String {
-        guard resetting == false else { return "" }
+//        guard resetting == false else { return "" }
         if minimalPressure[forRota] == 0.0 {
             return "Do 0 BAR(!): "
         } else {
