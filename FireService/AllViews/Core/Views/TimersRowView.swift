@@ -73,10 +73,15 @@ struct TimersRowView: View {
                 }
             }
             if !endButtonActive {
-                Text("\(vm.timeToLeaveTitle(forRota: rota.number))\(rota.remainingTimeAtEnd?.asString(style: .abbreviated) ?? "error")")
-                    .foregroundColor((-3599...300).contains(rota.remainingTimeAtEnd ?? 301) ? .white : .red)
-                    .padding(.horizontal, 1)
-                    .background((-3599...300).contains(rota.remainingTimeAtEnd ?? 301) ? .red : .clear)
+                Text(
+                    "\(vm.timeToLeaveTitle(forRota: rota.number))" +
+                    ((-12600...12600).contains(rota.remainingTimeAtEnd ?? 12601)
+                     ? (rota.remainingTimeAtEnd?.asString(style: .abbreviated) ?? "")
+                     : "")
+                )
+                .foregroundColor((-3599...300).contains(rota.remainingTimeAtEnd ?? 301) ? .white : .red)
+                .padding(.horizontal, 1)
+                .background((-3599...300).contains(rota.remainingTimeAtEnd ?? 301) ? .red : .clear)
             } else {
                 Text("\(vm.timeToLeaveTitle(forRota: rota.number))\((-12600...12600).contains(timersVM.rotaTimers.remainingTime ?? 12601) ? timersVM.rotaTimers.remainingTime?.asString(style: .abbreviated) ?? "" : "")")
                 //.font(.callout)
