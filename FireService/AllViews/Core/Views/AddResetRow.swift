@@ -11,6 +11,7 @@ struct AddResetRow: View {
     
     @EnvironmentObject private var vm: CoreViewModel
     @State private var cleanConfirmationAlert: Bool = false
+    @State private var isShowingSettings = false
     
     var body: some View {
         HStack {
@@ -40,9 +41,26 @@ struct AddResetRow: View {
                 Button("Nie", role: .cancel) { }
             }
             Spacer()
+            Button {
+                isShowingSettings = true
+            } label: {
+                Image(systemName: "gear")
+                    .font(.title)
+            }
+            .padding()
+            .popover(isPresented: $isShowingSettings) {
+                PopoverSettingsView()
+            }
         }
     }
 }
+//            .popover(isPresented: $isShowingSettings) {
+//                ResetProgressPopover { topLevel in
+//                    selectedLevel = topLevel
+//                    showAlert = true
+//                    isShowingSettings = false
+//                }
+//            }
 
 #Preview {
     AddResetRow()

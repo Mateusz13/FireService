@@ -82,7 +82,6 @@ extension MainView {
         }
     }
     
-    
     private func getAlert() -> Alert {
         
         return Alert(

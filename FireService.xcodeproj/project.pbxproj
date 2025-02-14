@@ -25,6 +25,10 @@
 		E6470DCC2B88FC5900E0B683 /* AddResetRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6470DCB2B88FC5900E0B683 /* AddResetRow.swift */; };
 		E65122FD2A9B3C51004C9B40 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65122FC2A9B3C51004C9B40 /* LaunchScreen.storyboard */; };
 		E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65122FE2A9B71CD004C9B40 /* LaunchView.swift */; };
+		E6606A772D5F712000DD95C7 /* PopoverSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6606A762D5F712000DD95C7 /* PopoverSettingsView.swift */; };
+		E6606A792D5F71BF00DD95C7 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6606A782D5F71BF00DD95C7 /* SettingsRowView.swift */; };
+		E6606A7B2D5F998600DD95C7 /* ContactUsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6606A7A2D5F998600DD95C7 /* ContactUsView.swift */; };
+		E6606A7D2D5F99C900DD95C7 /* XMarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6606A7C2D5F99C900DD95C7 /* XMarkButton.swift */; };
 		E66895F42B90DAB900392AF1 /* RotaTimers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66895F32B90DAB900392AF1 /* RotaTimers.swift */; };
 		E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68186862AA65F610021731F /* UserDefaultsManager.swift */; };
 		E69FDA942B75147C00C8197F /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69FDA932B75147C00C8197F /* ClockView.swift */; };
@@ -51,6 +55,10 @@
 		E6470DCB2B88FC5900E0B683 /* AddResetRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResetRow.swift; sourceTree = "<group>"; };
 		E65122FC2A9B3C51004C9B40 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E65122FE2A9B71CD004C9B40 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		E6606A762D5F712000DD95C7 /* PopoverSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverSettingsView.swift; sourceTree = "<group>"; };
+		E6606A782D5F71BF00DD95C7 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
+		E6606A7A2D5F998600DD95C7 /* ContactUsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsView.swift; sourceTree = "<group>"; };
+		E6606A7C2D5F99C900DD95C7 /* XMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMarkButton.swift; sourceTree = "<group>"; };
 		E66895F32B90DAB900392AF1 /* RotaTimers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotaTimers.swift; sourceTree = "<group>"; };
 		E68186862AA65F610021731F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		E69FDA932B75147C00C8197F /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
@@ -124,6 +132,10 @@
 				E6470DC72B7B950B00E0B683 /* TimersRowView.swift */,
 				E6470DCB2B88FC5900E0B683 /* AddResetRow.swift */,
 				E69FDA932B75147C00C8197F /* ClockView.swift */,
+				E6606A762D5F712000DD95C7 /* PopoverSettingsView.swift */,
+				E6606A782D5F71BF00DD95C7 /* SettingsRowView.swift */,
+				E6606A7A2D5F998600DD95C7 /* ContactUsView.swift */,
+				E6606A7C2D5F99C900DD95C7 /* XMarkButton.swift */,
 				E65123002A9BE04B004C9B40 /* Launch */,
 			);
 			path = Views;
@@ -283,6 +295,7 @@
 				E66895F42B90DAB900392AF1 /* RotaTimers.swift in Sources */,
 				E642E14929DA249100F53B07 /* MeasurementColumns.swift in Sources */,
 				E69FDA942B75147C00C8197F /* ClockView.swift in Sources */,
+				E6606A7B2D5F998600DD95C7 /* ContactUsView.swift in Sources */,
 				E63B8649299E1C24000F6CCE /* MainView.swift in Sources */,
 				E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */,
 				E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */,
@@ -295,10 +308,13 @@
 				E63B863D299ABB5E000F6CCE /* Fireman.swift in Sources */,
 				E63B863F299AC225000F6CCE /* CoreViewModel.swift in Sources */,
 				E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */,
+				E6606A7D2D5F99C900DD95C7 /* XMarkButton.swift in Sources */,
 				E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */,
 				E634833B29CF14FC00AEB05A /* Date.swift in Sources */,
 				E6B79C1029E1489E005BF832 /* HapticManager.swift in Sources */,
 				E63B8641299AD42D000F6CCE /* RotaTableView.swift in Sources */,
+				E6606A772D5F712000DD95C7 /* PopoverSettingsView.swift in Sources */,
+				E6606A792D5F71BF00DD95C7 /* SettingsRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +455,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -473,7 +489,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
