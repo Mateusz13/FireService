@@ -32,24 +32,24 @@ struct PopoverSettingsView: View {
     private var AllSettingsButtons: some View {
         VStack(alignment: .leading) {
             Button {
-                showContactSheet = true
-            } label: {
-                SettingsRowView(imageName: "envelope.fill", title: "Skontaktuj się z nami", tintColor: .gray, textColor: Color.black)
-                    .font(.largeTitle)
-            }
-            Button {
                 if let url = URL(string: "https://doc-hosting.flycricket.io/topword-polityka-prywatnosci/34fd1805-714c-45b6-a3ba-8d86f28a4087/privacy") {
                     UIApplication.shared.open(url)
                 }
             } label: {
-                SettingsRowView(imageName: "globe", title: "Polityka Prywatności", tintColor: .gray, textColor: .blue)
+                SettingsRowView(imageName: "globe", title: "INSTRUKCJA APLIKACJI", tintColor: .gray, textColor: .blue)
             }
             Button {
                 if let url = URL(string: "https://doc-hosting.flycricket.io/topword-warunki-uzytkowania/ed9c3df8-3dca-416c-ae52-100a69121e24/terms") {
                     UIApplication.shared.open(url)
                 }
             } label: {
-                SettingsRowView(imageName: "globe", title: "Warunki użytkowania", tintColor: .gray, textColor: .blue)
+                SettingsRowView(imageName: "globe", title: "REGULAMIN", tintColor: .gray, textColor: .blue)
+            }
+            Button {
+                showContactSheet = true
+            } label: {
+                SettingsRowView(imageName: "envelope.fill", title: "Skontaktuj się z nami", tintColor: .gray, textColor: Color.black)
+                    .font(.largeTitle)
             }
         }
     }
