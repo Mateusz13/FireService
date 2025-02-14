@@ -105,11 +105,8 @@ final class CoreViewModel: ObservableObject {
         self.minimalPressure = Array(repeating: initialMinimalPressure, count: maxRotasNumber)
         self.editData = Array(repeating: Array(repeating: false, count: measurementsNumber), count: numberOfRotas+1)
         NotificationManager.instance.cancelAllNotifications()
-        Task {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
-            DispatchQueue.main.async {
-                self.resetting = false
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.resetting = false
         }
     }
     
