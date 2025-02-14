@@ -43,7 +43,7 @@ struct MainView: View {
                 HStack {
                     ClockView()
                     Spacer()
-                    Text("POWIETRZE DLA ROT")
+                    Text("POWIETRZE DLA RATOWNIKÓW")
                         .bold()
                     Spacer()
                 }
