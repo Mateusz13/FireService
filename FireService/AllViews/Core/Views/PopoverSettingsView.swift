@@ -12,6 +12,24 @@ struct PopoverSettingsView: View {
     @State private var showContactSheet: Bool = false
     
     var body: some View {
+        if #available(iOS 16.4, *) {
+            AllSettingsButtons
+            .padding()
+            .presentationCompactAdaptation((.popover))
+            .sheet(isPresented: $showContactSheet) {
+                ContactUsView()
+                    .presentationDetents([.medium])
+            }
+        } else {
+            AllSettingsButtons
+            .padding()
+            .sheet(isPresented: $showContactSheet) {
+                ContactUsView()
+            }
+        }
+    }
+    
+    private var AllSettingsButtons: some View {
         VStack(alignment: .leading) {
             Button {
                 showContactSheet = true
@@ -33,12 +51,6 @@ struct PopoverSettingsView: View {
             } label: {
                 SettingsRowView(imageName: "globe", title: "Warunki użytkowania", tintColor: .gray, textColor: .blue)
             }
-        }
-        .presentationCompactAdaptation((.popover))
-        .padding()
-        .sheet(isPresented: $showContactSheet) {
-            ContactUsView()
-                .presentationDetents([.medium])
         }
     }
 }

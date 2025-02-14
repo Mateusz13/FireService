@@ -9,21 +9,30 @@ import SwiftUI
 
 struct ContactUsView: View {
     var body: some View {
-        NavigationStack {
-            VStack {
-                Text("Masz pytania?")
-                Text("Masz propozycję jak ulepszyć aplikację?")
-                Text("Napisz do nas!")
-                    .bold()
-                    .padding(.top)
-                Text("powietrzedlaratownikow@gmail.com")
-                    .padding()
+        
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                ContactUsView
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            XMarkButton()
+                        }
+                    }
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    XMarkButton()
-                }
-            }
+        } else {
+            ContactUsView
+        }
+    }
+    
+    private var ContactUsView: some View {
+        VStack {
+            Text("Masz pytania?")
+            Text("Masz propozycję jak ulepszyć aplikację?")
+            Text("Napisz do nas!")
+                .bold()
+                .padding(.top)
+            Text("powietrzedlaratownikow@gmail.com")
+                .padding()
         }
     }
 }
