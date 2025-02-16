@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E634064A29B75499000BFE5F /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = E634064929B75499000BFE5F /* Double.swift */; };
+		E63414A62D6271DF0095D216 /* ButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63414A52D6271DF0095D216 /* ButtonStyle.swift */; };
 		E634833B29CF14FC00AEB05A /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = E634833A29CF14FC00AEB05A /* Date.swift */; };
 		E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63B861B2996E188000F6CCE /* FireServiceApp.swift */; };
 		E63B86202996E189000F6CCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E63B861F2996E189000F6CCE /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		E634064929B75499000BFE5F /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		E63414A52D6271DF0095D216 /* ButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyle.swift; sourceTree = "<group>"; };
 		E634833A29CF14FC00AEB05A /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		E63B86182996E188000F6CCE /* FireService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FireService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E63B861B2996E188000F6CCE /* FireServiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireServiceApp.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				E63B864A299E24FC000F6CCE /* HideKeyboard.swift */,
 				E634064929B75499000BFE5F /* Double.swift */,
 				E634833A29CF14FC00AEB05A /* Date.swift */,
+				E63414A52D6271DF0095D216 /* ButtonStyle.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */,
 				E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */,
 				E6470DC82B7B950B00E0B683 /* TimersRowView.swift in Sources */,
+				E63414A62D6271DF0095D216 /* ButtonStyle.swift in Sources */,
 				E6470DCC2B88FC5900E0B683 /* AddResetRow.swift in Sources */,
 				E634064A29B75499000BFE5F /* Double.swift in Sources */,
 				E6470DCA2B7BCC3900E0B683 /* TimersRowViewModel.swift in Sources */,

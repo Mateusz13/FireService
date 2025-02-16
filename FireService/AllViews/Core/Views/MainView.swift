@@ -24,7 +24,7 @@ struct MainView: View {
                 Spacer()
             }
             if showTermsAlert {
-                Color.black.opacity(0.4)
+                Color.black.opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
                 TermsView(showTermsAlert: $showTermsAlert, hasAcceptedTerms: $hasAcceptedTerms)
             }

@@ -57,25 +57,15 @@ struct TermsView: View {
                         exit(0)
                     }
                 }
-                .font(.body)
-                .buttonStyle(.bordered)
-                .background(.red)
-                .cornerRadius(10)
-                .foregroundColor(.black)
-                .padding(.horizontal)
+                .customButtonStyle(foregroundColor: .white, backgroundColor: .red, overlayColor: .red)
                 
                 Button("Potwierdzam") {
                     hasAcceptedTerms = true
                     showTermsAlert = false
                 }
-                .font(.body)
-                .buttonStyle(.bordered)
-                .background(.blue)
-                .cornerRadius(10)
-                .foregroundColor(.green)
-                .padding(.horizontal)
+                .customButtonStyle(foregroundColor: .white, backgroundColor: .green, overlayColor: .green)
             }
-            .padding(.bottom)
+            .padding(.vertical)
         }
         .padding()
         .background(Color(.systemBackground))
