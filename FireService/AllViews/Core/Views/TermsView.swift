@@ -51,19 +51,22 @@ struct TermsView: View {
             .padding(.vertical)
             
             HStack(spacing: 20) {
-                Button("Wyjdź") {
+                Button {
                     UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         exit(0)
                     }
+                } label: {
+                    Text("Wyjdź")
+                        .customButtonStyle(foregroundColor: .white, backgroundColor: .red, overlayColor: .red)
                 }
-                .customButtonStyle(foregroundColor: .white, backgroundColor: .red, overlayColor: .red)
-                
-                Button("Potwierdzam") {
+                Button {
                     hasAcceptedTerms = true
                     showTermsAlert = false
+                } label: {
+                    Text("Potwierdzam")
+                        .customButtonStyle(foregroundColor: .white, backgroundColor: .green, overlayColor: .green)
                 }
-                .customButtonStyle(foregroundColor: .white, backgroundColor: .green, overlayColor: .green)
             }
             .padding(.vertical)
         }
