@@ -29,6 +29,7 @@
 		E6606A792D5F71BF00DD95C7 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6606A782D5F71BF00DD95C7 /* SettingsRowView.swift */; };
 		E6606A7B2D5F998600DD95C7 /* ContactUsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6606A7A2D5F998600DD95C7 /* ContactUsView.swift */; };
 		E6606A7D2D5F99C900DD95C7 /* XMarkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6606A7C2D5F99C900DD95C7 /* XMarkButton.swift */; };
+		E6606A7F2D6257E600DD95C7 /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6606A7E2D6257E600DD95C7 /* TermsView.swift */; };
 		E66895F42B90DAB900392AF1 /* RotaTimers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66895F32B90DAB900392AF1 /* RotaTimers.swift */; };
 		E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68186862AA65F610021731F /* UserDefaultsManager.swift */; };
 		E69FDA942B75147C00C8197F /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69FDA932B75147C00C8197F /* ClockView.swift */; };
@@ -59,6 +60,7 @@
 		E6606A782D5F71BF00DD95C7 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		E6606A7A2D5F998600DD95C7 /* ContactUsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsView.swift; sourceTree = "<group>"; };
 		E6606A7C2D5F99C900DD95C7 /* XMarkButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMarkButton.swift; sourceTree = "<group>"; };
+		E6606A7E2D6257E600DD95C7 /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
 		E66895F32B90DAB900392AF1 /* RotaTimers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotaTimers.swift; sourceTree = "<group>"; };
 		E68186862AA65F610021731F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		E69FDA932B75147C00C8197F /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				E6606A782D5F71BF00DD95C7 /* SettingsRowView.swift */,
 				E6606A7A2D5F998600DD95C7 /* ContactUsView.swift */,
 				E6606A7C2D5F99C900DD95C7 /* XMarkButton.swift */,
+				E6606A7E2D6257E600DD95C7 /* TermsView.swift */,
 				E65123002A9BE04B004C9B40 /* Launch */,
 			);
 			path = Views;
@@ -308,6 +311,7 @@
 				E63B863D299ABB5E000F6CCE /* Fireman.swift in Sources */,
 				E63B863F299AC225000F6CCE /* CoreViewModel.swift in Sources */,
 				E63B864B299E24FC000F6CCE /* HideKeyboard.swift in Sources */,
+				E6606A7F2D6257E600DD95C7 /* TermsView.swift in Sources */,
 				E6606A7D2D5F99C900DD95C7 /* XMarkButton.swift in Sources */,
 				E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */,
 				E634833B29CF14FC00AEB05A /* Date.swift in Sources */,
