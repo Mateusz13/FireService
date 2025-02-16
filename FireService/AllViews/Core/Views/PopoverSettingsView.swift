@@ -32,14 +32,14 @@ struct PopoverSettingsView: View {
     private var AllSettingsButtons: some View {
         VStack(alignment: .leading) {
             Button {
-                if let url = URL(string: "https://doc-hosting.flycricket.io/topword-polityka-prywatnosci/34fd1805-714c-45b6-a3ba-8d86f28a4087/privacy") {
+                if let url = URL(string: "https://drive.google.com/file/d/1L_tH51lGlY4lG9bE5LToaRRP81sArzTP/view?usp=share_link") {
                     UIApplication.shared.open(url)
                 }
             } label: {
                 SettingsRowView(imageName: "globe", title: "INSTRUKCJA APLIKACJI", tintColor: .gray, textColor: .blue)
             }
             Button {
-                if let url = URL(string: "https://doc-hosting.flycricket.io/topword-warunki-uzytkowania/ed9c3df8-3dca-416c-ae52-100a69121e24/terms") {
+                if let url = URL(string: "https://doc-hosting.flycricket.io/pdr-regulamin/df0c0984-7968-41d8-b8a1-bc664432ff34/terms") {
                     UIApplication.shared.open(url)
                 }
             } label: {
