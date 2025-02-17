@@ -12,12 +12,12 @@ struct LaunchView: View {
     
     var body: some View {
         ZStack {
-            Color.black
+            Color.white
                 .ignoresSafeArea()
             
             Image("LaunchScreen")
                 .resizable()
-                .scaledToFill()
+                .scaledToFit()
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
