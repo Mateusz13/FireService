@@ -16,6 +16,7 @@ struct ClockView: View {
     var body: some View {
         Text(currentTime)
             .bold()
+            .frame(minWidth: 75)
             .onReceive(timer2) { _ in
                 self.currentTime = Date().getFormattedDateToHHmmSS()
             }

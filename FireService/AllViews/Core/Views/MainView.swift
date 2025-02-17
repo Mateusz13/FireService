@@ -40,6 +40,7 @@ struct MainView: View {
                     Spacer()
                     Text("POWIETRZE DLA RATOWNIKÓW")
                         .bold()
+                    Spacer()
                 }
             }
         }
@@ -62,8 +63,10 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
-            .environmentObject(CoreViewModel())
+        NavigationView {
+            MainView()
+                .environmentObject(CoreViewModel())
+        }
     }
 }
 
