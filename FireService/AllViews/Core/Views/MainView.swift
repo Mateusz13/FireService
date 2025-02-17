@@ -40,7 +40,6 @@ struct MainView: View {
                     Spacer()
                     Text("POWIETRZE DLA RATOWNIKÓW")
                         .bold()
-                    Spacer()
                 }
             }
         }
