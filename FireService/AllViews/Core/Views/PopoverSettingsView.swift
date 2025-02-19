@@ -32,7 +32,7 @@ struct PopoverSettingsView: View {
     private var AllSettingsButtons: some View {
         VStack(alignment: .leading) {
             Button {
-                if let url = URL(string: "https://drive.google.com/file/d/1L_tH51lGlY4lG9bE5LToaRRP81sArzTP/view?usp=share_link") {
+                if let url = URL(string: "https://drive.google.com/file/d/1zPyV0L6y-Fot2uO65ceXvyEeROOCXyTh/view?usp=sharing") {
                     UIApplication.shared.open(url)
                 }
             } label: {
