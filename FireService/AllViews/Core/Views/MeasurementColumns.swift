@@ -61,6 +61,7 @@ struct MeasurementColumns: View {
                     Text("Oblicz")
                 }
                 .disabled(!endButtonActive)
+                .disabled(!allFieldsFilled)
                 .buttonStyle(.borderedProminent)
             } else if editData[measurement] || editData[measurement-1] {
                 Button {
@@ -73,6 +74,7 @@ struct MeasurementColumns: View {
                     Text("Oblicz")
                 }
                 .disabled(!endButtonActive)
+                .disabled(!allFieldsFilled)
                 .buttonStyle(.borderedProminent)
                 .foregroundColor(.red)
             } else {
@@ -81,6 +83,24 @@ struct MeasurementColumns: View {
                     .foregroundColor(.secondary)
             }
         }
+    }
+    var allFieldsFilled: Bool {
+        let f1Filled = !rota.f1Pressures[measurement].isEmpty
+        let f2Filled = !rota.f2Pressures[measurement].isEmpty
+        
+        // Base check on two required fields
+        var allFilled = f1Filled && f2Filled
+        
+        // Add conditional checks for additional fields if needed
+        if numberOfFiremans > 1 {
+            allFilled = allFilled && !rota.f3Pressures[measurement].isEmpty
+        }
+        
+        if numberOfFiremans > 2 {
+            allFilled = allFilled && !rota.f4Pressures[measurement].isEmpty
+        }
+        
+        return allFilled
     }
 }
 

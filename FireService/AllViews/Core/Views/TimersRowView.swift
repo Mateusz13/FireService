@@ -59,6 +59,7 @@ struct TimersRowView: View {
                 .foregroundColor(.black)
                 .padding(.vertical, 4)
                 .disabled(startOrCalculateButtonActive[0])
+                .opacity(startOrCalculateButtonActive[0] ? 0.5 : 1.0)
                 .alert("Zakończyć?", isPresented: $endConfirmationAlert) {
                     Button("Tak") { vm.endAction(forRota: number) }
                     Button("Nie", role: .cancel) { }
