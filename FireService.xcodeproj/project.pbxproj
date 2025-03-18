@@ -35,6 +35,7 @@
 		E68186872AA65F610021731F /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68186862AA65F610021731F /* UserDefaultsManager.swift */; };
 		E69FDA942B75147C00C8197F /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69FDA932B75147C00C8197F /* ClockView.swift */; };
 		E6B79C1029E1489E005BF832 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B79C0F29E1489E005BF832 /* HapticManager.swift */; };
+		E6D6F93F2D89D01200022878 /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6F93E2D89D01200022878 /* Links.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		E68186862AA65F610021731F /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		E69FDA932B75147C00C8197F /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
 		E6B79C0F29E1489E005BF832 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		E6D6F93E2D89D01200022878 /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +179,7 @@
 				E642E14D29DC0EF400F53B07 /* NotificationManager.swift */,
 				E6B79C0F29E1489E005BF832 /* HapticManager.swift */,
 				E68186862AA65F610021731F /* UserDefaultsManager.swift */,
+				E6D6F93E2D89D01200022878 /* Links.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				E69FDA942B75147C00C8197F /* ClockView.swift in Sources */,
 				E6606A7B2D5F998600DD95C7 /* ContactUsView.swift in Sources */,
 				E63B8649299E1C24000F6CCE /* MainView.swift in Sources */,
+				E6D6F93F2D89D01200022878 /* Links.swift in Sources */,
 				E63B861C2996E188000F6CCE /* FireServiceApp.swift in Sources */,
 				E65122FF2A9B71CD004C9B40 /* LaunchView.swift in Sources */,
 				E6470DC82B7B950B00E0B683 /* TimersRowView.swift in Sources */,
@@ -449,7 +453,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FireService/Preview Content\"";
 				DEVELOPMENT_TEAM = GT23F8HNN6;
 				ENABLE_PREVIEWS = YES;
@@ -467,7 +471,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.1;
+				MARKETING_VERSION = 0.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mateuszszafarczyk.FireService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -482,7 +486,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FireService/Preview Content\"";
 				DEVELOPMENT_TEAM = GT23F8HNN6;
 				ENABLE_PREVIEWS = YES;
@@ -500,7 +504,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6.1;
+				MARKETING_VERSION = 0.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mateuszszafarczyk.FireService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -25,9 +25,7 @@ struct TermsView: View {
                 
                 HStack(spacing: 4) {
                     Button {
-                        if let url = URL(string: "https://doc-hosting.flycricket.io/pdr-regulamin/df0c0984-7968-41d8-b8a1-bc664432ff34/terms") {
-                            UIApplication.shared.open(url)
-                        }
+                            UIApplication.shared.open(Link.regulationLink)
                     } label: {
                         Text("Regulamin")
                             .foregroundColor(.blue)
@@ -37,9 +35,7 @@ struct TermsView: View {
                     Text("oraz")
                     
                     Button {
-                        if let url = URL(string: "https://drive.google.com/file/d/1zPyV0L6y-Fot2uO65ceXvyEeROOCXyTh/view?usp=sharing") {
-                            UIApplication.shared.open(url)
-                        }
+                            UIApplication.shared.open(Link.instructionLink)
                     } label: {
                         Text("Instrukcję Aplikacji")
                             .foregroundColor(.blue)
