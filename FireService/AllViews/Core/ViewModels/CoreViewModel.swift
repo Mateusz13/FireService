@@ -123,17 +123,17 @@ final class CoreViewModel: ObservableObject {
             return
         }
         // Handle subsequent measurements
-        handleSubsequentMeasurements(forRota: forRota, forMeasurement: forMeasurement, rota: rota, time: Date())
+        _ = handleSubsequentMeasurements(forRota: forRota, forMeasurement: forMeasurement, rota: rota, time: Date())
     }
     
-    func recalculateExitTime(forRota: Int, forMeasurement: Int, previousTime: Date) {
+    func recalculateExitTime(forRota: Int, forMeasurement: Int, previousTime: Date) -> Bool {
         let rota = rotas[forRota]
         //checking if all required pressure textfields are filled
         if !validatePressures(forRota: forRota, forMeasurement: forMeasurement) {
             showError()
-            return
+            return false
         }
-        handleSubsequentMeasurements(forRota: forRota, forMeasurement: forMeasurement, rota: rota, time: previousTime)
+        return handleSubsequentMeasurements(forRota: forRota, forMeasurement: forMeasurement, rota: rota, time: previousTime, isRecalculating: true)
     }
     
     private func handleFirstMeasurement(forRota: Int, forMeasurement: Int) {
@@ -143,11 +143,14 @@ final class CoreViewModel: ObservableObject {
         NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
     }
     
-    private func handleSubsequentMeasurements(forRota: Int, forMeasurement: Int, rota: Rota, time: Date) {
+    private func handleSubsequentMeasurements(forRota: Int, forMeasurement: Int, rota: Rota, time: Date, isRecalculating: Bool = false) -> Bool {
         //set time:
         self.rotas[forRota].time?[forMeasurement] = time
         
-        self.startOrCalculateButtonActive[forRota][forMeasurement] = false
+        if !isRecalculating {
+            self.startOrCalculateButtonActive[forRota][forMeasurement] = false
+        }
+        
         NotificationManager.instance.cancelExitNotification(forRota: forRota)
         hideKeyboard()
         
@@ -158,9 +161,13 @@ final class CoreViewModel: ObservableObject {
         
         if validTimeToLeaveRange.contains(minimumTimeToLeave) {
             handleValidTimeToLeave(minimumTimeToLeave, forRota: forRota)
+            return true
         } else {
             showError()
-            self.startOrCalculateButtonActive[forRota][forMeasurement] = true
+            if !isRecalculating {
+                self.startOrCalculateButtonActive[forRota][forMeasurement] = true
+            }
+            return false
         }
     }
     
