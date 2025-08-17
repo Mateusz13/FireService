@@ -7,59 +7,167 @@
 
 import Foundation
 
+// MARK: - Constants
+private struct Constants {
+    static let measurementsNumber: Int = 11
+    static let maxRotasNumber: Int = 16
+    static let exitNotificationTime: TimeInterval = 300.0
+    static let validTimeToLeaveRange = 0.001...12600.0
+    static let initialMinimalPressure: Double = 50.0
+    static let defaultNumberOfRotas: Int = 2
+    static let maxNumberOfRotas: Int = 15
+    static let maxFiremansPerRota: Int = 3
+}
+
+// MARK: - UserDefaults Keys
+private struct UserDefaultsKeys {
+    static let rotasInputs = "rotasInputs"
+    static let numberOfFiremans = "numberOfFiremans"
+    static let minimalPressure = "minimalPressure"
+    static let endButtonActive = "endButtonActive"
+    static let numberOfRotas = "numberOfRotas"
+    static let startOrCalculateButtonActive = "startOrCalculateButtonActive"
+    static let editData = "editData"
+}
+
 final class CoreViewModel: ObservableObject {
+    
+    // MARK: - Published Properties
     @Published var resetting = false
     @Published var rotas: [Rota] {
-        didSet {
-            saveRotasInputs()
-        }
+        didSet { saveRotasInputs() }
     }
     @Published var numberOfFiremans: [Int] {
-        didSet {
-            saveNumberOfFiremans()
-        }
+        didSet { saveNumberOfFiremans() }
     }
     @Published var startOrCalculateButtonActive: [[Bool]] {
-        didSet {
-            saveStartOrCalculateButtonActive()
-        }
+        didSet { saveStartOrCalculateButtonActive() }
     }
     @Published var endButtonActive: [Bool] {
-        didSet {
-            saveEndButtonActive()
-        }
+        didSet { saveEndButtonActive() }
     }
     @Published var showAlert: Bool = false
-    @Published var minimalPressure : [Double] {
-        didSet {
-            saveMinimalPressure()
-        }
+    @Published var minimalPressure: [Double] {
+        didSet { saveMinimalPressure() }
     }
     @Published var editData: [[Bool]] {
-        didSet {
-            saveEditData()
-        }
-    }
-    var numberOfRotas: Int = 2 {
-        didSet {
-            saveNumberOfRotas()
-        }
+        didSet { saveEditData() }
     }
     
-    private let measurementsNumber: Int = 11
-    private let maxRotasNumber: Int = 16
-    private let exitNotificationTime = 300.0
-    private let validTimeToLeaveRange = (0.001...12600)
-    private let initialMinimalPressure = 50.0
+    // MARK: - Private Properties
+    var numberOfRotas: Int = Constants.defaultNumberOfRotas {
+        didSet { saveNumberOfRotas() }
+    }
     
+    // MARK: - Initialization
     init() {
-        let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
-        self.rotas = rotas
-        self.startOrCalculateButtonActive = Array(repeating: Array(repeating: true, count: measurementsNumber+2), count: numberOfRotas+1)//(2 more for: .disabled(!startOrCalculateButtonActive[measurement+2])
-        self.endButtonActive = Array(repeating: true, count: numberOfRotas+1)
-        self.numberOfFiremans = Array(repeating: 1, count: numberOfRotas+1)
-        self.minimalPressure = Array(repeating: initialMinimalPressure, count: maxRotasNumber)
-        self.editData = Array(repeating: Array(repeating: false, count: measurementsNumber), count: numberOfRotas+1)
+        let initialRotas = Self.createInitialRotas()
+        self.rotas = initialRotas
+        self.startOrCalculateButtonActive = Self.createInitialButtonStates(for: Constants.defaultNumberOfRotas)
+        self.endButtonActive = Array(repeating: true, count: Constants.defaultNumberOfRotas + 1)
+        self.numberOfFiremans = Array(repeating: 1, count: Constants.defaultNumberOfRotas + 1)
+        self.minimalPressure = Array(repeating: Constants.initialMinimalPressure, count: Constants.maxRotasNumber)
+        self.editData = Self.createInitialEditData(for: Constants.defaultNumberOfRotas)
+        
+        loadPersistedData()
+        print(rotas)
+    }
+    
+    // MARK: - Public Methods
+    func addRota() {
+        guard numberOfRotas < Constants.maxNumberOfRotas else { return }
+        
+        numberOfRotas += 1
+        rotas.append(Rota(number: numberOfRotas))
+        startOrCalculateButtonActive.append(Array(repeating: true, count: Constants.measurementsNumber + 2))
+        editData.append(Array(repeating: false, count: Constants.measurementsNumber))
+        endButtonActive.append(true)
+        numberOfFiremans.append(1)
+        minimalPressure.append(Constants.initialMinimalPressure)
+    }
+    
+    func addFireman(forRota rotaIndex: Int) {
+        guard rotaIndex < numberOfFiremans.count,
+              numberOfFiremans[rotaIndex] < Constants.maxFiremansPerRota else { return }
+        numberOfFiremans[rotaIndex] += 1
+    }
+    
+    func endAction(forRota rotaIndex: Int) {
+        guard rotaIndex < endButtonActive.count && rotaIndex < rotas.count else { return }
+        
+        endButtonActive[rotaIndex] = false
+        let currentTime = Date()
+        rotas[rotaIndex].exitTime = currentTime
+        rotas[rotaIndex].remainingTimeAtEnd = calculateRemainingTimeAtEnd(for: rotaIndex, currentTime: currentTime)
+        rotas[rotaIndex].totalDuration = calculateTotalDuration(for: rotaIndex, currentTime: currentTime)
+        
+        NotificationManager.instance.cancelExitNotification(forRota: rotaIndex)
+        NotificationManager.instance.cancelFirstMeasurementNotification(forRota: rotaIndex)
+    }
+    
+    func reset() {
+        resetting = true
+        numberOfRotas = Constants.defaultNumberOfRotas
+        rotas = Self.createInitialRotas()
+        startOrCalculateButtonActive = Self.createInitialButtonStates(for: Constants.defaultNumberOfRotas)
+        endButtonActive = Array(repeating: true, count: Constants.defaultNumberOfRotas + 1)
+        numberOfFiremans = Array(repeating: 1, count: Constants.defaultNumberOfRotas + 1)
+        minimalPressure = Array(repeating: Constants.initialMinimalPressure, count: Constants.maxRotasNumber)
+        editData = Self.createInitialEditData(for: Constants.defaultNumberOfRotas)
+        
+        NotificationManager.instance.cancelAllNotifications()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.resetting = false
+        }
+    }
+    
+    func startActionOrCalculateExitTime(forRota rotaIndex: Int, forMeasurement measurementIndex: Int) {
+        guard validatePressures(forRota: rotaIndex, forMeasurement: measurementIndex) else {
+            showError()
+            return
+        }
+        
+        if measurementIndex == 0 {
+            handleFirstMeasurement(forRota: rotaIndex, forMeasurement: measurementIndex)
+        } else {
+            let rota = rotas[rotaIndex]
+            _ = handleSubsequentMeasurements(forRota: rotaIndex, forMeasurement: measurementIndex, rota: rota, time: Date())
+        }
+    }
+    
+    func recalculateExitTime(forRota rotaIndex: Int, forMeasurement measurementIndex: Int, previousTime: Date) -> Bool {
+        guard validatePressures(forRota: rotaIndex, forMeasurement: measurementIndex) else {
+            showError()
+            return false
+        }
+        
+        let rota = rotas[rotaIndex]
+        return handleSubsequentMeasurements(forRota: rotaIndex, forMeasurement: measurementIndex, rota: rota, time: previousTime, isRecalculating: true)
+    }
+    
+    func timeToLeaveTitle(forRota rotaIndex: Int) -> String {
+        guard rotaIndex < minimalPressure.count else { return "" }
+        return minimalPressure[rotaIndex] == 0.0 ? "Do 0 BAR(!): " : "Do gwizdka: "
+    }
+}
+
+// MARK: - Private Helper Methods
+private extension CoreViewModel {
+    
+    static func createInitialRotas() -> [Rota] {
+        return [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
+    }
+    
+    static func createInitialButtonStates(for numberOfRotas: Int) -> [[Bool]] {
+        return Array(repeating: Array(repeating: true, count: Constants.measurementsNumber + 2), count: numberOfRotas + 1)
+    }
+    
+    static func createInitialEditData(for numberOfRotas: Int) -> [[Bool]] {
+        return Array(repeating: Array(repeating: false, count: Constants.measurementsNumber), count: numberOfRotas + 1)
+    }
+    
+    func loadPersistedData() {
         getNumberOfRotas()
         getNumberOfFiremans()
         getStartOrCalculateButtonActive()
@@ -67,236 +175,194 @@ final class CoreViewModel: ObservableObject {
         getRotasInputs()
         getMinimalPressure()
         getEditData()
-        print(rotas)
     }
     
-    func addRota() {
-        numberOfRotas += 1
-        self.rotas.append(Rota(number: numberOfRotas))
-        self.startOrCalculateButtonActive.append(Array(repeating: true, count: measurementsNumber+2))
-        self.editData.append(Array(repeating: false, count: measurementsNumber))
-        self.endButtonActive.append(true)
-        self.numberOfFiremans.append(1)
-        self.minimalPressure.append(initialMinimalPressure)
+    func calculateRemainingTimeAtEnd(for rotaIndex: Int, currentTime: Date) -> TimeInterval {
+        return (rotas[rotaIndex].exitDate?.timeIntervalSince1970 ?? 0) - currentTime.timeIntervalSince1970
     }
     
-    func addFireman(forRota: Int) {
-        numberOfFiremans[forRota] += 1
+    func calculateTotalDuration(for rotaIndex: Int, currentTime: Date) -> TimeInterval {
+        return currentTime.timeIntervalSince1970 - (rotas[rotaIndex].time?[0].timeIntervalSince1970 ?? 0)
     }
     
-    func endAction(forRota: Int) {
-        endButtonActive[forRota] = false
-        self.rotas[forRota].exitTime = Date()
-        self.rotas[forRota].remainingTimeAtEnd = (self.rotas[forRota].exitDate?.timeIntervalSince1970 ?? 0) - Date().timeIntervalSince1970
-        self.rotas[forRota].totalDuration = Date().timeIntervalSince1970 - (self.rotas[forRota].time?[0].timeIntervalSince1970 ?? 0)
-        NotificationManager.instance.cancelExitNotification(forRota: forRota)
-        NotificationManager.instance.cancelFirstMeasurementNotification(forRota: forRota)
-    }
-    
-    func reset() {
-        resetting = true
-        self.numberOfRotas = 2
-        let rotas = [Rota(number: 0), Rota(number: 1), Rota(number: 2)]
-        self.rotas = rotas
-        self.startOrCalculateButtonActive = Array(repeating: Array(repeating: true, count: measurementsNumber+2), count: numberOfRotas+1)
-        self.endButtonActive = Array(repeating: true, count:  numberOfRotas+1)
-        self.numberOfFiremans = Array(repeating: 1, count: numberOfRotas+1)
-        self.minimalPressure = Array(repeating: initialMinimalPressure, count: maxRotasNumber)
-        self.editData = Array(repeating: Array(repeating: false, count: measurementsNumber), count: numberOfRotas+1)
-        NotificationManager.instance.cancelAllNotifications()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.resetting = false
-        }
-    }
-    
-    func startActionOrCalculateExitTime(forRota: Int, forMeasurement: Int) {
-        let rota = rotas[forRota]
-        //checking if all required pressure textfields are filled
-        if !validatePressures(forRota: forRota, forMeasurement: forMeasurement) {
-            showError()
-            return
-        }
-        // Handle first measurement
-        if forMeasurement == 0 {
-            handleFirstMeasurement(forRota: forRota, forMeasurement: forMeasurement)
-            return
-        }
-        // Handle subsequent measurements
-        _ = handleSubsequentMeasurements(forRota: forRota, forMeasurement: forMeasurement, rota: rota, time: Date())
-    }
-    
-    func recalculateExitTime(forRota: Int, forMeasurement: Int, previousTime: Date) -> Bool {
-        let rota = rotas[forRota]
-        //checking if all required pressure textfields are filled
-        if !validatePressures(forRota: forRota, forMeasurement: forMeasurement) {
-            showError()
-            return false
-        }
-        return handleSubsequentMeasurements(forRota: forRota, forMeasurement: forMeasurement, rota: rota, time: previousTime, isRecalculating: true)
-    }
-    
-    private func handleFirstMeasurement(forRota: Int, forMeasurement: Int) {
-        self.rotas[forRota].time = Array(repeating: Date(), count: measurementsNumber+2)
-        self.startOrCalculateButtonActive[forRota][forMeasurement] = false
+    func handleFirstMeasurement(forRota rotaIndex: Int, forMeasurement measurementIndex: Int) {
+        rotas[rotaIndex].time = Array(repeating: Date(), count: Constants.measurementsNumber + 2)
+        startOrCalculateButtonActive[rotaIndex][measurementIndex] = false
         hideKeyboard()
-        NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: forRota)
+        NotificationManager.instance.scheduleFirstMeasurementNotification(forRota: rotaIndex)
     }
     
-    private func handleSubsequentMeasurements(forRota: Int, forMeasurement: Int, rota: Rota, time: Date, isRecalculating: Bool = false) -> Bool {
-        //set time:
-        self.rotas[forRota].time?[forMeasurement] = time
+    func handleSubsequentMeasurements(forRota rotaIndex: Int, forMeasurement measurementIndex: Int, rota: Rota, time: Date, isRecalculating: Bool = false) -> Bool {
+        rotas[rotaIndex].time?[measurementIndex] = time
         
         if !isRecalculating {
-            self.startOrCalculateButtonActive[forRota][forMeasurement] = false
+            startOrCalculateButtonActive[rotaIndex][measurementIndex] = false
         }
         
-        NotificationManager.instance.cancelExitNotification(forRota: forRota)
+        NotificationManager.instance.cancelExitNotification(forRota: rotaIndex)
         hideKeyboard()
         
-        let timeInterval = calculateTimeInterval(forRota: forRota, forMeasurement: forMeasurement)
-        let timeInterval2 = calculateTimeInterval2(forRota: forRota, forMeasurement: forMeasurement)
-        let timesToLeave = calculateTimesToLeave(rota: rota, forRota: forRota, forMeasurement: forMeasurement, timeInterval: timeInterval, timeInterval2: timeInterval2)
-        let minimumTimeToLeave = timesToLeave.min() ?? 0
+        let calculations = performTimeCalculations(forRota: rotaIndex, forMeasurement: measurementIndex, rota: rota)
+        let minimumTimeToLeave = calculations.timesToLeave.min() ?? 0
         
-        if validTimeToLeaveRange.contains(minimumTimeToLeave) {
-            handleValidTimeToLeave(minimumTimeToLeave, forRota: forRota)
+        if Constants.validTimeToLeaveRange.contains(minimumTimeToLeave) {
+            handleValidTimeToLeave(minimumTimeToLeave, forRota: rotaIndex)
             return true
         } else {
             showError()
             if !isRecalculating {
-                self.startOrCalculateButtonActive[forRota][forMeasurement] = true
+                startOrCalculateButtonActive[rotaIndex][measurementIndex] = true
             }
             return false
         }
     }
     
-    // Helper Functions
-    private func calculateTimeInterval(forRota: Int, forMeasurement: Int) -> TimeInterval {
-        return self.rotas[forRota].time?[forMeasurement].timeIntervalSince(self.rotas[forRota].time?[forMeasurement-1] ?? Date()) ?? 0
+    func performTimeCalculations(forRota rotaIndex: Int, forMeasurement measurementIndex: Int, rota: Rota) -> (timeInterval: TimeInterval, timeInterval2: TimeInterval, timesToLeave: [Double]) {
+        let timeInterval = calculateTimeInterval(forRota: rotaIndex, forMeasurement: measurementIndex)
+        let timeInterval2 = calculateTimeInterval2(forRota: rotaIndex, forMeasurement: measurementIndex)
+        let timesToLeave = calculateTimesToLeave(rota: rota, forRota: rotaIndex, forMeasurement: measurementIndex, timeInterval: timeInterval, timeInterval2: timeInterval2)
+        
+        return (timeInterval, timeInterval2, timesToLeave)
     }
     
-    private func calculateTimeInterval2(forRota: Int, forMeasurement: Int) -> TimeInterval {
-        return Date().timeIntervalSince(self.rotas[forRota].time?[forMeasurement] ?? Date())
+    func calculateTimeInterval(forRota rotaIndex: Int, forMeasurement measurementIndex: Int) -> TimeInterval {
+        guard let currentTime = rotas[rotaIndex].time?[measurementIndex],
+              let previousTime = rotas[rotaIndex].time?[measurementIndex - 1] else { return 0 }
+        return currentTime.timeIntervalSince(previousTime)
     }
     
-    private func calculateTimesToLeave(rota: Rota, forRota: Int, forMeasurement: Int, timeInterval: TimeInterval, timeInterval2: TimeInterval) -> [Double] {
+    func calculateTimeInterval2(forRota rotaIndex: Int, forMeasurement measurementIndex: Int) -> TimeInterval {
+        guard let measurementTime = rotas[rotaIndex].time?[measurementIndex] else { return 0 }
+        return Date().timeIntervalSince(measurementTime)
+    }
+    
+    func calculateTimesToLeave(rota: Rota, forRota rotaIndex: Int, forMeasurement measurementIndex: Int, timeInterval: TimeInterval, timeInterval2: TimeInterval) -> [Double] {
         var timesToLeave = [Double]()
         
-        for index in 0..<numberOfFiremans[forRota]+1 {
-            let initialPressure = rota.doublePressures(forFireman: index, forMeasurement-1) - minimalPressure[forRota]
-            let pressureUsed = rota.doublePressures(forFireman: index, forMeasurement-1) - rota.doublePressures(forFireman: index, forMeasurement)
-            let entireTimeOnAction = initialPressure / pressureUsed * timeInterval
-            let timeToLeave = entireTimeOnAction - timeInterval - timeInterval2
-            timesToLeave.append(timeToLeave)
+        for index in 0..<(numberOfFiremans[rotaIndex] + 1) {
+            let calculation = calculateIndividualTimeToLeave(
+                rota: rota,
+                firemanIndex: index,
+                rotaIndex: rotaIndex,
+                measurementIndex: measurementIndex,
+                timeInterval: timeInterval,
+                timeInterval2: timeInterval2
+            )
+            timesToLeave.append(calculation)
         }
         
         return timesToLeave
     }
     
-    private func handleValidTimeToLeave(_ timeToLeave: Double, forRota: Int) {
-        self.rotas[forRota].timeToLeave = timeToLeave
-        self.rotas[forRota].exitDate = Date().addingTimeInterval(timeToLeave)
-        if timeToLeave > exitNotificationTime {
-            let leaveNotificationTime = timeToLeave - exitNotificationTime
-            NotificationManager.instance.scheduleExitNotification(time: leaveNotificationTime, forRota: forRota, minimalPressure: minimalPressure[forRota])
+    func calculateIndividualTimeToLeave(rota: Rota, firemanIndex: Int, rotaIndex: Int, measurementIndex: Int, timeInterval: TimeInterval, timeInterval2: TimeInterval) -> Double {
+        let initialPressure = rota.doublePressures(forFireman: firemanIndex, measurementIndex - 1) - minimalPressure[rotaIndex]
+        let pressureUsed = rota.doublePressures(forFireman: firemanIndex, measurementIndex - 1) - rota.doublePressures(forFireman: firemanIndex, measurementIndex)
+        
+        guard pressureUsed > 0 else { return 0 }
+        
+        let entireTimeOnAction = initialPressure / pressureUsed * timeInterval
+        return entireTimeOnAction - timeInterval - timeInterval2
+    }
+    
+    func handleValidTimeToLeave(_ timeToLeave: Double, forRota rotaIndex: Int) {
+        rotas[rotaIndex].timeToLeave = timeToLeave
+        rotas[rotaIndex].exitDate = Date().addingTimeInterval(timeToLeave)
+        
+        if timeToLeave > Constants.exitNotificationTime {
+            let leaveNotificationTime = timeToLeave - Constants.exitNotificationTime
+            NotificationManager.instance.scheduleExitNotification(
+                time: leaveNotificationTime,
+                forRota: rotaIndex,
+                minimalPressure: minimalPressure[rotaIndex]
+            )
         }
     }
     
-    private func validatePressures(forRota: Int, forMeasurement: Int) -> Bool {
-        let rota = rotas[forRota]
+    func validatePressures(forRota rotaIndex: Int, forMeasurement measurementIndex: Int) -> Bool {
+        guard rotaIndex < rotas.count else { return false }
+        
+        let rota = rotas[rotaIndex]
         let pressures = [rota.f1Pressures, rota.f2Pressures, rota.f3Pressures, rota.f4Pressures]
-        return !pressures.prefix(numberOfFiremans[forRota]+1).contains { $0[forMeasurement].isEmpty }
+        let requiredPressures = pressures.prefix(numberOfFiremans[rotaIndex] + 1)
+        
+        return !requiredPressures.contains { $0[measurementIndex].isEmpty }
     }
     
-    private func showError() {
+    func showError() {
         showAlert = true
         HapticManager.notifiaction(type: .error)
     }
-    
-    func timeToLeaveTitle(forRota: Int) -> String {
-//        guard resetting == false else { return "" }
-        if minimalPressure[forRota] == 0.0 {
-            return "Do 0 BAR(!): "
-        } else {
-            return "Do gwizdka: "
-        }
-    }
-    
-    //SAVE AND GET DATA FROM USER DEFAULTS:
-    let rotasInputsKey: String = "rotasInputs"
-    let numberOfFiremansKey: String = "numberOfFiremans"
-    let minimalPressureKey: String = "minimalPressure"
-    let endButtonActiveKey: String = "endButtonActive"
-    let numberOfRotasKey: String = "numberOfRotas"
-    let startOrCalculateButtonActiveKey: String = "startOrCalculateButtonActive"
-    let editDataKey: String = "editData"
+}
+
+// MARK: - Persistence Methods
+private extension CoreViewModel {
     
     func saveNumberOfRotas() {
-        UserDefaultsManager.shared.save(numberOfRotas, forKey: numberOfRotasKey)
+        UserDefaultsManager.shared.save(numberOfRotas, forKey: UserDefaultsKeys.numberOfRotas)
     }
     
     func saveRotasInputs() {
-        UserDefaultsManager.shared.save(rotas, forKey: rotasInputsKey)
+        UserDefaultsManager.shared.save(rotas, forKey: UserDefaultsKeys.rotasInputs)
     }
     
     func saveNumberOfFiremans() {
-        UserDefaultsManager.shared.save(numberOfFiremans, forKey: numberOfFiremansKey)
+        UserDefaultsManager.shared.save(numberOfFiremans, forKey: UserDefaultsKeys.numberOfFiremans)
     }
     
     func saveMinimalPressure() {
-        UserDefaultsManager.shared.save(minimalPressure, forKey: minimalPressureKey)
+        UserDefaultsManager.shared.save(minimalPressure, forKey: UserDefaultsKeys.minimalPressure)
     }
     
     func saveEndButtonActive() {
-        UserDefaultsManager.shared.save(endButtonActive, forKey: endButtonActiveKey)
+        UserDefaultsManager.shared.save(endButtonActive, forKey: UserDefaultsKeys.endButtonActive)
     }
     
     func saveStartOrCalculateButtonActive() {
-        UserDefaultsManager.shared.save(startOrCalculateButtonActive, forKey: startOrCalculateButtonActiveKey)
+        UserDefaultsManager.shared.save(startOrCalculateButtonActive, forKey: UserDefaultsKeys.startOrCalculateButtonActive)
     }
     
     func saveEditData() {
-        UserDefaultsManager.shared.save(editData, forKey: editDataKey)
+        UserDefaultsManager.shared.save(editData, forKey: UserDefaultsKeys.editData)
     }
     
     func getNumberOfRotas() {
-        if let storedNumberOfRotas = UserDefaultsManager.shared.retrieve(Int.self, forKey: numberOfRotasKey) {
+        if let storedNumberOfRotas = UserDefaultsManager.shared.retrieve(Int.self, forKey: UserDefaultsKeys.numberOfRotas) {
             self.numberOfRotas = storedNumberOfRotas
         }
     }
     
     func getRotasInputs() {
-        if let storedRotas = UserDefaultsManager.shared.retrieve([Rota].self, forKey: rotasInputsKey) {
+        if let storedRotas = UserDefaultsManager.shared.retrieve([Rota].self, forKey: UserDefaultsKeys.rotasInputs) {
             self.rotas = storedRotas
         }
     }
     
     func getNumberOfFiremans() {
-        if let storedNumberOfFiremans = UserDefaultsManager.shared.retrieve([Int].self, forKey: numberOfFiremansKey) {
+        if let storedNumberOfFiremans = UserDefaultsManager.shared.retrieve([Int].self, forKey: UserDefaultsKeys.numberOfFiremans) {
             self.numberOfFiremans = storedNumberOfFiremans
         }
     }
     
     func getMinimalPressure() {
-        if let storedMinimalPressure = UserDefaultsManager.shared.retrieve([Double].self, forKey: minimalPressureKey) {
+        if let storedMinimalPressure = UserDefaultsManager.shared.retrieve([Double].self, forKey: UserDefaultsKeys.minimalPressure) {
             self.minimalPressure = storedMinimalPressure
         }
     }
     
     func getEndButtonActive() {
-        if let storedEndButtonActive = UserDefaultsManager.shared.retrieve([Bool].self, forKey: endButtonActiveKey) {
+        if let storedEndButtonActive = UserDefaultsManager.shared.retrieve([Bool].self, forKey: UserDefaultsKeys.endButtonActive) {
             self.endButtonActive = storedEndButtonActive
         }
     }
     
     func getStartOrCalculateButtonActive() {
-        if let storedStartOrCalculateButtonActive = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: startOrCalculateButtonActiveKey) {
+        if let storedStartOrCalculateButtonActive = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: UserDefaultsKeys.startOrCalculateButtonActive) {
             self.startOrCalculateButtonActive = storedStartOrCalculateButtonActive
         }
     }
     
     func getEditData() {
-        if let storedEditData = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: editDataKey) {
+        if let storedEditData = UserDefaultsManager.shared.retrieve([[Bool]].self, forKey: UserDefaultsKeys.editData) {
             self.editData = storedEditData
         }
     }
