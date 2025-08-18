@@ -46,21 +46,6 @@ struct Rota: Identifiable, Codable {
         return f4Pressures.compactMap(Double.init)
     }
     
-    func doublePressures(forFireman index: Int, _ measurement: Int) -> Double {
-        switch index {
-        case 0:
-            return doubleF1Pressures[measurement]
-        case 1:
-            return doubleF2Pressures[measurement]
-        case 2:
-            return doubleF3Pressures[measurement]
-        case 3:
-            return doubleF4Pressures[measurement]
-        default:
-            return 0.0
-        }
-    }
-    
     init(number: Int, f1Name: String = "", f2Name: String = "", f3Name: String = "", f4Name: String = "", f1Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f2Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f3Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""], f4Pressures: [String] = ["", "", "", "", "", "", "", "", "", "", ""]) {
         self.number = number
         self.f1Name = f1Name
@@ -72,4 +57,39 @@ struct Rota: Identifiable, Codable {
         self.f3Pressures = f3Pressures
         self.f4Pressures = f4Pressures
     }
+    
+    func doublePressures(forFireman index: Int, _ measurement: Int) -> Double {
+        let pressureArray = safeGetPressureArray(for: index)
+        return safeGetPressureValue(from: pressureArray, at: measurement)
+    }
+    
+    func safeGetPressureArray(for firemanIndex: Int) -> [Double] {
+         switch firemanIndex {
+         case 0: return doubleF1Pressures
+         case 1: return doubleF2Pressures
+         case 2: return doubleF3Pressures
+         case 3: return doubleF4Pressures
+         default: return []
+         }
+     }
+    
+    func safeGetPressureValue(from array: [Double], at index: Int) -> Double {
+        guard index >= 0 && index < array.count else { return 0.0 }
+        return array[index]
+    }
+    
+    //    func doublePressures(forFireman index: Int, _ measurement: Int) -> Double {
+    //        switch index {
+    //        case 0:
+    //            return doubleF1Pressures[measurement]
+    //        case 1:
+    //            return doubleF2Pressures[measurement]
+    //        case 2:
+    //            return doubleF3Pressures[measurement]
+    //        case 3:
+    //            return doubleF4Pressures[measurement]
+    //        default:
+    //            return 0.0
+    //        }
+    //    }
 }

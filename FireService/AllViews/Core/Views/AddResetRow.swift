@@ -54,13 +54,6 @@ struct AddResetRow: View {
         }
     }
 }
-//            .popover(isPresented: $isShowingSettings) {
-//                ResetProgressPopover { topLevel in
-//                    selectedLevel = topLevel
-//                    showAlert = true
-//                    isShowingSettings = false
-//                }
-//            }
 
 #Preview {
     AddResetRow()
