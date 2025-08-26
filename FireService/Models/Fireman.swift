@@ -77,19 +77,4 @@ struct Rota: Identifiable, Codable {
         guard index >= 0 && index < array.count else { return 0.0 }
         return array[index]
     }
-    
-    //    func doublePressures(forFireman index: Int, _ measurement: Int) -> Double {
-    //        switch index {
-    //        case 0:
-    //            return doubleF1Pressures[measurement]
-    //        case 1:
-    //            return doubleF2Pressures[measurement]
-    //        case 2:
-    //            return doubleF3Pressures[measurement]
-    //        case 3:
-    //            return doubleF4Pressures[measurement]
-    //        default:
-    //            return 0.0
-    //        }
-    //    }
 }
